@@ -1,5 +1,5 @@
 name: sodagarkom_app
-description: "A new Flutter project."
+description: "A mobile apps for sodagarkom e-commerce system."
 publish_to: 'none'
 version: 0.1.0
 
@@ -7,8 +7,10 @@ environment:
   sdk: '>=3.3.4 <4.0.0'
 
 dependencies:
+  dio: ^5.4.3+1
   flutter:
     sdk: flutter
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +19,17 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: PlusJakarta
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans-Bold.ttf
+        - asset: assets/fonts/PlusJakartaSans-ExtraBold.ttf
+        - asset: assets/fonts/PlusJakartaSans-Italic.ttf
+        - asset: assets/fonts/PlusJakartaSans-Light.ttf
+        - asset: assets/fonts/PlusJakartaSans-Medium.ttf
+        - asset: assets/fonts/PlusJakartaSans-MediumItalic.ttf
+        - asset: assets/fonts/PlusJakartaSans-Regular.ttf
+        - asset: assets/fonts/PlusJakartaSans-SemiBold.ttf
+  assets:
+    - assets/svg/
+    - assets/images/
