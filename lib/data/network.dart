@@ -1,15 +1,14 @@
-import '../core/core.dart';
 import 'package:dio/dio.dart';
 
 class NetworkService {
-  String baseUrl = Core.appBaseURL;
+  final String baseUrl;
   final Dio dio;
 
   NetworkService(this.baseUrl) : dio = Dio(BaseOptions(baseUrl: baseUrl));
 
   Future<Response> fetchData(String endpoint) async {
     try {
-      final response = await dio.get('$baseUrl/$endpoint');
+      final response = await dio.get(endpoint);
       return response;
     } catch (e) {
       throw Exception('Failed to load data: $e');
@@ -25,3 +24,24 @@ class NetworkService {
     }
   }
 }
+
+// class NetworkService {
+//   final Dio _dio;
+
+//   NetworkService()
+//       : _dio = Dio(BaseOptions(
+//           baseUrl: Core.appBaseURL,
+//           connectTimeout: const Duration(milliseconds: 5000),
+//           receiveTimeout: const Duration(milliseconds: 3000),
+//         ));
+
+//   Future<Response> getRequest(String endpoint) async {
+//     try {
+//       print(endpoint);
+//       final response = await _dio.get(endpoint);
+//       return response;
+//     } catch (e) {
+//       rethrow;
+//     }
+//   }
+// }

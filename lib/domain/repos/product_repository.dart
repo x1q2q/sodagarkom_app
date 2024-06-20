@@ -2,17 +2,17 @@ import '../../data/network.dart';
 import '../models/product.dart';
 
 class ProductRepository {
-  final NetworkService networkService;
+  final NetworkService _networkService;
 
-  ProductRepository(this.networkService);
+  ProductRepository(this._networkService);
 
   Future<Product> getProductByID() async {
-    final response = await networkService.fetchData('product/1');
+    final response = await _networkService.fetchData('product/8');
     if (response.statusCode == 200) {
-      final data = response.data;
-      return Product.fromMap(data);
+      final Map datas = Map.from(response.data);
+      return Product.fromMap(datas['data'][0]);
     } else {
-      throw Exception('Failed to load user data');
+      throw Exception('Failed to load products data');
     }
   }
 }

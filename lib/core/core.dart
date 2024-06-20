@@ -1,5 +1,4 @@
 class Core {
   static const String appName = 'SodagarKom';
-  static const String appBaseURL =
-      'http://localhost/sodagarkom_web/admin/v1/api';
+  static const String appBaseURL = 'http://192.168.1.53/sodagarkom_web/api/v1/';
 }

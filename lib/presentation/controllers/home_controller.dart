@@ -3,7 +3,9 @@ import '../../domain/repos/product_repository.dart';
 import '../../domain/models/product.dart';
 
 class HomeController extends GetxController {
-  ProductRepository? productRepository;
+  final ProductRepository _productRepository;
+
+  HomeController(this._productRepository);
   var product = Product(
           id: 0,
           name: 'loading...',
@@ -22,7 +24,7 @@ class HomeController extends GetxController {
 
   void fetchProducts() async {
     try {
-      Product fetchedProduct = await productRepository!.getProductByID();
+      Product fetchedProduct = await _productRepository.getProductByID();
       product.value = fetchedProduct;
     } catch (e) {
       print('failed to fetch producst: $e');

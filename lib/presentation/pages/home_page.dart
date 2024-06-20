@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text(Core.appName)),
         body: Center(
-            child: Obx(() => Text('Hello, ${controller.product.value.name}'))));
+            child:
+                Obx(() => Text('Hello, ${controller.product.value.stock}'))));
   }
 }

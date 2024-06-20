@@ -16,11 +16,11 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-        id: map['id'],
+        id: int.parse(map['id']),
         name: map['name'],
         categoryName: map['category_name'],
-        stock: map['stock'],
-        price: map['price'],
+        stock: int.parse(map['stock_temporary']),
+        price: int.parse(map['price']),
         description: map['description']);
   }
   Map toJson() {
