@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
       initialRoute: AppRoutes.appTab,
       initialBinding: TabsBinding(),
       getPages: AppRoutes.routes,
-      defaultTransition: Transition.fade,
+      defaultTransition: Transition.cupertinoDialog,
       debugShowCheckedModeBanner: false,
     );
   }

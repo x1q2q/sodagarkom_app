@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../router/app_routes.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage();
@@ -14,7 +15,9 @@ class ProductsPage extends StatelessWidget {
         Center(child: Text('ini product list')),
         ElevatedButton(
             onPressed: () {
-              Get.toNamed('/product-detail');
+              String productId = '1';
+              Get.toNamed(
+                  '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
             },
             child: Text('Details'))
       ],

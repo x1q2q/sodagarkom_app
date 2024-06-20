@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '.../../../controllers/app_tab_controller.dart';
 import '../../core/colors.dart';
+import '../../core/styles.dart';
+import 'app_svg.dart';
 
 class AppTabWidgets extends GetView<AppTabController> {
   AppTabWidgets(int index) {
@@ -17,28 +19,42 @@ class AppTabWidgets extends GetView<AppTabController> {
               backgroundColor: AppColors.lightred,
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    activeIcon: contIconTabs(AppSvg.homeActiveTabs),
+                    icon: contIconTabs(AppSvg.homeTabs),
                     label: 'Beranda',
                     tooltip: 'Beranda Aplikasi'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.library_add),
+                    activeIcon: contIconTabs(AppSvg.productsActiveTabs),
+                    icon: contIconTabs(AppSvg.productsTabs),
                     label: 'Produk',
-                    tooltip: 'Produk Aplikasi'),
+                    tooltip: 'Semua Produk'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.abc_outlined),
+                    backgroundColor: AppColors.purplev1,
+                    activeIcon: contIconTabs(AppSvg.transactionsActiveTabs),
+                    icon: contIconTabs(AppSvg.transactionsTabs),
                     label: 'Transaksi',
-                    tooltip: 'Transaksi Aplikasi'),
+                    tooltip: 'Transaksi Order'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.access_alarm),
+                    activeIcon: contIconTabs(AppSvg.profileActiveTabs),
+                    icon: contIconTabs(AppSvg.profileTabs),
                     label: 'Profil',
-                    tooltip: 'Profil Aplikasi'),
+                    tooltip: 'Profil Pengguna'),
               ],
               currentIndex: controller.selectedIndex.value,
               unselectedItemColor: AppColors.redv1,
               selectedItemColor: AppColors.redv2,
-              selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+              selectedLabelStyle: AppStyles.tabsSelected,
+              unselectedLabelStyle: AppStyles.tabsUnselected,
               onTap: controller.changePage,
               type: BottomNavigationBarType.fixed,
             ))));
+  }
+
+  Widget contIconTabs(Widget svg) {
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: 3),
+        child: svg,
+        width: 30,
+        height: 30);
   }
 }
