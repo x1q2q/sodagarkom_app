@@ -7,10 +7,9 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: SafeArea(
-                child: Column(
+    return Scaffold(
+        body: SafeArea(
+            child: Column(
       children: <Widget>[
         Center(child: Text('ini product list')),
         ElevatedButton(
@@ -21,6 +20,6 @@ class ProductsPage extends StatelessWidget {
             },
             child: Text('Details'))
       ],
-    ))));
+    )));
   }
 }

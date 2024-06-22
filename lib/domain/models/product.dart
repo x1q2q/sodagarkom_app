@@ -23,7 +23,7 @@ class Product {
         price: int.parse(map['price']),
         description: map['description']);
   }
-  Map toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,

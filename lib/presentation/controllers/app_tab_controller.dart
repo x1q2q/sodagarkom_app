@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:sodagarkom_app/presentation/bindings/home_binding.dart';
+import '../../presentation/bindings/home_binding.dart';
 import '../pages/home_page.dart';
 import '../pages/products_page.dart';
 import '../pages/transactions_page.dart';

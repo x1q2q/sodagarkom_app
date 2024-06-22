@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sodagarkom_app/core/styles.dart';
+import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import '../../core/core.dart';
@@ -10,40 +10,40 @@ import '../widgets/btn_cart.dart';
 import '../widgets/btn_circle.dart';
 import '../widgets/section_chips.dart';
 import '../widgets/product_card.dart';
+import '../router/app_routes.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.white,
-            body: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                  child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minHeight: viewportConstraints.maxHeight),
-                      child: Column(children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
-                          height: 570.0,
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              appHeader(context),
-                              appSearchBar(context),
-                              heroCategory(context),
-                              sectionCategory(context),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
-                            child: gridProducts(context))
-                      ])));
-            })));
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(child: LayoutBuilder(builder:
+            (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+              child: ConstrainedBox(
+                  constraints:
+                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                  child: Column(children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
+                      height: 570.0,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          appHeader(context),
+                          appSearchBar(context),
+                          heroCategory(context),
+                          sectionCategory(context),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
+                        child: gridProducts(context))
+                  ])));
+        })));
   }
 
   Widget appHeader(BuildContext context) {
@@ -132,7 +132,11 @@ class HomePage extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                             style: btnHeroCategory,
-                            onPressed: () {},
+                            onPressed: () {
+                              String categoryId = '1';
+                              Get.toNamed(
+                                  '${AppRoutes.categoryDetail.replaceFirst(":id", categoryId)}');
+                            },
                             child: Text(
                               'Detail',
                               style: AppStyles.btnTxtCardCategory,

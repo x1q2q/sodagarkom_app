@@ -5,7 +5,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(body: SafeArea(child: Text('ini halaman profile'))));
+    return Scaffold(body: SafeArea(child: Text('ini halaman profile')));
   }
 }

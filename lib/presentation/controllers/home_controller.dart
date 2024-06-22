@@ -21,14 +21,14 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // fetchProducts();
+    // fetchProduct();
   }
 
   void changeChip(bool selected, int index) {
     idChipSelected.value = selected ? index : 0;
   }
 
-  void fetchProducts() async {
+  void fetchProduct() async {
     // try {
     //   Product fetchedProduct = await _productRepository.getProductByID();
     //   product.value = fetchedProduct;

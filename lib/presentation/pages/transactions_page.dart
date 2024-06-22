@@ -5,8 +5,7 @@ class TransactionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: SafeArea(child: Text('ini halaman transactions list'))));
+    return Scaffold(
+        body: SafeArea(child: Text('ini halaman transactions list')));
   }
 }
