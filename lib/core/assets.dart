@@ -2,7 +2,9 @@ class Assets {
   // images
   static const String appLogo = 'assets/images/logo.png';
   static const String appProfileUser = 'assets/images/profile.png';
-  // svg
+  static const String dummCategory = 'assets/images/laptop.png';
+  static const String dummLaptop = 'assets/images/acer.jpg';
+  // svg icons
   static const String tabsIconHome = 'assets/svg/tabsicons/home.svg';
   static const String tabsIconHomeActive =
       'assets/svg/tabsicons/home_active.svg';
@@ -19,4 +21,8 @@ class Assets {
   static const String tabsIconProfile = 'assets/svg/tabsicons/profile.svg';
   static const String tabsIconProfileActive =
       'assets/svg/tabsicons/profile_active.svg';
+  // others svg
+  static const String iconCart = 'assets/svg/cart.svg';
+  static const String iconSearch = 'assets/svg/search.svg';
+  static const String iconCartAdd = 'assets/svg/cart-add.svg';
 }

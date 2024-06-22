@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class BtnCart extends StatelessWidget {
-  final Widget svg;
+class BtnCircle extends StatelessWidget {
+  final Widget widget;
   final void Function()? onTap;
   final Color bgColor;
-  final Color splashColor;
-  const BtnCart(
+  final Color? splashColor;
+  final double size;
+  final double padding;
+  const BtnCircle(
       {Key? key,
-      required this.svg,
+      required this.widget,
       this.onTap,
       required this.bgColor,
-      required this.splashColor})
+      this.splashColor,
+      required this.size,
+      this.padding = 0})
       : super(key: key);
 
   @override
@@ -28,12 +31,11 @@ class BtnCart extends StatelessWidget {
           onTap: onTap,
           customBorder: const CircleBorder(),
           child: Ink(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, border: Border.all(color: splashColor)),
-            height: 58,
-            width: 58,
-            child: svg,
+            padding: EdgeInsets.all(padding),
+            decoration: BoxDecoration(shape: BoxShape.circle),
+            height: size,
+            width: size,
+            child: widget,
           ),
         ),
       ),

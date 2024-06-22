@@ -18,4 +18,8 @@ class AppSvg {
   static Widget profileTabs = SvgPicture.asset(Assets.tabsIconProfile);
   static Widget profileActiveTabs =
       SvgPicture.asset(Assets.tabsIconProfileActive);
+
+  static Widget cart = SvgPicture.asset(Assets.iconCart);
+  static Widget search = SvgPicture.asset(Assets.iconSearch);
+  static Widget cartAdd = SvgPicture.asset(Assets.iconCartAdd);
 }

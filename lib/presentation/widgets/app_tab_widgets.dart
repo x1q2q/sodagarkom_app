@@ -6,14 +6,14 @@ import '../../core/styles.dart';
 import 'app_svg.dart';
 
 class AppTabWidgets extends GetView<AppTabController> {
-  AppTabWidgets(int index) {
-    controller.changePage(index);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-        body: controller.currentPage,
+    return Scaffold(
+        body: Navigator(
+          key: Get.nestedKey(1),
+          initialRoute: '/home',
+          onGenerateRoute: controller.onGenerateRoute,
+        ),
         bottomNavigationBar: Obx(() => BottomNavigationBar(
               elevation: 2.0,
               backgroundColor: AppColors.lightred,
@@ -47,14 +47,14 @@ class AppTabWidgets extends GetView<AppTabController> {
               unselectedLabelStyle: AppStyles.tabsUnselected,
               onTap: controller.changePage,
               type: BottomNavigationBarType.fixed,
-            ))));
+            )));
   }
 
   Widget contIconTabs(Widget svg) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 3),
-        child: svg,
-        width: 30,
-        height: 30);
+        margin: EdgeInsets.symmetric(vertical: 2),
+        width: 25,
+        height: 25,
+        child: svg);
   }
 }

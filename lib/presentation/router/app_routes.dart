@@ -3,6 +3,10 @@ import '../widgets/app_tab_widgets.dart';
 import '../bindings/tabs_binding.dart';
 import '../bindings/home_binding.dart';
 import '../pages/product_detail_page.dart';
+import '../pages/home_page.dart';
+import '../pages/products_page.dart';
+import '../pages/transactions_page.dart';
+import '../pages/profile_page.dart';
 
 class AppRoutes {
   static const String appTab = '/app-tab';
@@ -13,11 +17,11 @@ class AppRoutes {
   static const String productDetail = '/product-detail/:id';
 
   static final routes = [
-    GetPage(name: appTab, page: () => AppTabWidgets(0), binding: TabsBinding()),
-    GetPage(name: home, page: () => AppTabWidgets(1), binding: HomeBinding()),
-    GetPage(name: product, page: () => AppTabWidgets(2)),
-    GetPage(name: transaction, page: () => AppTabWidgets(3)),
-    GetPage(name: profile, page: () => AppTabWidgets(4)),
-    GetPage(name: productDetail,page:()=>ProductDetailPage()),
+    GetPage(name: appTab, page: () => AppTabWidgets(), binding: TabsBinding()),
+    GetPage(name: home, page: () => HomePage(), binding: HomeBinding()),
+    GetPage(name: product, page: () => ProductsPage()),
+    GetPage(name: transaction, page: () => TransactionsPage()),
+    GetPage(name: profile, page: () => ProfilePage()),
+    GetPage(name: productDetail, page: () => ProductDetailPage()),
   ];
 }
