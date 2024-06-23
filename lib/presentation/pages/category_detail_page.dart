@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sodagarkom_app/core/styles.dart';
-import 'package:sodagarkom_app/presentation/widgets/btn_circle.dart';
-import '../controllers/category_detail_controller.dart';
-import '../widgets/default_appbar.dart';
+import 'package:sodagarkom_app/presentation/widgets/app_svg.dart';
+import '../../core/styles.dart';
 import '../../core/colors.dart';
 import '../widgets/product_tile_card.dart';
 import '../../core/assets.dart';
+import '../controllers/category_detail_controller.dart';
+import '../widgets/default_appbar.dart';
+import '../widgets/btn_rounded.dart';
 
 class CategoryDetailPage extends StatelessWidget {
   final CategoryDetailController controller = Get.find();
@@ -25,14 +26,7 @@ class CategoryDetailPage extends StatelessWidget {
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
                   child: Column(children: <Widget>[
                     curtainCategory(context),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
-                        child: Column(
-                          children: <Widget>[
-                            sectionFiltered(context),
-                            AppStyles.vSpaceSmall,
-                          ],
-                        )),
+                    sectionLabel(context),
                     listProduct(context)
                   ])));
         })));
@@ -76,35 +70,41 @@ class CategoryDetailPage extends StatelessWidget {
     );
   }
 
-  Widget sectionFiltered(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Produk Terkait', style: AppStyles.labelSection),
-          BtnCircle(
-              widget: Icon(
-                Icons.grid_on,
-                color: Colors.white,
-              ),
-              bgColor: AppColors.lightpurple,
-              size: 35)
-        ]);
+  Widget sectionLabel(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('Produk Terkait', style: AppStyles.labelSection),
+              BtnRounded(
+                widget: AppSvg.gridView,
+                bgColor: AppColors.lightpurple,
+                splashColor: AppColors.purplev1,
+                onTap: () {},
+              )
+            ]));
   }
 
   Widget listProduct(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
         itemCount: 10,
         shrinkWrap: true,
+        separatorBuilder: (BuildContext context, int index) =>
+            AppStyles.vSpaceSmall,
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return ProductTileCard(
-              productName: 'Laptop1',
+              productName: 'Laptop Asus Aspire Pro ${index + 1}',
               productPrice: 'Rp.5000.000',
               productImage: Image.asset(
                 Assets.dummLaptop,
+                fit: BoxFit.cover,
               ),
               onTapCard: () {},
-              onTapBtn: () {});
+              onTapBtn: () {},
+              controller: controller);
         });
   }
 }

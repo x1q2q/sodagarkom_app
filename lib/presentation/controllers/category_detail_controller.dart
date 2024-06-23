@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import '../../domain/repositories/category_detail_repository.dart';
+import '../../domain/repositories/category_repository.dart';
 import '../../domain/models/category.dart';
 import '../../domain/models/product.dart';
 
 class CategoryDetailController extends GetxController {
-  final CategoryDetailRepository _categoryDetailRepository;
+  final CategoryRepository _categoryRepository;
 
-  CategoryDetailController(this._categoryDetailRepository);
+  CategoryDetailController(this._categoryRepository);
 
   var dumpCategory = Category(
           id: 1,
@@ -30,6 +30,7 @@ class CategoryDetailController extends GetxController {
         price: 25000000,
         description: 'still in description')
   ].obs;
+
   @override
   void onInit() {
     super.onInit();

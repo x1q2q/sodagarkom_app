@@ -28,7 +28,6 @@ class ProductCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
             elevation: 0.1,
             child: InkWell(
-                splashColor: AppColors.grayv1,
                 onTap: onTapCard,
                 borderRadius: BorderRadius.circular(18),
                 child: Container(
@@ -39,7 +38,9 @@ class ProductCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
+                              height: 120,
                               width: double.infinity,
+                              clipBehavior: Clip.antiAlias,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(18)),

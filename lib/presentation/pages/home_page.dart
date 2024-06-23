@@ -27,21 +27,19 @@ class HomePage extends StatelessWidget {
                   child: Column(children: <Widget>[
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
-                      height: 570.0,
+                      height: 165.0,
                       alignment: Alignment.center,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           appHeader(context),
                           appSearchBar(context),
-                          heroCategory(context),
-                          sectionCategory(context),
                         ],
                       ),
                     ),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
-                        child: gridProducts(context))
+                    heroCategory(context),
+                    sectionCategory(context),
+                    gridProducts(context)
                   ])));
         })));
   }
@@ -113,6 +111,7 @@ class HomePage extends StatelessWidget {
     return Container(
         height: 204,
         width: double.infinity,
+        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), color: AppColors.purplev1),
@@ -152,6 +151,7 @@ class HomePage extends StatelessWidget {
     return Container(
         width: double.infinity,
         height: 90,
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -172,15 +172,13 @@ class HomePage extends StatelessWidget {
             crossAxisSpacing: 10),
         itemCount: 11,
         shrinkWrap: true,
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext ctx, index) {
           return ProductCard(
               productName: 'Asus Aspire Pro',
               productPrice: 'Rp.25.000.000',
-              productImage: Image.asset(
-                Assets.dummLaptop,
-                height: 120,
-              ),
+              productImage: Image.asset(Assets.dummLaptop, fit: BoxFit.cover),
               onTapCard: () {},
               onTapBtn: () {});
         });

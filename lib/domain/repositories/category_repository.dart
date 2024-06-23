@@ -1,10 +1,10 @@
 import '../../data/network.dart';
 import '../models/category.dart';
 
-class CategoryDetailRepository {
+class CategoryRepository {
   final NetworkService _networkService;
 
-  CategoryDetailRepository(this._networkService);
+  CategoryRepository(this._networkService);
 
   Future<Category> getCategoryByID() async {
     final response = await _networkService.fetchData('category/8');

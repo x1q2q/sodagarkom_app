@@ -3,6 +3,7 @@ import '../widgets/app_tab_widgets.dart';
 import '../bindings/tabs_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/category_detail_binding.dart';
+import '../bindings/products_binding.dart';
 import '../pages/product_detail_page.dart';
 import '../pages/category_detail_page.dart';
 import '../pages/home_page.dart';
@@ -26,7 +27,8 @@ class AppRoutes {
         name: categoryDetail,
         page: () => CategoryDetailPage(),
         binding: CategoryDetailBinding()),
-    GetPage(name: product, page: () => ProductsPage()),
+    GetPage(
+        name: product, page: () => ProductsPage(), binding: ProductsBinding()),
     GetPage(name: transaction, page: () => TransactionsPage()),
     GetPage(name: profile, page: () => ProfilePage()),
     GetPage(name: productDetail, page: () => ProductDetailPage()),

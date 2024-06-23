@@ -63,18 +63,25 @@ class AppStyles {
       fontFamily: 'PlusJakarta',
       fontWeight: FontWeight.w700,
       color: Colors.white,
-      fontSize: 16);
+      fontSize: 18);
 
   static const TextStyle productNameTile = TextStyle(
       fontFamily: 'PlusJakarta',
       fontWeight: FontWeight.w600,
       color: AppColors.blackv1,
-      fontSize: 17);
+      fontSize: 16);
   static const TextStyle productPriceTile = TextStyle(
       fontFamily: 'PlusJakarta',
       fontWeight: FontWeight.w800,
       color: AppColors.blackv2,
-      fontSize: 18);
+      fontSize: 17);
+
+  static const TextStyle txtDropdown = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w600,
+      color: AppColors.blackv2,
+      fontSize: 14);
+
   static const Widget vSpaceXSmall = SizedBox(height: 5.0);
   static const Widget vSpaceSmall = SizedBox(height: 15.0);
   static const Widget vSpaceMedium = SizedBox(height: 35.0);

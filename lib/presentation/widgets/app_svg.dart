@@ -22,4 +22,6 @@ class AppSvg {
   static Widget cart = SvgPicture.asset(Assets.iconCart);
   static Widget search = SvgPicture.asset(Assets.iconSearch);
   static Widget cartAdd = SvgPicture.asset(Assets.iconCartAdd);
+  static Widget gridView = SvgPicture.asset(Assets.iconGridView);
+  static Widget listView = SvgPicture.asset(Assets.iconListView);
 }

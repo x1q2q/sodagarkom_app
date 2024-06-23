@@ -25,4 +25,6 @@ class Assets {
   static const String iconCart = 'assets/svg/cart.svg';
   static const String iconSearch = 'assets/svg/search.svg';
   static const String iconCartAdd = 'assets/svg/cart-add.svg';
+  static const String iconGridView = 'assets/svg/grid-view.svg';
+  static const String iconListView = 'assets/svg/list-view.svg';
 }
