@@ -134,8 +134,12 @@ class ProductsPage extends StatelessWidget {
           return ProductCard(
               productName: 'Asus Aspire Pro',
               productPrice: 'Rp.25.000.000',
-              productImage: Image.asset(Assets.dummLaptop, fit: BoxFit.cover),
-              onTapCard: () {},
+              productImage: Image.asset(Assets.dummLaptop2, fit: BoxFit.cover),
+              onTapCard: () {
+                String productId = '1';
+                Get.toNamed(
+                    '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+              },
               onTapBtn: () {});
         });
   }
@@ -152,11 +156,12 @@ class ProductsPage extends StatelessWidget {
           return ProductTileCard(
               productName: 'Laptop Asus Aspire Pro ${index + 1}',
               productPrice: 'Rp.5000.000',
-              productImage: Image.asset(
-                Assets.dummLaptop,
-                fit: BoxFit.cover,
-              ),
-              onTapCard: () {},
+              productImage: Image.asset(Assets.dummLaptop2, fit: BoxFit.cover),
+              onTapCard: () {
+                String productId = '1';
+                Get.toNamed(
+                    '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+              },
               onTapBtn: () {},
               controller: controller);
         });

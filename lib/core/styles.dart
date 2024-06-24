@@ -169,6 +169,12 @@ class AppStyles {
       color: AppColors.blackv1,
       fontSize: 14);
 
+  static const TextStyle txtRedPrice = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w700,
+      color: AppColors.redv2,
+      fontSize: 20);
+
   static const Widget vSpaceXSmall = SizedBox(height: 5.0);
   static const Widget vSpaceSmall = SizedBox(height: 15.0);
   static const Widget vSpaceMedium = SizedBox(height: 35.0);

@@ -4,6 +4,7 @@ class Assets {
   static const String appProfileUser = 'assets/images/profile.png';
   static const String dummCategory = 'assets/images/laptop.png';
   static const String dummLaptop = 'assets/images/acer.jpg';
+  static const String dummLaptop2 = 'assets/images/asus.jpg';
   static const String dummTrfProof = 'assets/images/bukti.jpeg';
   // svg icons
   static const String tabsIconHome = 'assets/svg/tabsicons/home.svg';

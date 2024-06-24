@@ -49,6 +49,9 @@ class AppRoutes {
         name: transactionDetail,
         page: () => TransactionDetailPage(),
         binding: TransactionDetailBinding()),
-    GetPage(name: productDetail, page: () => ProductDetailPage()),
+    GetPage(
+        name: productDetail,
+        page: () => ProductDetailPage(),
+        binding: ProductsBinding()),
   ];
 }
