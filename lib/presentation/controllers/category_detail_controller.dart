@@ -31,6 +31,12 @@ class CategoryDetailController extends GetxController {
         description: 'still in description')
   ].obs;
 
+  var isGridView = false.obs;
+
+  void changeTypeView() {
+    isGridView.value = !isGridView.value;
+  }
+
   @override
   void onInit() {
     super.onInit();

@@ -4,6 +4,7 @@ import 'package:sodagarkom_app/presentation/widgets/app_svg.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
 import '../widgets/product_tile_card.dart';
+import '../widgets/product_card.dart';
 import '../../core/assets.dart';
 import '../controllers/category_detail_controller.dart';
 import '../widgets/default_appbar.dart';
@@ -27,7 +28,9 @@ class CategoryDetailPage extends StatelessWidget {
                   child: Column(children: <Widget>[
                     curtainCategory(context),
                     sectionLabel(context),
-                    listProduct(context)
+                    Obx(() => controller.isGridView.value
+                        ? gridProducts(context)
+                        : listProduct(context))
                   ])));
         })));
   }
@@ -77,12 +80,14 @@ class CategoryDetailPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text('Produk Terkait', style: AppStyles.labelSection),
-              BtnRounded(
-                widget: AppSvg.gridView,
-                bgColor: AppColors.lightpurple,
-                splashColor: AppColors.purplev1,
-                onTap: () {},
-              )
+              Obx(() => BtnRounded(
+                    widget: controller.isGridView.value
+                        ? AppSvg.gridView
+                        : AppSvg.listView,
+                    bgColor: AppColors.lightpurple,
+                    splashColor: AppColors.purplev1,
+                    onTap: controller.changeTypeView,
+                  ))
             ]));
   }
 
@@ -105,6 +110,27 @@ class CategoryDetailPage extends StatelessWidget {
               onTapCard: () {},
               onTapBtn: () {},
               controller: controller);
+        });
+  }
+
+  Widget gridProducts(BuildContext context) {
+    return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 20 / 23,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10),
+        itemCount: 11,
+        shrinkWrap: true,
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext ctx, index) {
+          return ProductCard(
+              productName: 'Asus Aspire Pro',
+              productPrice: 'Rp.25.000.000',
+              productImage: Image.asset(Assets.dummLaptop, fit: BoxFit.cover),
+              onTapCard: () {},
+              onTapBtn: () {});
         });
   }
 }

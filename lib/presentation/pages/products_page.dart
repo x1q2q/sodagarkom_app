@@ -10,6 +10,7 @@ import '../widgets/btn_cart.dart';
 import '../widgets/btn_circle.dart';
 import '../widgets/btn_rounded.dart';
 import '../widgets/product_card.dart';
+import '../widgets/product_tile_card.dart';
 import '../router/app_routes.dart';
 
 class ProductsPage extends StatelessWidget {
@@ -39,7 +40,9 @@ class ProductsPage extends StatelessWidget {
                       ),
                     ),
                     sectionLabel(context),
-                    gridProducts(context)
+                    Obx(() => controller.isGridView.value
+                        ? gridProducts(context)
+                        : listProduct(context))
                   ])));
         })));
   }
@@ -105,12 +108,14 @@ class ProductsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text('Semua Produk', style: AppStyles.labelSection),
-              BtnRounded(
-                widget: AppSvg.listView,
-                bgColor: AppColors.lightpurple,
-                splashColor: AppColors.purplev1,
-                onTap: () {},
-              )
+              Obx(() => BtnRounded(
+                    widget: controller.isGridView.value
+                        ? AppSvg.gridView
+                        : AppSvg.listView,
+                    bgColor: AppColors.lightpurple,
+                    splashColor: AppColors.purplev1,
+                    onTap: controller.changeTypeView,
+                  ))
             ]));
   }
 
@@ -132,6 +137,28 @@ class ProductsPage extends StatelessWidget {
               productImage: Image.asset(Assets.dummLaptop, fit: BoxFit.cover),
               onTapCard: () {},
               onTapBtn: () {});
+        });
+  }
+
+  Widget listProduct(BuildContext context) {
+    return ListView.separated(
+        itemCount: 10,
+        shrinkWrap: true,
+        separatorBuilder: (BuildContext context, int index) =>
+            AppStyles.vSpaceSmall,
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return ProductTileCard(
+              productName: 'Laptop Asus Aspire Pro ${index + 1}',
+              productPrice: 'Rp.5000.000',
+              productImage: Image.asset(
+                Assets.dummLaptop,
+                fit: BoxFit.cover,
+              ),
+              onTapCard: () {},
+              onTapBtn: () {},
+              controller: controller);
         });
   }
 }

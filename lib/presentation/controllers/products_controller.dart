@@ -13,6 +13,12 @@ class ProductsController extends GetxController {
     // fetchProducts();
   }
 
+  var isGridView = true.obs;
+
+  void changeTypeView() {
+    isGridView.value = !isGridView.value;
+  }
+
   var product = Product(
           id: 0,
           name: 'loading...',
