@@ -4,7 +4,7 @@ import '../../core/colors.dart';
 import 'btn_circle.dart';
 import 'app_svg.dart';
 
-enum MenuPopup { itemOne, itemTwo }
+enum MenuPopup { firstItem, secondItem }
 
 class ProductTileCard extends StatelessWidget {
   final String productName;
@@ -83,7 +83,7 @@ class ProductTileCard extends StatelessWidget {
                                 size: 40,
                               ),
                               onSelected: (MenuPopup item) {
-                                if (item.name == 'itemOne') {
+                                if (item.name == 'firstItem') {
                                   print('detail');
                                 } else {
                                   print('+keranjang');
@@ -92,12 +92,12 @@ class ProductTileCard extends StatelessWidget {
                               itemBuilder: (BuildContext context) =>
                                   <PopupMenuEntry<MenuPopup>>[
                                     const PopupMenuItem<MenuPopup>(
-                                      value: MenuPopup.itemOne,
+                                      value: MenuPopup.firstItem,
                                       child: Text('Detail Produk',
                                           style: AppStyles.txtDropdown),
                                     ),
                                     const PopupMenuItem<MenuPopup>(
-                                      value: MenuPopup.itemTwo,
+                                      value: MenuPopup.secondItem,
                                       child: Text('+ Keranjang',
                                           style: AppStyles.txtDropdown),
                                     ),

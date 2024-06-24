@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../presentation/bindings/home_binding.dart';
 import '../../presentation/bindings/products_binding.dart';
+import '../../presentation/bindings/transactions_binding.dart';
+import '../../presentation/bindings/user_binding.dart';
 import '../pages/home_page.dart';
 import '../pages/products_page.dart';
 import '../pages/transactions_page.dart';
@@ -41,9 +43,15 @@ class AppTabController extends GetxController {
             page: () => ProductsPage(),
             binding: ProductsBinding());
       case '/transactions':
-        return GetPageRoute(settings: settings, page: () => TransactionsPage());
+        return GetPageRoute(
+            settings: settings,
+            page: () => TransactionsPage(),
+            binding: TransactionsBinding());
       case '/profile':
-        return GetPageRoute(settings: settings, page: () => ProfilePage());
+        return GetPageRoute(
+            settings: settings,
+            page: () => ProfilePage(),
+            binding: UserBinding());
       default:
         return null;
     }

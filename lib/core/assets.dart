@@ -4,6 +4,7 @@ class Assets {
   static const String appProfileUser = 'assets/images/profile.png';
   static const String dummCategory = 'assets/images/laptop.png';
   static const String dummLaptop = 'assets/images/acer.jpg';
+  static const String dummTrfProof = 'assets/images/bukti.jpeg';
   // svg icons
   static const String tabsIconHome = 'assets/svg/tabsicons/home.svg';
   static const String tabsIconHomeActive =
@@ -27,4 +28,7 @@ class Assets {
   static const String iconCartAdd = 'assets/svg/cart-add.svg';
   static const String iconGridView = 'assets/svg/grid-view.svg';
   static const String iconListView = 'assets/svg/list-view.svg';
+  static const String iconGalleryAdd = 'assets/svg/gallery-add.svg';
+  static const String iconCameraAdd = 'assets/svg/camera-add.svg';
+  static const String iconLogout = 'assets/svg/logout.svg';
 }

@@ -17,7 +17,7 @@ class AppTabWidgets extends GetView<AppTabController> {
               onGenerateRoute: controller.onGenerateRoute,
             ),
             bottomNavigationBar: Obx(() => BottomNavigationBar(
-                  elevation: 2.0,
+                  elevation: 3.0,
                   backgroundColor: AppColors.lightred,
                   items: <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
