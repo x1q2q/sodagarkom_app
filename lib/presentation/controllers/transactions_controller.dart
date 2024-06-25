@@ -7,7 +7,8 @@ class TransactionsController extends GetxController {
 
   TransactionsController(this._transactionRepository);
   var transactions =
-      Transaction(id: 0, status: 'selesai', createdAt: '2024-10-05').obs;
+      Transaction(id: 0, userId: 0, status: 'selesai', createdAt: '2024-10-05')
+          .obs;
 
   var idChipSelected = 0.obs;
   var chips = ['Semua', 'Selesai', 'Pending', 'Dibatalkan', 'Perlu Upload'];

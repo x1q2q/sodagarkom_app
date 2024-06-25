@@ -7,14 +7,18 @@ import '../bindings/products_binding.dart';
 import '../bindings/transactions_binding.dart';
 import '../bindings/user_binding.dart';
 import '../bindings/transaction_detail_binding.dart';
+import '../bindings/transaction_confirm_binding.dart';
+import '../bindings/carts_binding.dart';
 import '../pages/product_detail_page.dart';
 import '../pages/category_detail_page.dart';
 import '../pages/home_page.dart';
 import '../pages/products_page.dart';
 import '../pages/transactions_page.dart';
 import '../pages/transaction_detail_page.dart';
+import '../pages/transaction_confirm_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/edit_profile_page.dart';
+import '../pages/carts_page.dart';
 
 class AppRoutes {
   static const String appTab = '/app-tab';
@@ -26,6 +30,8 @@ class AppRoutes {
   static const String productDetail = '/product-detail/:id';
   static const String editProfile = '/edit-profile';
   static const String transactionDetail = '/transaction-detail/:id';
+  static const String carts = '/carts';
+  static const String transactionConfirm = '/transaction-confirm';
 
   static final routes = [
     GetPage(name: appTab, page: () => AppTabWidgets(), binding: TabsBinding()),
@@ -53,5 +59,10 @@ class AppRoutes {
         name: productDetail,
         page: () => ProductDetailPage(),
         binding: ProductsBinding()),
+    GetPage(name: carts, page: () => CartsPage(), binding: CartsBinding()),
+    GetPage(
+        name: transactionConfirm,
+        page: () => TransactionConfirmPage(),
+        binding: TransactionConfirmBinding()),
   ];
 }

@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:sodagarkom_app/core/styles.dart';
+import '../../core/styles.dart';
 import '../../core/colors.dart';
 import '../../core/assets.dart';
 import '../widgets/default_appbar.dart';
-import '../widgets/span_status.dart';
+import '../widgets/default_bottombar.dart';
 import '../controllers/products_controller.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -70,25 +68,20 @@ class ProductDetailPage extends StatelessWidget {
   }
 
   Widget bottomAppBar() {
-    return ClipRRect(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-        child: BottomAppBar(
-            shape: CircularNotchedRectangle(),
-            color: AppColors.lightred,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                    child: Text('Rp.12.000.000',
-                        style: AppStyles.txtRedPrice,
-                        overflow: TextOverflow.ellipsis)),
-                ElevatedButton(
-                  child: Text('+ Keranjang', style: AppStyles.btnTxtWhite),
-                  style: AppStyles.btnElevatedRed,
-                  onPressed: () {},
-                )
-              ],
-            )));
+    return DefaultBottombar(
+        widget: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+            child: Text('Rp.12.000.000',
+                style: AppStyles.txtRedPrice, overflow: TextOverflow.ellipsis)),
+        ElevatedButton(
+          child: Text('+ Keranjang', style: AppStyles.btnTxtWhite),
+          style: AppStyles.btnElevatedRed,
+          onPressed: () {},
+        )
+      ],
+    ));
   }
 
   Widget produkContent() {

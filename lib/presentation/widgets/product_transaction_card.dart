@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
-import 'btn_circle.dart';
-import 'app_svg.dart';
 
 enum MenuPopup { firstItem, secondItem }
 

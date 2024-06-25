@@ -90,7 +90,7 @@ class TransactionCard extends StatelessWidget {
                                   child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   Column(
                                       crossAxisAlignment:
@@ -107,13 +107,11 @@ class TransactionCard extends StatelessWidget {
                                           style: AppStyles.trxProductDesc,
                                         ),
                                       ]),
-                                  Padding(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Text(
-                                        'Total Belanja: $totalAmount',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppStyles.trxProductDesc,
-                                      )),
+                                  Text(
+                                    'Total Belanja: $totalAmount',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppStyles.trxProductDesc,
+                                  )
                                 ],
                               )),
                               PopupMenuButton<MenuPopup>(

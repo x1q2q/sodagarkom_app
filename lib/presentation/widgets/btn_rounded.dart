@@ -5,12 +5,14 @@ class BtnRounded extends StatelessWidget {
   final void Function()? onTap;
   final Color bgColor;
   final Color? splashColor;
+  final bool isOutline;
   const BtnRounded(
       {Key? key,
       required this.widget,
       this.onTap,
       required this.bgColor,
-      this.splashColor})
+      this.splashColor,
+      this.isOutline = false})
       : super(key: key);
 
   @override
@@ -20,15 +22,19 @@ class BtnRounded extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Material(
-        color: bgColor,
+        color: !isOutline ? bgColor : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
         child: InkWell(
           splashColor: splashColor,
           onTap: onTap,
           borderRadius: BorderRadius.circular(10),
           child: Ink(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            padding: const EdgeInsets.all(8),
+            decoration: !isOutline
+                ? BoxDecoration(borderRadius: BorderRadius.circular(10))
+                : BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: bgColor, width: 1.5)),
             height: 35,
             width: 35,
             child: widget,

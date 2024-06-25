@@ -32,4 +32,8 @@ class Assets {
   static const String iconGalleryAdd = 'assets/svg/gallery-add.svg';
   static const String iconCameraAdd = 'assets/svg/camera-add.svg';
   static const String iconLogout = 'assets/svg/logout.svg';
+
+  static const String iconPlus = 'assets/svg/plus.svg';
+  static const String iconMinus = 'assets/svg/minus.svg';
+  static const String iconCross = 'assets/svg/cross.svg';
 }

@@ -19,7 +19,7 @@ class Category {
         products: map['products']);
   }
 
-  Map toJson() {
+  Map toMap() {
     return {
       'id': id,
       'name': name,

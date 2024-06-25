@@ -7,7 +7,8 @@ class TransactionDetailController extends GetxController {
 
   TransactionDetailController(this._transactionRepository);
   var transactions =
-      Transaction(id: 0, status: 'selesai', createdAt: '2024-10-05').obs;
+      Transaction(id: 0, userId: 0, status: 'selesai', createdAt: '2024-10-05')
+          .obs;
 
   var isVisiblePaymentProof = false.obs;
 

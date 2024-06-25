@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
-import '../../core/core.dart';
+import '../controllers/carts_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
-import '../widgets/app_svg.dart';
-import '../widgets/btn_cart.dart';
-import '../widgets/btn_circle.dart';
+import '../widgets/app_header.dart';
+import '../widgets/app_searchbar.dart';
 import '../widgets/section_chips.dart';
 import '../widgets/product_card.dart';
 import '../router/app_routes.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.find();
+  final CartsController cartsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +32,8 @@ class HomePage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          appHeader(context),
-                          appSearchBar(context),
+                          AppHeader(controller: cartsController),
+                          AppSearchbar(controller: controller),
                         ],
                       ),
                     ),
@@ -42,60 +42,6 @@ class HomePage extends StatelessWidget {
                     gridProducts(context)
                   ])));
         })));
-  }
-
-  Widget appHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(Core.appName, style: AppStyles.labelAppName),
-        Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: <Widget>[
-            BtnCart(
-                onTap: () {},
-                svg: AppSvg.cart,
-                bgColor: AppColors.lightgray,
-                splashColor: AppColors.grayv1),
-            Positioned(
-                child: BtnCircle(
-                    widget:
-                        Center(child: Text('1', style: AppStyles.cartItems)),
-                    bgColor: AppColors.redv3,
-                    size: 25),
-                top: 0,
-                right: 0)
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget appSearchBar(BuildContext context) {
-    return Material(
-        color: AppColors.lightgray,
-        borderRadius: BorderRadius.circular(20),
-        child: InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-                height: 58,
-                width: double.infinity,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        child: AppSvg.search),
-                    Text(
-                      'Cari produk di sini ...',
-                      style: AppStyles.searchBarField,
-                    )
-                  ],
-                ))));
   }
 
   Widget heroCategory(BuildContext context) {

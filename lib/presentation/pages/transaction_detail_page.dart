@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/transaction_detail_controller.dart';
 import '../../core/assets.dart';
 import '../widgets/default_appbar.dart';
+import '../widgets/row_label.dart';
 import '../widgets/span_status.dart';
 import '../widgets/product_transaction_card.dart';
 
@@ -23,14 +24,7 @@ class TransactionDetailPage extends StatelessWidget {
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
                   child: Column(children: <Widget>[
-                    Container(
-                      color: Colors.white,
-                      margin: EdgeInsets.only(bottom: 18.0),
-                      padding: EdgeInsets.fromLTRB(20, 30, 20, 15),
-                      height: 140.0,
-                      alignment: Alignment.center,
-                      child: headerStatus(),
-                    ),
+                    boxWhite(headerStatus()),
                     boxWhite(listProduct()),
                     boxWhite(transferProof()),
                     boxWhite(totalPayment(), withNoPadding: true)
@@ -50,16 +44,16 @@ class TransactionDetailPage extends StatelessWidget {
         child: widget);
   }
 
-  Widget rowLabelKey(String key, String val, TextStyle fieldKeyStyle,
-      {TextStyle? fieldValStyle}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(key, style: fieldKeyStyle),
-        Text(val, style: fieldValStyle ?? fieldKeyStyle)
-      ],
-    );
-  }
+  // Widget rowLabelKey(String key, String val, TextStyle fieldKeyStyle,
+  //     {TextStyle? fieldValStyle}) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: <Widget>[
+  //       Text(key, style: fieldKeyStyle),
+  //       Text(val, style: fieldValStyle ?? fieldKeyStyle)
+  //     ],
+  //   );
+  // }
 
   Widget headerStatus() {
     return Column(
@@ -69,13 +63,17 @@ class TransactionDetailPage extends StatelessWidget {
         AppStyles.vSpaceXSmall,
         Padding(
             padding: EdgeInsets.symmetric(vertical: 5),
-            child: rowLabelKey(
-                'Kode Transaksi', '#TRX-01-20240512', AppStyles.fieldLabelVal,
+            child: RowLabel(
+                field: 'Kode Transaksi',
+                value: '#TRX-01-20240512',
+                fieldKeyStyle: AppStyles.fieldLabelVal,
                 fieldValStyle: AppStyles.fieldLabelKey)),
         Padding(
             padding: EdgeInsets.symmetric(vertical: 5),
-            child: rowLabelKey('Tangal Pembelian', '10 Juni 2024, 12:16',
-                AppStyles.fieldLabelVal)),
+            child: RowLabel(
+              field: 'Tangal Pembelian',
+              value: '10 Juni 2024, 12:16',
+              fieldKeyStyle: AppStyles.fieldLabelVal)),
       ],
     );
   }
@@ -148,22 +146,30 @@ class TransactionDetailPage extends StatelessWidget {
     return Column(children: <Widget>[
       Padding(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
-          child: rowLabelKey(
-              'Metode Pembayaran', 'Transfer Manual', AppStyles.fieldLabelKey)),
+          child: RowLabel(
+              field: 'Metode Pembayaran',
+              value: 'Transfer Manual',
+              fieldKeyStyle: AppStyles.fieldLabelKey)),
       Divider(color: AppColors.lightgray),
       Padding(
           padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-          child: rowLabelKey(
-              'Biaya Ongkos Kirim', 'Rp.35.000', AppStyles.fieldLabelVal)),
+          child: RowLabel(
+              field: 'Biaya Ongkos Kirim',
+              value: 'Rp.35.000',
+              fieldKeyStyle: AppStyles.fieldLabelVal)),
       Padding(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 5),
-          child: rowLabelKey('Total Harga(2 Barang)', 'Rp.51.000.000',
-              AppStyles.fieldLabelVal)),
+          child: RowLabel(
+              field: 'Total Harga(2 Barang)',
+              value: 'Rp.51.000.000',
+              fieldKeyStyle: AppStyles.fieldLabelVal)),
       Divider(color: AppColors.lightgray),
       Padding(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-          child: rowLabelKey(
-              'Total Pembayaran', 'Rp. 51.053.000', AppStyles.fieldLabelKey)),
+          child: RowLabel(
+              field: 'Total Pembayaran',
+              value: 'Rp. 51.053.000',
+              fieldKeyStyle: AppStyles.fieldLabelKey)),
     ]);
   }
 }

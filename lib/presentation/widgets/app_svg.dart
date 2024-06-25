@@ -27,4 +27,8 @@ class AppSvg {
   static Widget galleryAdd = SvgPicture.asset(Assets.iconGalleryAdd);
   static Widget cameraAdd = SvgPicture.asset(Assets.iconCameraAdd);
   static Widget logout = SvgPicture.asset(Assets.iconLogout);
+
+  static Widget addCart = SvgPicture.asset(Assets.iconPlus);
+  static Widget decCart = SvgPicture.asset(Assets.iconMinus);
+  static Widget cross = SvgPicture.asset(Assets.iconCross);
 }
