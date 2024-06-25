@@ -28,10 +28,6 @@ class HomeController extends GetxController {
     idChipSelected.value = selected ? index : 0;
   }
 
-  void goToSearch() {
-    print('go to search');
-  }
-
   void fetchProduct() async {
     // try {
     //   Product fetchedProduct = await _productRepository.getProductByID();

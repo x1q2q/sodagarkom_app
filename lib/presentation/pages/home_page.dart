@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           AppHeader(controller: cartsController),
-                          AppSearchbar(controller: controller),
+                          const AppSearchbar(),
                         ],
                       ),
                     ),

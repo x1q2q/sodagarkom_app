@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../core/colors.dart';
 import '../../core/styles.dart';
+import '../router/app_routes.dart';
 import 'app_svg.dart';
 
 class AppSearchbar extends StatelessWidget {
-  final controller;
-  const AppSearchbar({Key? key, required this.controller}) : super(key: key);
+  const AppSearchbar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,9 @@ class AppSearchbar extends StatelessWidget {
         color: AppColors.lightgray,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
-            onTap: controller.goToSearch,
+            onTap: () {
+              Get.toNamed(AppRoutes.search);
+            },
             borderRadius: BorderRadius.circular(20),
             child: Container(
                 height: 58,

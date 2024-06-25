@@ -39,8 +39,4 @@ Aspire All in One C22-1700
 • Inch, Res, Ratio, Panel :
 • Graphics : Intel® Iris® Xe Graphics ''')
       .obs;
-
-  void goToSearch() {
-    print('go to search from products page');
-  }
 }

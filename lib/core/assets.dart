@@ -35,5 +35,8 @@ class Assets {
 
   static const String iconPlus = 'assets/svg/plus.svg';
   static const String iconMinus = 'assets/svg/minus.svg';
-  static const String iconCross = 'assets/svg/cross.svg';
+
+  static const String crossWhite = 'assets/svg/cross-white.svg';
+  static const String crossBlack = 'assets/svg/cross-black.svg';
+  static const String iconHistory = 'assets/svg/time-history.svg';
 }

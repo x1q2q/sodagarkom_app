@@ -30,5 +30,8 @@ class AppSvg {
 
   static Widget addCart = SvgPicture.asset(Assets.iconPlus);
   static Widget decCart = SvgPicture.asset(Assets.iconMinus);
-  static Widget cross = SvgPicture.asset(Assets.iconCross);
+
+  static Widget cross = SvgPicture.asset(Assets.crossWhite);
+  static Widget crossHistory = SvgPicture.asset(Assets.crossBlack);
+  static Widget timeHistory = SvgPicture.asset(Assets.iconHistory);
 }

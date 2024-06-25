@@ -9,6 +9,7 @@ import '../bindings/user_binding.dart';
 import '../bindings/transaction_detail_binding.dart';
 import '../bindings/transaction_confirm_binding.dart';
 import '../bindings/carts_binding.dart';
+import '../bindings/search_binding.dart';
 import '../pages/product_detail_page.dart';
 import '../pages/category_detail_page.dart';
 import '../pages/home_page.dart';
@@ -19,6 +20,7 @@ import '../pages/transaction_confirm_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/edit_profile_page.dart';
 import '../pages/carts_page.dart';
+import '../pages/search_page.dart';
 
 class AppRoutes {
   static const String appTab = '/app-tab';
@@ -32,6 +34,7 @@ class AppRoutes {
   static const String transactionDetail = '/transaction-detail/:id';
   static const String carts = '/carts';
   static const String transactionConfirm = '/transaction-confirm';
+  static const String search = '/search';
 
   static final routes = [
     GetPage(name: appTab, page: () => AppTabWidgets(), binding: TabsBinding()),
@@ -64,5 +67,6 @@ class AppRoutes {
         name: transactionConfirm,
         page: () => TransactionConfirmPage(),
         binding: TransactionConfirmBinding()),
+    GetPage(name: search, page: () => SearchPage(), binding: SearchBinding()),
   ];
 }
