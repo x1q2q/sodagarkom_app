@@ -21,14 +21,16 @@ class CategoryDetailController extends GetxController {
         categoryName: 'Laptop Asus',
         stock: 10,
         price: 25000000,
-        description: 'still in description'),
+        description: 'still in description',
+        imageThumb: 'loading'),
     Product(
         id: 1,
         name: 'Laptop Asus Aspire1',
         categoryName: 'Laptop Asus',
         stock: 10,
         price: 25000000,
-        description: 'still in description')
+        description: 'still in description',
+        imageThumb: 'loading')
   ].obs;
 
   var isGridView = false.obs;

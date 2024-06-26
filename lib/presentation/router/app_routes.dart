@@ -44,7 +44,7 @@ class AppRoutes {
     GetPage(
         name: productDetail,
         page: () => ProductDetailPage(),
-        binding: ProductsBinding()),
+        binding: ProductDetailBinding()),
     GetPage(name: carts, page: () => CartsPage(), binding: CartsBinding()),
     GetPage(
         name: transactionConfirm,

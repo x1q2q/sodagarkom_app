@@ -7,7 +7,7 @@ import '../../core/core.dart';
 class CartsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NetworkService>(() => NetworkService(Core.appBaseURL));
+    Get.lazyPut<NetworkService>(() => NetworkService(Core.pathApi));
     Get.lazyPut<CartRepository>(
         () => CartRepository(Get.find<NetworkService>()));
     Get.lazyPut<CartsController>(

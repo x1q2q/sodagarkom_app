@@ -96,7 +96,9 @@ class EditProfilePage extends StatelessWidget {
           label: AppSvg.save,
           icon: Text('Simpan', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
-          onPressed: () {},
+          onPressed: () {
+            // Get.snackbar('success', 'berhasil menyimpan data');
+          },
         )));
   }
 }

@@ -12,7 +12,8 @@ class MySearchController extends GetxController {
           categoryName: 'loading...',
           stock: 0,
           price: 0,
-          description: 'loading...')
+          description: 'loading...',
+          imageThumb: 'loading')
       .obs;
 
   var onSubmit = false.obs;

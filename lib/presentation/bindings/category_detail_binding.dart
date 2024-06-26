@@ -7,7 +7,7 @@ import '../../core/core.dart';
 class CategoryDetailBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NetworkService>(() => NetworkService(Core.appBaseURL));
+    Get.lazyPut<NetworkService>(() => NetworkService(Core.pathApi));
     Get.lazyPut<CategoryRepository>(
         () => CategoryRepository(Get.find<NetworkService>()));
     Get.lazyPut<CategoryDetailController>(

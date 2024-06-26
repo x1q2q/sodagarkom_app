@@ -7,7 +7,7 @@ import '../../core/core.dart';
 class TransactionConfirmBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NetworkService>(() => NetworkService(Core.appBaseURL));
+    Get.lazyPut<NetworkService>(() => NetworkService(Core.pathApi));
     Get.lazyPut<TransactionRepository>(
         () => TransactionRepository(Get.find<NetworkService>()));
     Get.lazyPut<TransactionConfirmController>(

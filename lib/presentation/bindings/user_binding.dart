@@ -7,7 +7,7 @@ import '../../core/core.dart';
 class UserBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NetworkService>(() => NetworkService(Core.appBaseURL));
+    Get.lazyPut<NetworkService>(() => NetworkService(Core.pathApi));
     Get.lazyPut<UserRepository>(
         () => UserRepository(Get.find<NetworkService>()));
     Get.lazyPut<UsersController>(

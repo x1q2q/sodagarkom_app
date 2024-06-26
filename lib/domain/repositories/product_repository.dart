@@ -6,11 +6,26 @@ class ProductRepository {
 
   ProductRepository(this._networkService);
 
-  Future<Product> getProductByID() async {
-    final response = await _networkService.fetchData('product/8');
+  Future<List<Product>> getProducts() async {
+    final response = await _networkService.fetchData('products');
+    if (response.statusCode == 200) {
+      final Map result = Map.from(response.data);
+      final List<dynamic> jsonResults = result['data'];
+
+      List<Product> products = List.generate(jsonResults.length, (j) {
+        return Product.fromJson(jsonResults[j]);
+      });
+      return products;
+    } else {
+      throw Exception('Failed to load products data');
+    }
+  }
+
+  Future<Product> getProductByID(String id) async {
+    final response = await _networkService.fetchData('product/$id');
     if (response.statusCode == 200) {
       final Map datas = Map.from(response.data);
-      return Product.fromMap(datas['data'][0]);
+      return Product.fromJson(datas['data'][0]);
     } else {
       throw Exception('Failed to load products data');
     }

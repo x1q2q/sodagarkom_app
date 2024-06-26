@@ -9,7 +9,7 @@ import '../../core/core.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NetworkService>(() => NetworkService(Core.appBaseURL));
+    Get.lazyPut<NetworkService>(() => NetworkService(Core.pathApi));
     Get.lazyPut<ProductRepository>(
         () => ProductRepository(Get.find<NetworkService>()));
     Get.lazyPut<HomeController>(

@@ -39,4 +39,7 @@ class AppSvg {
 
   static Widget edit = SvgPicture.asset(Assets.iconEdit);
   static Widget save = SvgPicture.asset(Assets.iconSave);
+  static Widget imgNotFound = SvgPicture.string(Assets.strNotFoundImage);
+  static Widget imgNotFoundPotrait =
+      SvgPicture.string(Assets.strNotFoundImagePotrait);
 }
