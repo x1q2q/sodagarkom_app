@@ -5,7 +5,7 @@ import '../../core/colors.dart';
 import '../../core/styles.dart';
 import 'app_svg.dart';
 
-class AppTabWidgets extends GetView<AppTabController> {
+class AppTab extends GetView<AppTabController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

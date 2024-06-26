@@ -1,0 +1,10 @@
+export 'carts_binding.dart';
+export 'category_detail_binding.dart';
+export 'home_binding.dart';
+export 'products_binding.dart';
+export 'search_binding.dart';
+export 'tabs_binding.dart';
+export 'transaction_confirm_binding.dart';
+export 'transaction_detail_binding.dart';
+export 'transactions_binding.dart';
+export 'user_binding.dart';

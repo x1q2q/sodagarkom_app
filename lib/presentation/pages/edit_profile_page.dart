@@ -5,9 +5,7 @@ import '../controllers/users_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
 import '../router/app_routes.dart';
-import '../widgets/app_input_field.dart';
-import '../widgets/app_svg.dart';
-import '../widgets/default_appbar.dart';
+import '../widgets/widgets.dart';
 
 class EditProfilePage extends StatelessWidget {
   final UsersController controller = Get.find();

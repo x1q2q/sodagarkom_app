@@ -4,12 +4,7 @@ import 'package:get/get.dart';
 import '../controllers/my_search_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
-import '../widgets/app_svg.dart';
-import '../widgets/btn_rounded.dart';
-import '../widgets/btn_circle.dart';
-import '../widgets/product_card.dart';
-import '../widgets/product_tile_card.dart';
-import '../widgets/default_appbar.dart';
+import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 
 class SearchPage extends StatelessWidget {
@@ -27,17 +22,16 @@ class SearchPage extends StatelessWidget {
           title: TextField(
             autofocus: true,
             controller: txtController,
-            style: AppStyles.trxProductName,
             cursorColor: AppColors.blackv1,
             decoration: InputDecoration(
                 isDense: true,
-                labelStyle: AppStyles.fieldInput,
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 border: null,
                 fillColor: Colors.white,
                 filled: true,
                 hintText: 'Cari produk di sini ...',
+                hintStyle: AppStyles.fieldInput,
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(18),
                     borderSide:

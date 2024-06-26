@@ -5,10 +5,7 @@ import '../controllers/home_controller.dart';
 import '../controllers/carts_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
-import '../widgets/app_header.dart';
-import '../widgets/app_searchbar.dart';
-import '../widgets/section_chips.dart';
-import '../widgets/product_card.dart';
+import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 
 class HomePage extends StatelessWidget {

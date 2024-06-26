@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sodagarkom_app/presentation/widgets/app_svg.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
-import '../widgets/product_tile_card.dart';
-import '../widgets/product_card.dart';
 import '../../core/assets.dart';
 import '../controllers/category_detail_controller.dart';
-import '../widgets/default_appbar.dart';
-import '../widgets/btn_rounded.dart';
+import '../widgets/widgets.dart';
 
 class CategoryDetailPage extends StatelessWidget {
   final CategoryDetailController controller = Get.find();

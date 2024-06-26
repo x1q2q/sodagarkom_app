@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
 import '../../core/assets.dart';
-import '../widgets/default_appbar.dart';
-import '../widgets/default_bottombar.dart';
+import '../widgets/widgets.dart';
 import '../controllers/products_controller.dart';
 
 class ProductDetailPage extends StatelessWidget {

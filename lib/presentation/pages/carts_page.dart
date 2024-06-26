@@ -3,10 +3,7 @@ import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/carts_controller.dart';
 import '../../core/assets.dart';
-import '../widgets/default_appbar.dart';
-import '../widgets/default_bottombar.dart';
-import '../widgets/product_cart_card.dart';
-import '../widgets/app_svg.dart';
+import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 
 class CartsPage extends StatelessWidget {

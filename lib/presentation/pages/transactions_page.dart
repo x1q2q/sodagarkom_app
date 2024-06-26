@@ -4,12 +4,7 @@ import '../../core/colors.dart';
 import 'package:get/get.dart';
 import '../controllers/transactions_controller.dart';
 import '../../core/assets.dart';
-import '../widgets/section_chips.dart';
-import '../widgets/transaction_card.dart';
-import '../widgets/app_svg.dart';
-import '../widgets/btn_circle.dart';
-import '../widgets/app_dialog_upload.dart';
-import '../widgets/app_dialog_cancel.dart';
+import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 
 class TransactionsPage extends StatelessWidget {

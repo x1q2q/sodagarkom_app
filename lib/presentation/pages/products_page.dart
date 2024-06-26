@@ -5,12 +5,7 @@ import '../controllers/products_controller.dart';
 import '../controllers/carts_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
-import '../widgets/app_svg.dart';
-import '../widgets/btn_rounded.dart';
-import '../widgets/product_card.dart';
-import '../widgets/app_header.dart';
-import '../widgets/app_searchbar.dart';
-import '../widgets/product_tile_card.dart';
+import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 
 class ProductsPage extends StatelessWidget {

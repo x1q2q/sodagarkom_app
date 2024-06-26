@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
-import '../widgets/default_appbar.dart';
-import '../widgets/row_label.dart';
-import '../widgets/default_bottombar.dart';
-import '../widgets/app_svg.dart';
+import '../widgets/widgets.dart';
 import '../controllers/transaction_confirm_controller.dart';
 
 class TransactionConfirmPage extends StatelessWidget {

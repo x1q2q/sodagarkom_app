@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
 
-enum MenuPopup { firstItem, secondItem }
-
 class ProductTransactionCard extends StatelessWidget {
   final String productName;
   final String productPrice;

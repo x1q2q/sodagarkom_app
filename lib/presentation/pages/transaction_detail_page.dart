@@ -4,10 +4,7 @@ import '../../core/colors.dart';
 import 'package:get/get.dart';
 import '../controllers/transaction_detail_controller.dart';
 import '../../core/assets.dart';
-import '../widgets/default_appbar.dart';
-import '../widgets/row_label.dart';
-import '../widgets/span_status.dart';
-import '../widgets/product_transaction_card.dart';
+import '../widgets/widgets.dart';
 
 class TransactionDetailPage extends StatelessWidget {
   final TransactionDetailController controller = Get.find();
@@ -71,9 +68,9 @@ class TransactionDetailPage extends StatelessWidget {
         Padding(
             padding: EdgeInsets.symmetric(vertical: 5),
             child: RowLabel(
-              field: 'Tangal Pembelian',
-              value: '10 Juni 2024, 12:16',
-              fieldKeyStyle: AppStyles.fieldLabelVal)),
+                field: 'Tangal Pembelian',
+                value: '10 Juni 2024, 12:16',
+                fieldKeyStyle: AppStyles.fieldLabelVal)),
       ],
     );
   }

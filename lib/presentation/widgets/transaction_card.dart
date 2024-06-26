@@ -5,7 +5,7 @@ import '../../core/colors.dart';
 import 'span_status.dart';
 import '../router/app_routes.dart';
 
-enum MenuPopup { firstItem, secondItem, thirdItem }
+enum MenuPopupTransaction { firstItem, secondItem, thirdItem }
 
 class TransactionCard extends StatelessWidget {
   final String trxID;
@@ -114,7 +114,7 @@ class TransactionCard extends StatelessWidget {
                                   )
                                 ],
                               )),
-                              PopupMenuButton<MenuPopup>(
+                              PopupMenuButton<MenuPopupTransaction>(
                                   shape: RoundedRectangleBorder(
                                       side: BorderSide(
                                           color: AppColors.lightgray),
@@ -126,7 +126,7 @@ class TransactionCard extends StatelessWidget {
                                     color: AppColors.blackv2,
                                     size: 40,
                                   ),
-                                  onSelected: (MenuPopup item) {
+                                  onSelected: (MenuPopupTransaction item) {
                                     if (item.name == 'firstItem') {
                                       Get.dialog(dialogUpload!);
                                     } else if (item.name == 'secondItem') {
@@ -138,9 +138,9 @@ class TransactionCard extends StatelessWidget {
                                     }
                                   },
                                   itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry<MenuPopup>>[
-                                        PopupMenuItem<MenuPopup>(
-                                          value: MenuPopup.firstItem,
+                                      <PopupMenuEntry<MenuPopupTransaction>>[
+                                        PopupMenuItem<MenuPopupTransaction>(
+                                          value: MenuPopupTransaction.firstItem,
                                           enabled: dropDownItemUpload(status),
                                           child: Text('Upload Bukti Transfer',
                                               style: dropDownItemUpload(status)
@@ -148,13 +148,14 @@ class TransactionCard extends StatelessWidget {
                                                   : AppStyles
                                                       .txtDropdownDisabled),
                                         ),
-                                        PopupMenuItem<MenuPopup>(
-                                          value: MenuPopup.secondItem,
+                                        PopupMenuItem<MenuPopupTransaction>(
+                                          value:
+                                              MenuPopupTransaction.secondItem,
                                           child: Text('Detail Transaksi',
                                               style: AppStyles.txtDropdown),
                                         ),
-                                        PopupMenuItem<MenuPopup>(
-                                          value: MenuPopup.thirdItem,
+                                        PopupMenuItem<MenuPopupTransaction>(
+                                          value: MenuPopupTransaction.thirdItem,
                                           enabled: dropDownItemCancel(status),
                                           child: Text('Batalkan Transaksi',
                                               style: dropDownItemCancel(status)

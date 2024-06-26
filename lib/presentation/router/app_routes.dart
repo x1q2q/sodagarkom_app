@@ -1,28 +1,7 @@
 import 'package:get/get.dart';
-import '../widgets/app_tab_widgets.dart';
-import '../bindings/tabs_binding.dart';
-import '../bindings/home_binding.dart';
-import '../bindings/category_detail_binding.dart';
-import '../bindings/products_binding.dart';
-import '../bindings/transactions_binding.dart';
-import '../bindings/user_binding.dart';
-import '../bindings/transaction_detail_binding.dart';
-import '../bindings/transaction_confirm_binding.dart';
-import '../bindings/carts_binding.dart';
-import '../bindings/search_binding.dart';
-import '../pages/product_detail_page.dart';
-import '../pages/category_detail_page.dart';
-import '../pages/home_page.dart';
-import '../pages/products_page.dart';
-import '../pages/transactions_page.dart';
-import '../pages/transaction_detail_page.dart';
-import '../pages/transaction_confirm_page.dart';
-import '../pages/profile_page.dart';
-import '../pages/edit_profile_page.dart';
-import '../pages/carts_page.dart';
-import '../pages/search_page.dart';
-import '../pages/login_page.dart';
-import '../pages/registration_page.dart';
+import '../widgets/app_tab.dart';
+import '../bindings/bindings.dart';
+import '../pages/pages.dart';
 
 class AppRoutes {
   static const String appTab = '/app-tab';
@@ -41,7 +20,7 @@ class AppRoutes {
   static const String registration = '/registration';
 
   static final routes = [
-    GetPage(name: appTab, page: () => AppTabWidgets(), binding: TabsBinding()),
+    GetPage(name: appTab, page: () => AppTab(), binding: TabsBinding()),
     GetPage(name: home, page: () => HomePage(), binding: HomeBinding()),
     GetPage(
         name: categoryDetail,
