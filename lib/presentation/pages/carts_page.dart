@@ -6,6 +6,7 @@ import '../../core/assets.dart';
 import '../widgets/default_appbar.dart';
 import '../widgets/default_bottombar.dart';
 import '../widgets/product_cart_card.dart';
+import '../widgets/app_svg.dart';
 import '../router/app_routes.dart';
 
 class CartsPage extends StatelessWidget {
@@ -31,19 +32,24 @@ class CartsPage extends StatelessWidget {
     return DefaultBottombar(
         widget: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        ElevatedButton(
-          child: Text('Beli Lagi', style: AppStyles.btnTxtWhite),
-          style: AppStyles.btnElevatedPurple,
+        Expanded(
+            child: ElevatedButton(
+          child: Text('Belanja Lagi', style: AppStyles.btnTxtPurple),
+          style: AppStyles.btnOutinePurple,
           onPressed: () {},
-        ),
-        ElevatedButton(
-          child: Text('Checkout', style: AppStyles.btnTxtWhite),
+        )),
+        SizedBox(width: 10),
+        Expanded(
+            child: ElevatedButton.icon(
+          label: AppSvg.checkout,
+          icon: Text('Checkout', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
           onPressed: () {
             Get.toNamed(AppRoutes.transactionConfirm);
           },
-        )
+        ))
       ],
     ));
   }

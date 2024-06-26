@@ -31,7 +31,7 @@ class SearchPage extends StatelessWidget {
             cursorColor: AppColors.blackv1,
             decoration: InputDecoration(
                 isDense: true,
-                labelStyle: AppStyles.fieldLabelVal,
+                labelStyle: AppStyles.fieldInput,
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 border: null,

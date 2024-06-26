@@ -39,4 +39,9 @@ class Assets {
   static const String crossWhite = 'assets/svg/cross-white.svg';
   static const String crossBlack = 'assets/svg/cross-black.svg';
   static const String iconHistory = 'assets/svg/time-history.svg';
+
+  static const String iconCheckout = 'assets/svg/checkout-cart.svg';
+  static const String iconTrxSubmit = 'assets/svg/transaction-submit.svg';
+  static const String iconEdit = 'assets/svg/edit-profil.svg';
+  static const String iconSave = 'assets/svg/save.svg';
 }

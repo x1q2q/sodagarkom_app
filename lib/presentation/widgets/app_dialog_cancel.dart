@@ -67,8 +67,8 @@ class AppDialogCancel extends StatelessWidget {
                           children: <Widget>[
                             SizedBox(width: 80),
                             OutlinedButton(
-                              child: Text(txtConfirm,
-                                  style: AppStyles.btnTxtOutlineCancel),
+                              child:
+                                  Text(txtConfirm, style: AppStyles.btnTxtPink),
                               style: AppStyles.btnOutlineCancel,
                               onPressed: onConfirm,
                             ),

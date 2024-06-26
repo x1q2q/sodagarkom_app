@@ -122,15 +122,23 @@ class AppStyles {
 
   static ButtonStyle btnOutlineCancel = OutlinedButton.styleFrom(
     side: BorderSide(width: 1, color: AppColors.redv2),
-    minimumSize: Size(90, 40),
+    minimumSize: Size(70, 40),
     backgroundColor: AppColors.lightred,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
   );
-
+  static ButtonStyle btnSmElevatedPurple = ElevatedButton.styleFrom(
+    minimumSize: Size(70, 40),
+    foregroundColor: Colors.white,
+    backgroundColor: AppColors.purplev1,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+  );
   static ButtonStyle btnElevatedPurple = ElevatedButton.styleFrom(
-    minimumSize: Size(90, 40),
+    minimumSize: Size(80, 50),
+    foregroundColor: Colors.white,
     backgroundColor: AppColors.purplev1,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -138,22 +146,45 @@ class AppStyles {
   );
 
   static ButtonStyle btnElevatedRed = ElevatedButton.styleFrom(
-    minimumSize: Size(90, 40),
-    backgroundColor: AppColors.redv3,
+    minimumSize: Size(80, 50),
+    foregroundColor: Colors.white,
+    backgroundColor: AppColors.redv2,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
   );
 
+  static ButtonStyle btnOutinePurple = OutlinedButton.styleFrom(
+    side: BorderSide(width: 1, color: AppColors.purplev1),
+    minimumSize: Size(80, 50),
+    foregroundColor: AppColors.purplev1,
+    backgroundColor: AppColors.lightred,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+  );
+
+  static const TextStyle btnTxtPurple = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w600,
+      color: AppColors.purplev1,
+      fontSize: 16);
+
   static const TextStyle btnTxtWhite = TextStyle(
       fontFamily: 'PlusJakarta',
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+      fontSize: 16);
+
+  static const TextStyle btnSmTxtWhite = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w600,
       color: Colors.white,
       fontSize: 13);
 
-  static const TextStyle btnTxtOutlineCancel = TextStyle(
+  static const TextStyle btnTxtPink = TextStyle(
       fontFamily: 'PlusJakarta',
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
       color: AppColors.redv2,
       fontSize: 13);
 
@@ -174,6 +205,30 @@ class AppStyles {
       fontWeight: FontWeight.w700,
       color: AppColors.redv2,
       fontSize: 20);
+
+  static const TextStyle fieldInput = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w500,
+      color: AppColors.grayv1,
+      fontSize: 14);
+
+  static const TextStyle txtWTitle = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+      fontSize: 20);
+  static const TextStyle txtWDesc = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w300,
+      color: Colors.white,
+      fontSize: 16);
+
+  static const TextStyle btnAuth = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+      letterSpacing: 0.6,
+      fontSize: 17);
 
   static const Widget vSpaceXSmall = SizedBox(height: 5.0);
   static const Widget vSpaceSmall = SizedBox(height: 15.0);

@@ -34,4 +34,9 @@ class AppSvg {
   static Widget cross = SvgPicture.asset(Assets.crossWhite);
   static Widget crossHistory = SvgPicture.asset(Assets.crossBlack);
   static Widget timeHistory = SvgPicture.asset(Assets.iconHistory);
+  static Widget checkout = SvgPicture.asset(Assets.iconCheckout);
+  static Widget trxSubmit = SvgPicture.asset(Assets.iconTrxSubmit);
+
+  static Widget edit = SvgPicture.asset(Assets.iconEdit);
+  static Widget save = SvgPicture.asset(Assets.iconSave);
 }

@@ -21,6 +21,8 @@ import '../pages/profile_page.dart';
 import '../pages/edit_profile_page.dart';
 import '../pages/carts_page.dart';
 import '../pages/search_page.dart';
+import '../pages/login_page.dart';
+import '../pages/registration_page.dart';
 
 class AppRoutes {
   static const String appTab = '/app-tab';
@@ -35,6 +37,8 @@ class AppRoutes {
   static const String carts = '/carts';
   static const String transactionConfirm = '/transaction-confirm';
   static const String search = '/search';
+  static const String login = '/login';
+  static const String registration = '/registration';
 
   static final routes = [
     GetPage(name: appTab, page: () => AppTabWidgets(), binding: TabsBinding()),
@@ -68,5 +72,7 @@ class AppRoutes {
         page: () => TransactionConfirmPage(),
         binding: TransactionConfirmBinding()),
     GetPage(name: search, page: () => SearchPage(), binding: SearchBinding()),
+    GetPage(name: login, page: () => LoginPage()),
+    GetPage(name: registration, page: () => RegistrationPage()),
   ];
 }

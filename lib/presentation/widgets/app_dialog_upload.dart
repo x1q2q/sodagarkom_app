@@ -64,8 +64,8 @@ class AppDialogUpload extends StatelessWidget {
                             SizedBox(width: 80),
                             ElevatedButton(
                               child: Text(txtConfirm,
-                                  style: AppStyles.btnTxtWhite),
-                              style: AppStyles.btnElevatedPurple,
+                                  style: AppStyles.btnSmTxtWhite),
+                              style: AppStyles.btnSmElevatedPurple,
                               onPressed: onConfirm,
                             ),
                           ],

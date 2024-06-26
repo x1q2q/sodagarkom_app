@@ -5,6 +5,7 @@ import '../../core/colors.dart';
 import '../widgets/default_appbar.dart';
 import '../widgets/row_label.dart';
 import '../widgets/default_bottombar.dart';
+import '../widgets/app_svg.dart';
 import '../controllers/transaction_confirm_controller.dart';
 
 class TransactionConfirmPage extends StatelessWidget {
@@ -32,8 +33,9 @@ class TransactionConfirmPage extends StatelessWidget {
 
   Widget bottomAppBar() {
     return DefaultBottombar(
-        widget: ElevatedButton(
-      child: Text('Submit Transaksi', style: AppStyles.btnTxtWhite),
+        widget: ElevatedButton.icon(
+      icon: Text('Submit Transaksi', style: AppStyles.btnTxtWhite),
+      label: AppSvg.trxSubmit,
       style: AppStyles.btnElevatedRed,
       onPressed: () {},
     ));

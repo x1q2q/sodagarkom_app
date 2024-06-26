@@ -40,8 +40,9 @@ class ProfilePage extends StatelessWidget {
       children: <Widget>[
         Image.asset(Assets.appProfileUser, height: 120),
         Text('@username123123', style: AppStyles.labelSection),
-        ElevatedButton(
-          child: Text('Edit Profil', style: AppStyles.btnTxtWhite),
+        ElevatedButton.icon(
+          icon: Text('Edit Profil', style: AppStyles.btnTxtWhite),
+          label: AppSvg.edit,
           style: AppStyles.btnElevatedRed,
           onPressed: () {
             Get.toNamed(AppRoutes.editProfile);

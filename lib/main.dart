@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
         ),
       ),
       title: Core.appName,
-      initialRoute: AppRoutes.appTab,
+      initialRoute: AppRoutes.login,
       getPages: AppRoutes.routes,
       defaultTransition: Transition.noTransition,
       debugShowCheckedModeBanner: false,

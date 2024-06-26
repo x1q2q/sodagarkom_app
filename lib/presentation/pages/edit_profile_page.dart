@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
@@ -7,6 +5,7 @@ import '../controllers/users_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
 import '../router/app_routes.dart';
+import '../widgets/app_input_field.dart';
 import '../widgets/app_svg.dart';
 import '../widgets/default_appbar.dart';
 
@@ -46,40 +45,27 @@ class EditProfilePage extends StatelessWidget {
     );
   }
 
-  Widget profilFieldCard(String textKey, final controller,
-      {bool isTextArea = false}) {
+  Widget fieldInput(String fieldLabel, TextEditingController txtController,
+      String placeholder,
+      {bool isObscure = false, Icon? icon, int lines = 1}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(bottom: 5),
-            child: Text(textKey, style: AppStyles.fieldLabelKey)),
-        SizedBox(
-          child: TextFormField(
-            maxLines: isTextArea ? 4 : 1,
-            controller: controller,
-            decoration: InputDecoration(
-                isDense: true,
-                labelStyle: AppStyles.fieldLabelVal,
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                fillColor: AppColors.lightgray,
-                filled: true,
-                hintText: 'field is required',
-                hintStyle: TextStyle(
-                    color: AppColors.grayv1, fontWeight: FontWeight.normal),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blackv1),
-                    borderRadius: BorderRadius.circular(8)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.blackv1),
-                    borderRadius: BorderRadius.circular(8))),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            fieldLabel,
+            style: AppStyles.fieldLabelKey,
           ),
-        ),
-        AppStyles.vSpaceSmall
-      ],
-    );
+          AppStyles.vSpaceXSmall,
+          AppInputField(
+            controller: txtController,
+            hintText: placeholder,
+            obscureText: isObscure,
+            icon: icon,
+            bgColor: AppColors.lightgray,
+            lines: lines,
+          ),
+          AppStyles.vSpaceSmall
+        ]);
   }
 
   Widget listFieldUser(BuildContext context) {
@@ -89,12 +75,17 @@ class EditProfilePage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            profilFieldCard('Username', controller.unameCtrlr),
-            profilFieldCard('Email', controller.emailCtrlr),
-            profilFieldCard('Nama Lengkap', controller.fnameCtrlr),
-            profilFieldCard('No. Telepon', controller.notelpCtrlr),
-            profilFieldCard('Alamat', controller.addressCtrlr,
-                isTextArea: true),
+            fieldInput(
+                'Username', controller.unameCtrlr, 'kolom tidak boleh kosong'),
+            fieldInput(
+                'Email', controller.emailCtrlr, 'kolom tidak boleh kosong'),
+            fieldInput('Nama Lengkap', controller.fnameCtrlr,
+                'masukkan kolom tidak boleh kosong'),
+            fieldInput('Nomor Telepon', controller.notelpCtrlr,
+                'kolom tidak boleh kosong'),
+            fieldInput(
+                'Alamat', controller.addressCtrlr, 'kolom tidak boleh kosong',
+                lines: 3),
           ],
         ));
   }
@@ -103,8 +94,9 @@ class EditProfilePage extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 30),
         child: Center(
-            child: ElevatedButton(
-          child: Text('Simpan', style: AppStyles.btnTxtWhite),
+            child: ElevatedButton.icon(
+          label: AppSvg.save,
+          icon: Text('Simpan', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
           onPressed: () {},
         )));
