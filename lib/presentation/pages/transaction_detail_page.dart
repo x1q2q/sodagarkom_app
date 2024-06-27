@@ -10,7 +10,6 @@ class TransactionDetailPage extends StatelessWidget {
   final TransactionDetailController controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    final String transactionId = Get.parameters['id'] ?? 'unknown';
     return Scaffold(
         appBar: DefaultAppbar(title: 'Detail Transaksi'),
         backgroundColor: AppColors.lightgray,

@@ -32,17 +32,23 @@ class AppStyles {
       color: AppColors.grayv1,
       fontSize: 18);
 
-  static const TextStyle labelCardCategory = TextStyle(
+  static const TextStyle labelCategory = TextStyle(
       fontFamily: 'PlusJakarta',
       fontWeight: FontWeight.w700,
       color: Colors.white,
       fontSize: 26);
 
+  static const TextStyle labelCategoryPurple = TextStyle(
+      fontFamily: 'PlusJakarta',
+      fontWeight: FontWeight.w700,
+      color: AppColors.purplev1,
+      fontSize: 26);
+
   static const TextStyle btnTxtCardCategory = TextStyle(
       fontFamily: 'PlusJakarta',
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: AppColors.purplev1,
-      fontSize: 17);
+      fontSize: 16);
 
   static const TextStyle labelSection = TextStyle(
       fontFamily: 'PlusJakarta',

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import '../../domain/repositories/product_repository.dart';
-import '../../domain/models/category.dart';
 import '../../domain/models/product.dart';
 
 class ProductsController extends GetxController {

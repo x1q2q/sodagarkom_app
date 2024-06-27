@@ -2,36 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
-import '../../core/assets.dart';
+import '../../core/core.dart';
 import '../controllers/category_detail_controller.dart';
 import '../widgets/widgets.dart';
+import '../router/app_routes.dart';
 
 class CategoryDetailPage extends StatelessWidget {
-  final CategoryDetailController controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    // final String categoryId = Get.parameters['id'] ?? 'unknown';
-    // String titleBar = '$controller.dumpCategory.value.name';
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: DefaultAppbar(title: '${controller.dumpCategory.value.name}'),
+        appBar: DefaultAppbar(title: 'Kategori Detail'),
         body: SafeArea(child: LayoutBuilder(builder:
             (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    curtainCategory(context),
-                    sectionLabel(context),
-                    Obx(() => controller.isGridView.value
-                        ? gridProducts(context)
-                        : listProduct(context))
-                  ])));
+                  child: GetBuilder<CategoryDetailController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            curtainCategory(context, dx),
+                            sectionLabel(context, dx),
+                            dx.isGridView
+                                ? gridProducts(context, dx)
+                                : listProduct(context, dx)
+                          ]))));
         })));
   }
 
-  Widget curtainCategory(BuildContext context) {
+  Widget curtainCategory(BuildContext context, dynamic controller) {
     return Container(
       padding: EdgeInsets.fromLTRB(20, 25, 20, 20),
       height: 228.0,
@@ -44,18 +43,39 @@ class CategoryDetailPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Image.asset(Assets.dummCategory, height: 120),
-              ),
+                  padding: EdgeInsets.only(right: 20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        controller.isLoading
+                            ? AppSkeleton.shimmerCategory
+                            : Text('${controller.category!.name}',
+                                style: AppStyles.labelCategoryPurple),
+                        AppStyles.vSpaceSmall,
+                        controller.isLoading
+                            ? AppSkeleton.shimmerImgSmall
+                            : (controller.category!.imageThumb == '')
+                                ? AppSvg.imgNotFound
+                                : Image.network(
+                                    '${Core.pathAssetsCategory}${controller.category!.imageThumb}',
+                                    width: 110,
+                                    height: 110)
+                      ])),
               Expanded(
-                  child: Text('${controller.dumpCategory.value.description}',
-                      textAlign: TextAlign.justify,
-                      style: AppStyles.btnTxtCardCategory))
+                  child: controller.isLoading
+                      ? AppSkeleton.shimmerDescription
+                      : Text('${controller.category!.description}',
+                          textAlign: TextAlign.justify,
+                          maxLines: 6,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.btnTxtCardCategory))
             ],
           ),
           Center(
             child: Text(
-              '${controller.products.value.length} Items',
+              controller.isLoading
+                  ? '... items'
+                  : '${controller.category!.products!.length} items',
               style: AppStyles.productNameGrid,
             ),
           )
@@ -69,64 +89,88 @@ class CategoryDetailPage extends StatelessWidget {
     );
   }
 
-  Widget sectionLabel(BuildContext context) {
+  Widget sectionLabel(BuildContext context, dynamic controller) {
     return Padding(
         padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text('Produk Terkait', style: AppStyles.labelSection),
-              Obx(() => BtnRounded(
-                    widget: controller.isGridView.value
-                        ? AppSvg.gridView
-                        : AppSvg.listView,
-                    bgColor: AppColors.lightpurple,
-                    splashColor: AppColors.purplev1,
-                    onTap: controller.changeTypeView,
-                  ))
+              BtnRounded(
+                widget:
+                    controller.isGridView ? AppSvg.gridView : AppSvg.listView,
+                bgColor: AppColors.lightpurple,
+                splashColor: AppColors.purplev1,
+                onTap: controller.changeTypeView,
+              )
             ]));
   }
 
-  Widget listProduct(BuildContext context) {
-    return ListView.separated(
-        itemCount: 10,
-        shrinkWrap: true,
-        separatorBuilder: (BuildContext context, int index) =>
-            AppStyles.vSpaceSmall,
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return ProductTileCard(
-              productName: 'Laptop Asus Aspire Pro ${index + 1}',
-              productPrice: 'Rp.5000.000',
-              productImage: Image.asset(
-                Assets.dummLaptop,
-                fit: BoxFit.cover,
-              ),
-              onTapCard: () {},
-              onTapBtn: () {},
-              controller: controller);
-        });
+  Widget listProduct(BuildContext context, dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerListView
+        : ListView.separated(
+            itemCount: controller.category!.products!.length,
+            shrinkWrap: true,
+            separatorBuilder: (BuildContext context, int index) =>
+                AppStyles.vSpaceSmall,
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return ProductTileCard(
+                  productName: '${controller.category!.products![index].name}',
+                  productPrice:
+                      'Rp. ${controller.category!.products![index].price}',
+                  productImage: (controller
+                              .category!.products![index].imageThumb ==
+                          '')
+                      ? AppSvg.imgNotFound
+                      : Image.network(
+                          '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
+                          fit: BoxFit.cover),
+                  onTapCard: () {
+                    String productId =
+                        controller.category!.products![index].id.toString();
+                    Get.toNamed(
+                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                  },
+                  onTapBtn: () {},
+                  controller: controller);
+            });
   }
 
-  Widget gridProducts(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 20 / 23,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10),
-        itemCount: 11,
-        shrinkWrap: true,
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext ctx, index) {
-          return ProductCard(
-              productName: 'Asus Aspire Pro',
-              productPrice: 'Rp.25.000.000',
-              productImage: Image.asset(Assets.dummLaptop, fit: BoxFit.cover),
-              onTapCard: () {},
-              onTapBtn: () {});
-        });
+  Widget gridProducts(BuildContext context, dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerGridView
+        : GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 20 / 23,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10),
+            itemCount: controller.category!.products!.length,
+            shrinkWrap: true,
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext ctx, index) {
+              return ProductCard(
+                  productName: '${controller.category!.products![index].name}',
+                  productPrice:
+                      'Rp. ${controller.category!.products![index].price}',
+                  productImage: (controller
+                              .category!.products![index].imageThumb ==
+                          '')
+                      ? AppSvg.imgNotFound
+                      : Image.network(
+                          '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
+                          fit: BoxFit.cover),
+                  onTapCard: () {
+                    String productId =
+                        controller.category!.products![index].id.toString();
+                    Get.toNamed(
+                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                  },
+                  onTapBtn: () {});
+            });
   }
 }

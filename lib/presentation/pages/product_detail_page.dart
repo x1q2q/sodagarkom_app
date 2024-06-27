@@ -5,11 +5,9 @@ import '../../core/colors.dart';
 import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../controllers/product_detail_controller.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductDetailController controller = Get.find();
-  final String productId = Get.parameters['id'] ?? 'unknown';
   final double heightHeaderImg = 420.0;
 
   @override

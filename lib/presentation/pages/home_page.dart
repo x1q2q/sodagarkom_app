@@ -3,8 +3,8 @@ import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/carts_controller.dart';
-import '../../core/assets.dart';
 import '../../core/colors.dart';
+import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 
@@ -21,27 +21,29 @@ class HomePage extends StatelessWidget {
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
-                      height: 165.0,
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          AppHeader(controller: cartsController),
-                          const AppSearchbar(),
-                        ],
-                      ),
-                    ),
-                    heroCategory(context),
-                    sectionCategory(context),
-                    gridProducts(context)
-                  ])));
+                  child: GetBuilder<HomeController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
+                              height: 165.0,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  AppHeader(controller: cartsController),
+                                  const AppSearchbar(),
+                                ],
+                              ),
+                            ),
+                            heroCategory(context, dx),
+                            sectionCategory(context, dx),
+                            gridProducts(context, dx)
+                          ]))));
         })));
   }
 
-  Widget heroCategory(BuildContext context) {
+  Widget heroCategory(BuildContext context, dynamic controller) {
     ButtonStyle btnHeroCategory = ElevatedButton.styleFrom(
       elevation: 0.2,
       backgroundColor: Colors.white,
@@ -69,28 +71,39 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('Laptop Asus', style: AppStyles.labelCardCategory),
+                      controller.isLoading
+                          ? AppSkeleton.shimmerCategory
+                          : Text(controller.category!.name,
+                              style: AppStyles.labelCategory),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                             style: btnHeroCategory,
                             onPressed: () {
-                              String categoryId = '1';
+                              String categoryId =
+                                  controller.category!.id.toString();
                               Get.toNamed(
                                   '${AppRoutes.categoryDetail.replaceFirst(":id", categoryId)}');
                             },
-                            child: Text(
+                            child: const Text(
                               'Detail',
                               style: AppStyles.btnTxtCardCategory,
                             )),
                       )
                     ]),
               ),
-              Image.asset(Assets.dummCategory, width: 160, height: 160)
+              controller.isLoading
+                  ? AppSkeleton.shimmerImgSmall
+                  : (controller.category!.imageThumb == '')
+                      ? AppSvg.imgNotFound
+                      : Image.network(
+                          '${Core.pathAssetsCategory}${controller.category!.imageThumb}',
+                          width: 160,
+                          height: 160)
             ]));
   }
 
-  Widget sectionCategory(BuildContext context) {
+  Widget sectionCategory(BuildContext context, dynamic controller) {
     return Container(
         width: double.infinity,
         height: 90,
@@ -102,28 +115,85 @@ class HomePage extends StatelessWidget {
                 'Kategori',
                 style: AppStyles.labelSection,
               ),
-              SectionChips(controller: controller)
+              controller.isLoading
+                  ? AppSkeleton.shimmerPrice
+                  : Expanded(
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.categories.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Obx(() => Padding(
+                                padding: EdgeInsets.only(right: 4),
+                                child: ChoiceChip(
+                                  color: MaterialStateProperty.resolveWith(
+                                      (states) {
+                                    return states
+                                            .contains(MaterialState.selected)
+                                        ? AppColors.redv2
+                                        : Colors.white;
+                                  }),
+                                  showCheckmark: false,
+                                  label: Text(
+                                    '${controller.categories[index].name}',
+                                  ),
+                                  labelStyle: TextStyle(
+                                      fontFamily: 'PlusJakarta',
+                                      fontWeight: FontWeight.w500,
+                                      color: (controller.idChipSelected.value ==
+                                              controller.categories[index].id)
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontSize: 15),
+                                  selected: controller.idChipSelected.value ==
+                                      controller.categories[index].id,
+                                  onSelected: (bool selected) {
+                                    if (controller.idChipSelected.value !=
+                                        controller.categories[index].id) {
+                                      // prevent for double click on the same chip
+                                      controller.changeChip(selected,
+                                          controller.categories[index].id);
+                                      controller.fetchCategoryId(controller
+                                          .categories[index].id
+                                          .toString());
+                                    }
+                                  },
+                                )));
+                          }))
             ]));
   }
 
-  Widget gridProducts(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 20 / 23,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10),
-        itemCount: 11,
-        shrinkWrap: true,
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext ctx, index) {
-          return ProductCard(
-              productName: 'Asus Aspire Pro',
-              productPrice: 'Rp.25.000.000',
-              productImage: Image.asset(Assets.dummLaptop, fit: BoxFit.cover),
-              onTapCard: () {},
-              onTapBtn: () {});
-        });
+  Widget gridProducts(BuildContext context, dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerGridView
+        : GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 20 / 23,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10),
+            itemCount: controller.category!.products!.length,
+            shrinkWrap: true,
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext ctx, index) {
+              return ProductCard(
+                  productName: '${controller.category!.products![index].name}',
+                  productPrice:
+                      'Rp. ${controller.category!.products![index].price}',
+                  productImage: (controller
+                              .category!.products![index].imageThumb ==
+                          '')
+                      ? AppSvg.imgNotFound
+                      : Image.network(
+                          '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
+                          fit: BoxFit.cover),
+                  onTapCard: () {
+                    String productId =
+                        controller.category!.products![index].id.toString();
+                    Get.toNamed(
+                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                  },
+                  onTapBtn: () {});
+            });
   }
 }

@@ -97,7 +97,12 @@ class EditProfilePage extends StatelessWidget {
           icon: Text('Simpan', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
           onPressed: () {
-            // Get.snackbar('success', 'berhasil menyimpan data');
+            Get.snackbar('success', 'berhasil menyimpan data',
+                margin: EdgeInsets.only(top: 20, right: 10, left: 10),
+                backgroundColor: AppColors.lightgreen,
+                colorText: AppColors.greenv1);
+            // Navigator.pop(context);
+            Get.until((route) => route.settings.name == AppRoutes.appTab);
           },
         )));
   }

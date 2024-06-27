@@ -4,26 +4,35 @@ class Category {
   final int id;
   final String name;
   final String description;
+  final String imageThumb;
   final List<Product>? products;
 
   Category(
       {required this.id,
       required this.name,
       required this.description,
+      required this.imageThumb,
       this.products});
-  factory Category.fromMap(Map<String, dynamic> map) {
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    List<Product> extractProducts =
+        List.generate(json['products']['data'].length, (j) {
+      return Product.fromJson(json['products']['data'][j]);
+    });
     return Category(
-        id: int.parse(map['id']),
-        name: map['name'],
-        description: map['description'],
-        products: map['products']);
+        id: int.parse(json['id']),
+        name: json['name'],
+        description: json['description'],
+        imageThumb: json['image_thumb'],
+        products: extractProducts);
   }
 
-  Map toMap() {
+  Map toJson() {
     return {
       'id': id,
       'name': name,
       'description': description,
+      'image_thumb': imageThumb,
       'products': products
     };
   }

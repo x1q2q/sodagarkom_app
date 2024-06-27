@@ -24,8 +24,8 @@ class ProductRepository {
   Future<Product> getProductByID(String id) async {
     final response = await _networkService.fetchData('product/$id');
     if (response.statusCode == 200) {
-      final Map datas = Map.from(response.data);
-      return Product.fromJson(datas['data'][0]);
+      final Map result = Map.from(response.data);
+      return Product.fromJson(result['data'][0]);
     } else {
       throw Exception('Failed to load products data');
     }

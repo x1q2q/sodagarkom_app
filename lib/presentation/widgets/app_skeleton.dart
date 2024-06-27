@@ -79,6 +79,30 @@ class AppSkeleton {
           itemBuilder: (_, i) {
             return baseContainer(double.infinity, 100, radius: 18);
           }));
+  static Widget shimmerImgSmall = Shimmer.fromColors(
+      baseColor: Colors.purple.shade200,
+      highlightColor: Colors.purple.shade300,
+      child: baseContainer(120, 120));
+
+  static Widget shimmerCategory = Shimmer.fromColors(
+      baseColor: Colors.purple.shade200,
+      highlightColor: Colors.purple.shade300,
+      child: baseContainer(170, 25));
+
+  static Widget shimmerDescription = Shimmer.fromColors(
+      baseColor: Colors.purple.shade200,
+      highlightColor: Colors.purple.shade400,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          baseContainer(180, 20, shadeGrey: 300),
+          AppStyles.vSpaceSmall,
+          baseContainer(double.infinity, 20, shadeGrey: 300),
+          AppStyles.vSpaceSmall,
+          baseContainer(double.infinity, 20, shadeGrey: 300),
+          AppStyles.vSpaceSmall
+        ],
+      ));
 
   static Widget shimmerProfil = Shimmer.fromColors(
       baseColor: Colors.lightGreen.shade200,

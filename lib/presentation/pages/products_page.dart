@@ -22,25 +22,26 @@ class ProductsPage extends StatelessWidget {
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
-                      height: 165.0,
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          AppHeader(controller: cartsController),
-                          const AppSearchbar(),
-                        ],
-                      ),
-                    ),
-                    sectionLabel(context),
-                    GetBuilder<ProductsController>(
-                        builder: (dx) => dx.isGridView
-                            ? gridProducts(context, dx)
-                            : listProduct(context, dx))
-                  ])));
+                  child: GetBuilder<ProductsController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
+                              height: 165.0,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  AppHeader(controller: cartsController),
+                                  const AppSearchbar(),
+                                ],
+                              ),
+                            ),
+                            sectionLabel(context),
+                            dx.isGridView
+                                ? gridProducts(context, dx)
+                                : listProduct(context, dx)
+                          ]))));
         })));
   }
 
@@ -62,8 +63,8 @@ class ProductsPage extends StatelessWidget {
             ]));
   }
 
-  Widget gridProducts(BuildContext context, dynamic dx) {
-    return dx.isLoading
+  Widget gridProducts(BuildContext context, dynamic controller) {
+    return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -71,21 +72,21 @@ class ProductsPage extends StatelessWidget {
                 childAspectRatio: 20 / 23,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10),
-            itemCount: dx.products.length,
+            itemCount: controller.products.length,
             shrinkWrap: true,
             padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return ProductCard(
-                  productName: '${dx.products[index].name}',
-                  productPrice: 'Rp. ${dx.products[index].price}',
-                  productImage: (dx.products[index].imageThumb == '')
+                  productName: '${controller.products[index].name}',
+                  productPrice: 'Rp. ${controller.products[index].price}',
+                  productImage: (controller.products[index].imageThumb == '')
                       ? AppSvg.imgNotFound
                       : Image.network(
-                          '${Core.pathAssetsProduct}${dx.products[index].imageThumb}',
+                          '${Core.pathAssetsProduct}${controller.products[index].imageThumb}',
                           fit: BoxFit.cover),
                   onTapCard: () {
-                    String productId = dx.products[index].id.toString();
+                    String productId = controller.products[index].id.toString();
                     Get.toNamed(
                         '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
                   },
@@ -93,11 +94,11 @@ class ProductsPage extends StatelessWidget {
             });
   }
 
-  Widget listProduct(BuildContext context, dynamic dx) {
-    return dx.isLoading
+  Widget listProduct(BuildContext context, dynamic controller) {
+    return controller.isLoading
         ? AppSkeleton.shimmerListView
         : ListView.separated(
-            itemCount: dx.products.length,
+            itemCount: controller.products.length,
             shrinkWrap: true,
             separatorBuilder: (BuildContext context, int index) =>
                 AppStyles.vSpaceSmall,
@@ -105,15 +106,15 @@ class ProductsPage extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               return ProductTileCard(
-                  productName: '${dx.products[index].name}',
-                  productPrice: 'Rp. ${dx.products[index].price}',
-                  productImage: (dx.products[index].imageThumb == '')
+                  productName: '${controller.products[index].name}',
+                  productPrice: 'Rp. ${controller.products[index].price}',
+                  productImage: (controller.products[index].imageThumb == '')
                       ? AppSvg.imgNotFound
                       : Image.network(
-                          '${Core.pathAssetsProduct}${dx.products[index].imageThumb}',
+                          '${Core.pathAssetsProduct}${controller.products[index].imageThumb}',
                           fit: BoxFit.cover),
                   onTapCard: () {
-                    String productId = dx.products[index].id.toString();
+                    String productId = controller.products[index].id.toString();
                     Get.toNamed(
                         '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
                   },
