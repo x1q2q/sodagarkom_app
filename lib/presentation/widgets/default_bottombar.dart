@@ -10,7 +10,7 @@ class DefaultBottombar extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
         child: BottomAppBar(
-            shape: CircularNotchedRectangle(),
+            shape: const CircularNotchedRectangle(),
             color: AppColors.lightred,
             child: widget));
   }

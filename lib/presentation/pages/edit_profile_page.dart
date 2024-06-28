@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
-import '../controllers/users_controller.dart';
+import '../controllers/profile_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
 import '../router/app_routes.dart';
 import '../widgets/widgets.dart';
 
 class EditProfilePage extends StatelessWidget {
-  final UsersController controller = Get.find();
+  const EditProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DefaultAppbar(title: 'Edit Profil'),
+        appBar: const DefaultAppbar(title: 'Edit Profil'),
         backgroundColor: AppColors.lightgray,
         body: SafeArea(child: LayoutBuilder(builder:
             (BuildContext context, BoxConstraints viewportConstraints) {
@@ -20,27 +20,31 @@ class EditProfilePage extends StatelessWidget {
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    Container(
-                      color: Colors.white,
-                      padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
-                      height: 180.0,
-                      alignment: Alignment.center,
-                      child: headerProfile(context),
-                    ),
-                    listFieldUser(context),
-                    fieldButton(context),
-                  ])));
+                  child: GetBuilder<ProfileController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            Container(
+                              color: Colors.white,
+                              padding:
+                                  const EdgeInsets.fromLTRB(20, 25, 20, 25),
+                              height: 180.0,
+                              alignment: Alignment.center,
+                              child: headerProfile(context, dx),
+                            ),
+                            listFieldUser(context, dx),
+                            fieldButton(context, dx),
+                          ]))));
         })));
   }
 
-  Widget headerProfile(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Image.asset(Assets.appProfileUser, height: 120),
-      ],
-    );
+  Widget headerProfile(BuildContext context, dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerEditProfil
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Image.asset(Assets.appProfileUser, height: 120),
+            ],
+          );
   }
 
   Widget fieldInput(String fieldLabel, TextEditingController txtController,
@@ -66,10 +70,10 @@ class EditProfilePage extends StatelessWidget {
         ]);
   }
 
-  Widget listFieldUser(BuildContext context) {
+  Widget listFieldUser(BuildContext context, dynamic controller) {
     return Container(
-        margin: EdgeInsets.only(top: 18),
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        margin: const EdgeInsets.only(top: 18),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         color: Colors.white,
         child: Column(
           children: <Widget>[
@@ -88,21 +92,22 @@ class EditProfilePage extends StatelessWidget {
         ));
   }
 
-  Widget fieldButton(BuildContext context) {
+  Widget fieldButton(BuildContext context, dynamic controller) {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 30),
         child: Center(
             child: ElevatedButton.icon(
           label: AppSvg.save,
-          icon: Text('Simpan', style: AppStyles.btnTxtWhite),
+          icon: const Text('Simpan', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
           onPressed: () {
             Get.snackbar('success', 'berhasil menyimpan data',
-                margin: EdgeInsets.only(top: 20, right: 10, left: 10),
+                margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
                 backgroundColor: AppColors.lightgreen,
                 colorText: AppColors.greenv1);
             // Navigator.pop(context);
             Get.until((route) => route.settings.name == AppRoutes.appTab);
+            ;
           },
         )));
   }

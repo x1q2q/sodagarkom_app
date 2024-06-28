@@ -6,21 +6,46 @@ class TransactionsController extends GetxController {
   final TransactionRepository _transactionRepository;
 
   TransactionsController(this._transactionRepository);
-  var transactions =
-      Transaction(id: 0, userId: 0, status: 'selesai', createdAt: '2024-10-05')
-          .obs;
 
-  var idChipSelected = 0.obs;
-  var chips = ['Semua', 'Selesai', 'Pending', 'Dibatalkan', 'Perlu Upload'];
+  var idChipSelected = 'all'.obs;
+  List chips = [];
+  bool isLoading = true;
+  List<Transaction>? transactions;
 
   @override
   void onInit() {
     super.onInit();
+    fetchFilters();
   }
 
-  void changeChip(bool selected, int index) {
-    idChipSelected.value = selected ? index : 0;
+  void changeChip(bool selected, String filter) {
+    idChipSelected.value = selected ? filter : 'all';
+    isLoading = true;
+    fetchTransactionsFilter(filter);
   }
 
-  void fetchTransactions() async {}
+  void fetchFilters() async {
+    try {
+      List fetchedTransactions = await _transactionRepository.getFilters();
+      chips = fetchedTransactions;
+      idChipSelected.value = chips[0].id;
+      fetchTransactionsFilter(chips[0].id);
+    } catch (e) {
+      print('failed to fetch filters: $e');
+    }
+    update();
+  }
+
+  void fetchTransactionsFilter(String filter) async {
+    try {
+      int dummCustomerId = 9;
+      List<Transaction> fetchedTransactions = await _transactionRepository
+          .getTransactionsFilter(dummCustomerId, filter);
+      transactions = fetchedTransactions;
+      isLoading = false;
+    } catch (e) {
+      print('failed to fetch transactions: $e');
+    }
+    update();
+  }
 }

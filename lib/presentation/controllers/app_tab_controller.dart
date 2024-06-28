@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../presentation/bindings/home_binding.dart';
 import '../../presentation/bindings/products_binding.dart';
 import '../../presentation/bindings/transactions_binding.dart';
-import '../../presentation/bindings/user_binding.dart';
+import '../bindings/profile_binding.dart';
 import '../pages/home_page.dart';
 import '../pages/products_page.dart';
 import '../pages/transactions_page.dart';
@@ -51,7 +51,7 @@ class AppTabController extends GetxController {
         return GetPageRoute(
             settings: settings,
             page: () => ProfilePage(),
-            binding: UserBinding());
+            binding: ProfileBinding());
       default:
         return null;
     }

@@ -6,9 +6,7 @@ class TransactionConfirmController extends GetxController {
   final TransactionRepository _transactionRepository;
 
   TransactionConfirmController(this._transactionRepository);
-  var TransactionConfirm =
-      Transaction(id: 0, userId: 0, status: 'selesai', createdAt: '2024-10-05')
-          .obs;
+
   var addressReceiver =
       ''' Barang akan dikirim dengan penerima: Username1, ke alamat berikut: 
       Jl. desa karangtengah, pengadegan, Kab. Purbalinga 53393  ''';

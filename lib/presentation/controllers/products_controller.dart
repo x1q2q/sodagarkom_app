@@ -11,17 +11,17 @@ class ProductsController extends GetxController {
   bool isGridView = true;
   bool isLoading = true;
 
+  @override
+  void onInit() {
+    super.onInit();
+    fetchProducts();
+  }
+
   void changeTypeView() {
     isLoading = true;
     isGridView = !isGridView;
     fetchProducts();
     update();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchProducts();
   }
 
   void fetchProducts() async {
@@ -33,5 +33,9 @@ class ProductsController extends GetxController {
       print('failed to fetch producst: $e');
     }
     update();
+  }
+
+  void addToCart(String id) async {
+    print(id);
   }
 }

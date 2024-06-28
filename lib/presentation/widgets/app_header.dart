@@ -5,17 +5,20 @@ import '../../core/colors.dart';
 import 'btn_cart.dart';
 import 'btn_circle.dart';
 import 'app_svg.dart';
+import 'package:get/get.dart';
+import '../controllers/carts_controller.dart';
+
+final CartsController controller = Get.find();
 
 class AppHeader extends StatelessWidget {
-  final controller;
-  const AppHeader({Key? key, required this.controller}) : super(key: key);
+  const AppHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(Core.appName, style: AppStyles.labelAppName),
+        const Text(Core.appName, style: AppStyles.labelAppName),
         Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
@@ -26,12 +29,12 @@ class AppHeader extends StatelessWidget {
                 bgColor: AppColors.lightgray,
                 splashColor: AppColors.grayv1),
             Positioned(
-                child: BtnCircle(
+                child: Obx(() => BtnCircle(
                     widget: Center(
                         child: Text('${controller.qtyCarts.value}',
                             style: AppStyles.cartItems)),
                     bgColor: AppColors.redv3,
-                    size: 25),
+                    size: 25)),
                 top: 0,
                 right: 0)
           ],

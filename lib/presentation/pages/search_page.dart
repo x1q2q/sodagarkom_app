@@ -172,6 +172,7 @@ class SearchPage extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return ProductTileCard(
+              productId: '1',
               productName: 'Laptop Asus Aspire Pro ${index + 1}',
               productPrice: 'Rp.5000.000',
               productImage: Image.asset(Assets.dummLaptop2, fit: BoxFit.cover),
@@ -180,7 +181,6 @@ class SearchPage extends StatelessWidget {
                 Get.toNamed(
                     '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
               },
-              onTapBtn: () {},
               controller: controller);
         });
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../core/styles.dart';
+import '../../core/colors.dart';
 
 class AppSkeleton {
   static Widget baseContainer(double w, double h,
@@ -12,6 +13,17 @@ class AppSkeleton {
             color: Colors.grey[shadeGrey]!,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(radius)))));
+  }
+
+  static Widget roundedContainer() {
+    return SizedBox(
+      width: 120,
+      child: Container(
+        height: 120,
+        decoration: ShapeDecoration(
+            color: Colors.grey[400]!, shape: const CircleBorder()),
+      ),
+    );
   }
 
   static Widget shimmerImg = Shimmer.fromColors(
@@ -45,8 +57,8 @@ class AppSkeleton {
       ));
 
   static Widget shimmerPrice = Shimmer.fromColors(
-      baseColor: Colors.pink.shade200,
-      highlightColor: Colors.pink.shade300,
+      baseColor: Colors.red.shade200,
+      highlightColor: Colors.red.shade300,
       child: baseContainer(190, 28));
 
   static Widget shimmerGridView = Shimmer.fromColors(
@@ -60,8 +72,8 @@ class AppSkeleton {
               crossAxisSpacing: 10),
           itemCount: 6,
           shrinkWrap: true,
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
-          physics: NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext ctx, index) {
             return baseContainer(double.infinity, 120, radius: 18);
           }));
@@ -74,24 +86,24 @@ class AppSkeleton {
           shrinkWrap: true,
           separatorBuilder: (BuildContext context, int index) =>
               AppStyles.vSpaceSmall,
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (_, i) {
             return baseContainer(double.infinity, 100, radius: 18);
           }));
   static Widget shimmerImgSmall = Shimmer.fromColors(
-      baseColor: Colors.purple.shade200,
-      highlightColor: Colors.purple.shade300,
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
       child: baseContainer(120, 120));
 
   static Widget shimmerCategory = Shimmer.fromColors(
-      baseColor: Colors.purple.shade200,
-      highlightColor: Colors.purple.shade300,
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
       child: baseContainer(170, 25));
 
   static Widget shimmerDescription = Shimmer.fromColors(
-      baseColor: Colors.purple.shade200,
-      highlightColor: Colors.purple.shade400,
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -104,114 +116,115 @@ class AppSkeleton {
         ],
       ));
 
-  static Widget shimmerProfil = Shimmer.fromColors(
-      baseColor: Colors.lightGreen.shade200,
-      highlightColor: Colors.lightGreen.shade100,
+  static Widget shimmerSpan = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
+      child: baseContainer(double.infinity, 20));
+
+  static Widget shimmerTransaction = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade400,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           AppStyles.vSpaceXSmall,
-          SizedBox(
-            width: 120,
-            child: Container(
-              height: 120,
-              decoration: ShapeDecoration(
-                  color: Colors.grey[400]!, shape: const CircleBorder()),
-            ),
-          ),
-          AppStyles.vSpaceMedium,
-          Container(
-            width: 140,
-            height: 26,
-            decoration: ShapeDecoration(
-                color: Colors.grey[400]!,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30)))),
-          ),
-          AppStyles.vSpaceLarge,
+          baseContainer(170, 20, shadeGrey: 300),
           AppStyles.vSpaceSmall,
-          Expanded(
-              child: ListView.builder(
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) {
-                    return Container(
-                      width: double.infinity,
-                      height: 50,
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                      decoration: ShapeDecoration(
-                          color: Colors.grey[400]!,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)))),
-                    );
-                  }))
+          baseContainer(double.infinity, 20, shadeGrey: 300),
+          AppStyles.vSpaceXSmall,
+          baseContainer(double.infinity, 20, shadeGrey: 300),
+          AppStyles.vSpaceXSmall
         ],
       ));
-  static Widget shimmerNotif = Shimmer.fromColors(
-      baseColor: Colors.lightGreen.shade200,
-      highlightColor: Colors.lightGreen.shade100,
+
+  static Widget shimmerTransactionTotal = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade400,
+      child: ListView.separated(
+          itemCount: 4,
+          shrinkWrap: true,
+          separatorBuilder: (BuildContext context, int index) =>
+              AppStyles.vSpaceSmall,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (_, i) {
+            return baseContainer(double.infinity, 20, shadeGrey: 300);
+          }));
+
+  static Widget shimmerListProducTrx = Shimmer.fromColors(
+      baseColor: Colors.grey.shade100,
+      highlightColor: Colors.grey.shade300,
+      child: ListView.separated(
+          itemCount: 2,
+          shrinkWrap: true,
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(color: AppColors.grayv1),
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (_, i) {
+            return baseContainer(double.infinity, 70, radius: 18);
+          }));
+
+  static Widget shimmerBtn = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
+      child: baseContainer(100, 26, radius: 18));
+
+  static Widget shimmerBtnRed = Shimmer.fromColors(
+      baseColor: Colors.red.shade200,
+      highlightColor: Colors.red.shade300,
+      child: baseContainer(120, 26));
+
+  static Widget shimmerChips = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
       child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.only(top: 10),
+          child: Row(
             children: <Widget>[
-              AppStyles.vSpaceXSmall,
-              Container(
-                height: 30,
-                width: 190,
-                decoration: ShapeDecoration(
-                    color: Colors.grey[400]!,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(40)))),
-              ),
-              AppStyles.vSpaceXSmall,
-              ListView.builder(
-                itemCount: 3,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (_, index) {
-                  return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                              width: 60,
-                              child: Container(
-                                height: 60,
-                                decoration: ShapeDecoration(
-                                    color: Colors.grey[400]!,
-                                    shape: const CircleBorder()),
-                              )),
-                          SizedBox(width: 10),
-                          Flexible(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height: 20,
-                                decoration: ShapeDecoration(
-                                    color: Colors.grey[400]!,
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)))),
-                              ),
-                              AppStyles.vSpaceXSmall,
-                              Container(
-                                height: 15,
-                                decoration: ShapeDecoration(
-                                    color: Colors.grey[400]!,
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)))),
-                              ),
-                            ],
-                          )),
-                        ],
-                      ));
-                },
-              ),
+              baseContainer(100, 30, radius: 8),
+              const SizedBox(width: 10),
+              baseContainer(100, 30, radius: 8),
+              const SizedBox(width: 10),
+              baseContainer(100, 30, radius: 8),
+              const SizedBox(width: 10)
             ],
           )));
+
+  static Widget shimmerProfil = Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade400,
+      child: Column(
+        children: <Widget>[
+          AppStyles.vSpaceSmall,
+          roundedContainer(),
+          AppStyles.vSpaceSmall,
+          baseContainer(160, 26, radius: 18)
+        ],
+      ));
+
+  static Widget shimmerListProfile = Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade400,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: ListView.separated(
+            itemCount: 6,
+            shrinkWrap: true,
+            separatorBuilder: (BuildContext context, int index) =>
+                AppStyles.vSpaceSmall,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (_, i) {
+              return baseContainer(double.infinity, 30, shadeGrey: 300);
+            }),
+      ));
+
+  static Widget shimmerEditProfil = Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade400,
+      child: Column(
+        children: <Widget>[
+          AppStyles.vSpaceSmall,
+          roundedContainer(),
+          AppStyles.vSpaceSmall,
+        ],
+      ));
 }

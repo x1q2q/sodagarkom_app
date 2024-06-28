@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/products_controller.dart';
-import '../controllers/carts_controller.dart';
 import '../../core/core.dart';
 import '../../core/colors.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
+import '../../extensions/string_extensions.dart';
 
 class ProductsPage extends StatelessWidget {
-  final ProductsController controller = Get.find();
-  final CartsController cartsController = Get.find();
-
+  const ProductsPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +23,15 @@ class ProductsPage extends StatelessWidget {
                   child: GetBuilder<ProductsController>(
                       builder: (dx) => Column(children: <Widget>[
                             Container(
-                              padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
+                              padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
                               height: 165.0,
                               alignment: Alignment.center,
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  AppHeader(controller: cartsController),
-                                  const AppSearchbar(),
+                                  AppHeader(),
+                                  AppSearchbar(),
                                 ],
                               ),
                             ),
@@ -47,18 +45,18 @@ class ProductsPage extends StatelessWidget {
 
   Widget sectionLabel(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
+        padding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Semua Produk', style: AppStyles.labelSection),
+              const Text('Semua Produk', style: AppStyles.labelSection),
               GetBuilder<ProductsController>(
                   builder: (dx) => BtnRounded(
                         widget:
                             dx.isGridView ? AppSvg.gridView : AppSvg.listView,
                         bgColor: AppColors.lightpurple,
                         splashColor: AppColors.purplev1,
-                        onTap: controller.changeTypeView,
+                        onTap: dx.changeTypeView,
                       ))
             ]));
   }
@@ -74,13 +72,14 @@ class ProductsPage extends StatelessWidget {
                 crossAxisSpacing: 10),
             itemCount: controller.products.length,
             shrinkWrap: true,
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
-            physics: NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return ProductCard(
                   productName: '${controller.products[index].name}',
-                  productPrice: 'Rp. ${controller.products[index].price}',
-                  productImage: (controller.products[index].imageThumb == '')
+                  productPrice:
+                      '${controller.products[index].price}'.toRupiah(),
+                  productImage: (controller.products[index].imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${controller.products[index].imageThumb}',
@@ -88,7 +87,7 @@ class ProductsPage extends StatelessWidget {
                   onTapCard: () {
                     String productId = controller.products[index].id.toString();
                     Get.toNamed(
-                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                        AppRoutes.productDetail.replaceFirst(":id", productId));
                   },
                   onTapBtn: () {});
             });
@@ -102,13 +101,15 @@ class ProductsPage extends StatelessWidget {
             shrinkWrap: true,
             separatorBuilder: (BuildContext context, int index) =>
                 AppStyles.vSpaceSmall,
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               return ProductTileCard(
+                  productId: controller.products[index].id.toString(),
                   productName: '${controller.products[index].name}',
-                  productPrice: 'Rp. ${controller.products[index].price}',
-                  productImage: (controller.products[index].imageThumb == '')
+                  productPrice:
+                      '${controller.products[index].price}'.toRupiah(),
+                  productImage: (controller.products[index].imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${controller.products[index].imageThumb}',
@@ -116,9 +117,8 @@ class ProductsPage extends StatelessWidget {
                   onTapCard: () {
                     String productId = controller.products[index].id.toString();
                     Get.toNamed(
-                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                        AppRoutes.productDetail.replaceFirst(":id", productId));
                   },
-                  onTapBtn: () {},
                   controller: controller);
             });
   }

@@ -15,15 +15,14 @@ class Category {
       this.products});
 
   factory Category.fromJson(Map<String, dynamic> json) {
-    List<Product> extractProducts =
-        List.generate(json['products']['data'].length, (j) {
-      return Product.fromJson(json['products']['data'][j]);
+    List<Product> extractProducts = List.generate(json['products'].length, (j) {
+      return Product.fromJson(json['products'][j]);
     });
     return Category(
         id: int.parse(json['id']),
         name: json['name'],
         description: json['description'],
-        imageThumb: json['image_thumb'],
+        imageThumb: json['image_thumb'] ?? '',
         products: extractProducts);
   }
 

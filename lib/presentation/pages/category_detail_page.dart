@@ -6,13 +6,15 @@ import '../../core/core.dart';
 import '../controllers/category_detail_controller.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
+import '../../extensions/string_extensions.dart';
 
 class CategoryDetailPage extends StatelessWidget {
+  const CategoryDetailPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: DefaultAppbar(title: 'Kategori Detail'),
+        appBar: const DefaultAppbar(title: 'Kategori Detail'),
         body: SafeArea(child: LayoutBuilder(builder:
             (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
@@ -32,7 +34,7 @@ class CategoryDetailPage extends StatelessWidget {
 
   Widget curtainCategory(BuildContext context, dynamic controller) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 25, 20, 20),
+      padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
       height: 228.0,
       alignment: Alignment.center,
       child: Column(
@@ -54,7 +56,7 @@ class CategoryDetailPage extends StatelessWidget {
                         AppStyles.vSpaceSmall,
                         controller.isLoading
                             ? AppSkeleton.shimmerImgSmall
-                            : (controller.category!.imageThumb == '')
+                            : (controller.category!.imageThumb.isEmpty)
                                 ? AppSvg.imgNotFound
                                 : Image.network(
                                     '${Core.pathAssetsCategory}${controller.category!.imageThumb}',
@@ -82,8 +84,10 @@ class CategoryDetailPage extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-          color: AppColors.lightpurple,
-          borderRadius: BorderRadius.only(
+          color: controller.isLoading
+              ? Colors.grey.shade50
+              : AppColors.lightpurple,
+          borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30))),
     );
@@ -91,11 +95,11 @@ class CategoryDetailPage extends StatelessWidget {
 
   Widget sectionLabel(BuildContext context, dynamic controller) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(20, 25, 20, 25),
+        padding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Produk Terkait', style: AppStyles.labelSection),
+              const Text('Produk Terkait', style: AppStyles.labelSection),
               BtnRounded(
                 widget:
                     controller.isGridView ? AppSvg.gridView : AppSvg.listView,
@@ -114,16 +118,16 @@ class CategoryDetailPage extends StatelessWidget {
             shrinkWrap: true,
             separatorBuilder: (BuildContext context, int index) =>
                 AppStyles.vSpaceSmall,
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               return ProductTileCard(
+                  productId: '${controller.category!.products![index].id}',
                   productName: '${controller.category!.products![index].name}',
-                  productPrice:
-                      'Rp. ${controller.category!.products![index].price}',
+                  productPrice: '${controller.category!.products![index].price}'
+                      .toRupiah(),
                   productImage: (controller
-                              .category!.products![index].imageThumb ==
-                          '')
+                          .category!.products![index].imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
@@ -132,9 +136,8 @@ class CategoryDetailPage extends StatelessWidget {
                     String productId =
                         controller.category!.products![index].id.toString();
                     Get.toNamed(
-                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                        AppRoutes.productDetail.replaceFirst(":id", productId));
                   },
-                  onTapBtn: () {},
                   controller: controller);
             });
   }
@@ -150,16 +153,15 @@ class CategoryDetailPage extends StatelessWidget {
                 crossAxisSpacing: 10),
             itemCount: controller.category!.products!.length,
             shrinkWrap: true,
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-            physics: NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return ProductCard(
                   productName: '${controller.category!.products![index].name}',
-                  productPrice:
-                      'Rp. ${controller.category!.products![index].price}',
+                  productPrice: '${controller.category!.products![index].price}'
+                      .toRupiah(),
                   productImage: (controller
-                              .category!.products![index].imageThumb ==
-                          '')
+                          .category!.products![index].imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
@@ -168,7 +170,7 @@ class CategoryDetailPage extends StatelessWidget {
                     String productId =
                         controller.category!.products![index].id.toString();
                     Get.toNamed(
-                        '${AppRoutes.productDetail.replaceFirst(":id", productId)}');
+                        AppRoutes.productDetail.replaceFirst(":id", productId));
                   },
                   onTapBtn: () {});
             });

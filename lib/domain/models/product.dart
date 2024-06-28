@@ -24,7 +24,7 @@ class Product {
       stock: int.parse(json['stock_temporary']),
       price: int.parse(json['price']),
       description: json['description'],
-      imageThumb: json['image_thumb'],
+      imageThumb: json['image_thumb'] ?? '',
     );
   }
   Map<String, dynamic> toJson() {

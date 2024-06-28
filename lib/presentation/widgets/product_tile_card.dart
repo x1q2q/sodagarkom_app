@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../router/app_routes.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
-import 'btn_circle.dart';
-import 'app_svg.dart';
 
 enum MenuPopup { firstItem, secondItem }
 
 class ProductTileCard extends StatelessWidget {
+  final String productId;
   final String productName;
   final String productPrice;
   final Widget productImage;
   final void Function() onTapCard;
-  final void Function() onTapBtn;
   final controller;
 
   const ProductTileCard(
       {Key? key,
+      required this.productId,
       required this.productName,
       required this.productPrice,
       required this.productImage,
       required this.onTapCard,
-      required this.onTapBtn,
       required this.controller})
       : super(key: key);
 
@@ -37,7 +37,7 @@ class ProductTileCard extends StatelessWidget {
                 child: Container(
                     height: 100,
                     width: double.infinity,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(18)),
                     child: Row(
@@ -47,8 +47,8 @@ class ProductTileCard extends StatelessWidget {
                               width: 90,
                               height: 90,
                               clipBehavior: Clip.antiAlias,
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.only(right: 5),
+                              padding: const EdgeInsets.all(5),
+                              margin: const EdgeInsets.only(right: 5),
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border.all(color: AppColors.grayv1),
@@ -72,21 +72,22 @@ class ProductTileCard extends StatelessWidget {
                             ],
                           )),
                           PopupMenuButton<MenuPopup>(
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   side: BorderSide(color: AppColors.lightgray),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(8))),
                               color: Colors.white,
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.more_vert,
                                 color: AppColors.redv2,
                                 size: 40,
                               ),
                               onSelected: (MenuPopup item) {
                                 if (item.name == 'firstItem') {
-                                  print('detail');
+                                  Get.toNamed(AppRoutes.productDetail
+                                      .replaceFirst(":id", productId));
                                 } else {
-                                  print('+keranjang');
+                                  controller.addToCart(productId);
                                 }
                               },
                               itemBuilder: (BuildContext context) =>

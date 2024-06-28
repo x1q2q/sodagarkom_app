@@ -33,4 +33,8 @@ class CategoryDetailController extends GetxController {
     }
     update();
   }
+
+  void addToCart(String id) async {
+    print(id);
+  }
 }

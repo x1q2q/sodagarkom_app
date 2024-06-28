@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
-import 'package:get/get.dart';
 import '../controllers/transactions_controller.dart';
-import '../../core/assets.dart';
+import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
+import '../../extensions/string_extensions.dart';
 
 class TransactionsPage extends StatelessWidget {
-  final TransactionsController controller = Get.find();
+  const TransactionsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,38 +21,43 @@ class TransactionsPage extends StatelessWidget {
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    sectionStatus(context),
-                    listTransaction(context)
-                  ])));
+                  child: GetBuilder<TransactionsController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            sectionStatus(context, dx),
+                            listTransaction(context, dx)
+                          ]))));
         })));
   }
 
-  Widget sectionStatus(BuildContext context) {
+  Widget sectionStatus(BuildContext context, dynamic controller) {
     return Container(
         width: double.infinity,
         height: 90,
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[SectionChips(controller: controller)]));
+            children: <Widget>[
+              controller.isLoading
+                  ? AppSkeleton.shimmerChips
+                  : SectionChips(controller: controller)
+            ]));
   }
 
   Widget contentDialogUpload(BuildContext context) {
-    final String textContent =
+    const String textContent =
         '''Pastikan anda sudah transfer sebesar: Rp. 35.000.0000, ke salah satu nomor rekening berikut :
     - BRI (+62) 820000213291231, a.n Aleksander Grahambell
     - BCA (+46) 8394238022342, a.n Aleksander Grahambell.''';
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(textContent, style: AppStyles.dialogContent),
+          const Text(textContent, style: AppStyles.dialogContent),
           AppStyles.vSpaceMedium,
-          Text('Jika sudah, upload bukti transfer di sini: ',
+          const Text('Jika sudah, upload bukti transfer di sini: ',
               style: AppStyles.dialogContent),
           AppStyles.vSpaceXSmall,
           Container(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
                 color: AppColors.lightgray,
                 borderRadius: BorderRadius.circular(8)),
@@ -68,7 +75,7 @@ class TransactionsPage extends StatelessWidget {
                             onTap: () {
                               print('galeri');
                             }),
-                        Text('Galeri', style: AppStyles.productNameTile)
+                        const Text('Galeri', style: AppStyles.productNameTile)
                       ]),
                   Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -79,16 +86,16 @@ class TransactionsPage extends StatelessWidget {
                             size: 120,
                             padding: 20,
                             onTap: () {
-                              print('kamera');
+                              // print('kamera');
                             }),
-                        Text('Kamera', style: AppStyles.productNameTile)
+                        const Text('Kamera', style: AppStyles.productNameTile)
                       ])
                 ]),
           )
         ]);
   }
 
-  Widget listTransaction(BuildContext context) {
+  Widget listTransaction(BuildContext context, dynamic controller) {
     final dialogUpload = AppDialogUpload(
         title: 'Upload Bukti Transaksi',
         contentWidget: contentDialogUpload(context),
@@ -100,34 +107,52 @@ class TransactionsPage extends StatelessWidget {
         contentText: 'Yakin untuk membatalkan transaksi #trx-01-20240618 ?',
         txtConfirm: 'Ya, Batalkan',
         onConfirm: () {});
-    return ListView.separated(
-        itemCount: 10,
-        shrinkWrap: true,
-        separatorBuilder: (BuildContext context, int index) =>
-            AppStyles.vSpaceSmall,
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return TransactionCard(
-              trxID: '#TRX-01-20240618',
-              trxDate: '30 Juni 2024',
-              status: 'reserved',
-              productName: 'Laptop Asus Aspire Pro ${index + 1}',
-              productQty: '1',
-              trxQtyRemaining: '2',
-              totalAmount: 'Rp.5000.000',
-              productImage: Image.asset(
-                Assets.dummLaptop,
-                fit: BoxFit.cover,
-              ),
-              dialogUpload: dialogUpload,
-              dialogCancel: dialogCancel,
-              onTapCard: () {
-                String transactionId = '1';
-                Get.toNamed(
-                    '${AppRoutes.transactionDetail.replaceFirst(":id", transactionId)}');
-              },
-              controller: controller);
-        });
+
+    return controller.isLoading
+        ? AppSkeleton.shimmerListView
+        : ListView.separated(
+            itemCount: controller.transactions!.length,
+            shrinkWrap: true,
+            separatorBuilder: (BuildContext context, int index) =>
+                AppStyles.vSpaceSmall,
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              String id = controller.transactions![index].id.toString();
+              String code = controller.transactions![index].code;
+              String createdAt = controller.transactions![index].createdAt;
+              String status = controller.transactions![index].status;
+              String totalAmount = controller.transactions![index].totalAmount
+                  .toString()
+                  .toRupiah();
+              String productName =
+                  controller.transactions![index].products[0].productName;
+              String productImage =
+                  controller.transactions![index].products[0].productImage;
+              String productQuantity = controller
+                  .transactions![index].products[0].productQuantity
+                  .toString();
+              int qtyRemaining =
+                  controller.transactions![index].products.length - 1;
+              return TransactionCard(
+                  trxID: id,
+                  trxCode: code,
+                  trxDate: createdAt,
+                  status: status,
+                  productName: productName,
+                  productQty: productQuantity,
+                  trxQtyRemaining: qtyRemaining.toString(),
+                  totalAmount: totalAmount,
+                  productImage: (productImage.isEmpty)
+                      ? AppSvg.imgNotFound
+                      : Image.network('${Core.pathAssetsProduct}$productImage',
+                          fit: BoxFit.cover),
+                  dialogUpload: dialogUpload,
+                  dialogCancel: dialogCancel,
+                  onTapCard: () {
+                    Get.toNamed(
+                        AppRoutes.transactionDetail.replaceFirst(":id", id));
+                  });
+            });
   }
 }

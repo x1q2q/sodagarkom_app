@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
-import '../controllers/users_controller.dart';
+import '../controllers/profile_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
 import '../router/app_routes.dart';
 import '../widgets/widgets.dart';
 
 class ProfilePage extends StatelessWidget {
-  final UsersController controller = Get.find();
+  const ProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,44 +19,49 @@ class ProfilePage extends StatelessWidget {
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    Container(
-                      color: Colors.white,
-                      padding: EdgeInsets.fromLTRB(20, 60, 20, 25),
-                      height: 300.0,
-                      alignment: Alignment.center,
-                      child: headerProfile(context),
-                    ),
-                    listFieldUser(context),
-                    fieldButton(context),
-                  ])));
+                  child: GetBuilder<ProfileController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            Container(
+                              color: Colors.white,
+                              padding:
+                                  const EdgeInsets.fromLTRB(20, 60, 20, 25),
+                              height: 300.0,
+                              alignment: Alignment.center,
+                              child: headerProfile(context, dx),
+                            ),
+                            listFieldUser(context, dx),
+                            fieldButton(context, dx),
+                          ]))));
         })));
   }
 
-  Widget headerProfile(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Image.asset(Assets.appProfileUser, height: 120),
-        Text('@username123123', style: AppStyles.labelSection),
-        ElevatedButton.icon(
-          icon: Text('Edit Profil', style: AppStyles.btnTxtWhite),
-          label: AppSvg.edit,
-          style: AppStyles.btnElevatedRed,
-          onPressed: () {
-            Get.toNamed(AppRoutes.editProfile);
-          },
-        ),
-      ],
-    );
+  Widget headerProfile(BuildContext context, dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerProfil
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Image.asset(Assets.appProfileUser, height: 120),
+              Text(controller.customer!.username,
+                  style: AppStyles.labelSection),
+              ElevatedButton.icon(
+                icon: const Text('Edit Profil', style: AppStyles.btnTxtWhite),
+                label: AppSvg.edit,
+                style: AppStyles.btnElevatedRed,
+                onPressed: () {
+                  Get.toNamed(AppRoutes.editProfile);
+                },
+              ),
+            ],
+          );
   }
 
   Widget profilFieldCard(String textKey, String textVal,
       {bool isColumn = false}) {
     return SizedBox.fromSize(
         child: Container(
-            margin: EdgeInsets.only(bottom: 10),
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: AppColors.lightgray),
@@ -65,7 +70,7 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.only(right: 10),
+                          padding: const EdgeInsets.only(right: 10),
                           child: Text(textKey, style: AppStyles.fieldLabelKey)),
                       Flexible(
                           child: Text(textVal,
@@ -77,7 +82,7 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Text(textKey, style: AppStyles.fieldLabelKey)),
                       Text(textVal,
                           style: AppStyles.fieldLabelVal,
@@ -86,60 +91,68 @@ class ProfilePage extends StatelessWidget {
                   )));
   }
 
-  Widget listFieldUser(BuildContext context) {
+  Widget listFieldUser(BuildContext context, dynamic controller) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 18),
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
+        margin: const EdgeInsets.symmetric(vertical: 18),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
         color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            profilFieldCard('Email', 'ahonghitamsemesta@gmail.com'),
-            profilFieldCard('Nama Lengkap', 'Ahong Hitam Semesta'),
-            profilFieldCard('No. Telepon', '083248923432'),
-            profilFieldCard('Alamat',
-                'Jl. desa karangtengah, pengadegan, Kab. Purbalinga 53393 ',
-                isColumn: true),
-            profilFieldCard('Terdaftar Pada', '10 Juni 2024'),
-          ],
-        ));
+        child: controller.isLoading
+            ? AppSkeleton.shimmerListProfile
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  profilFieldCard('Email', controller.customer!.email),
+                  profilFieldCard(
+                      'Nama Lengkap', controller.customer!.fullName),
+                  profilFieldCard('No. Telepon', controller.customer!.phone),
+                  profilFieldCard('Alamat', controller.customer!.address,
+                      isColumn: true),
+                  profilFieldCard(
+                      'Terdaftar Pada', controller.customer!.createdAt),
+                ],
+              ));
   }
 
-  Widget fieldButton(BuildContext context) {
+  Widget fieldButton(BuildContext context, dynamic controller) {
     final dialogLogout = AppDialogCancel(
-        title: 'Logout Akun',
-        contentText: 'Yakin untuk logout akun?',
-        txtConfirm: 'Ya, Logout',
+        title: 'Konfirmasi Keluar Akun',
+        contentText: 'Yakin untuk keluar akun?',
+        txtConfirm: 'Yakin',
         onConfirm: () {});
     return Container(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         color: Colors.white,
-        child: SizedBox.fromSize(
-            child: Material(
-                color: AppColors.lightgray,
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.1,
-                child: InkWell(
-                    onTap: () {
-                      Get.dialog(dialogLogout);
-                    },
+        width: double.infinity,
+        child: controller.isLoading
+            ? AppSkeleton.shimmerBtn
+            : SizedBox.fromSize(
+                child: Material(
+                    color: AppColors.lightgray,
                     borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                                child: Row(children: <Widget>[
-                              AppSvg.logout,
-                              SizedBox(width: 10),
-                              Text('Keluar Akun',
-                                  style: AppStyles.fieldLabelKey)
-                            ])),
-                            Text('versi 0.1', style: AppStyles.fieldLabelVal)
-                          ],
-                        ))))));
+                    elevation: 0.1,
+                    child: InkWell(
+                        onTap: () {
+                          Get.dialog(dialogLogout);
+                        },
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Expanded(
+                                    child: Row(children: <Widget>[
+                                  AppSvg.logout,
+                                  const SizedBox(width: 10),
+                                  const Text('Keluar Akun',
+                                      style: AppStyles.fieldLabelKey)
+                                ])),
+                                const Text('versi 0.1',
+                                    style: AppStyles.fieldLabelVal)
+                              ],
+                            ))))));
   }
 }

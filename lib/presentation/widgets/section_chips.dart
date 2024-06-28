@@ -14,7 +14,7 @@ class SectionChips extends StatelessWidget {
             itemCount: controller.chips.length,
             itemBuilder: (BuildContext context, int index) {
               return Obx(() => Padding(
-                  padding: EdgeInsets.only(right: 4),
+                  padding: const EdgeInsets.only(right: 4),
                   child: ChoiceChip(
                     color: MaterialStateProperty.resolveWith((states) {
                       return states.contains(MaterialState.selected)
@@ -23,20 +23,24 @@ class SectionChips extends StatelessWidget {
                     }),
                     showCheckmark: false,
                     label: Text(
-                      '${controller.chips[index]}',
+                      '${controller.chips[index].name}',
                     ),
                     labelStyle: TextStyle(
                         fontFamily: 'PlusJakarta',
                         fontWeight: FontWeight.w500,
-                        color: (controller.idChipSelected.value == index)
+                        color: (controller.idChipSelected.value ==
+                                controller.chips[index].id)
                             ? Colors.white
                             : Colors.black,
                         fontSize: 15),
-                    selected: controller.idChipSelected.value == index,
+                    selected: controller.idChipSelected.value ==
+                        controller.chips[index].id,
                     onSelected: (bool selected) {
-                      if (controller.idChipSelected.value != index) {
+                      if (controller.idChipSelected.value !=
+                          controller.chips[index].id) {
                         // prevent for double click on the same chip
-                        controller.changeChip(selected, index);
+                        controller.changeChip(
+                            selected, controller.chips[index].id);
                       }
                     },
                   )));

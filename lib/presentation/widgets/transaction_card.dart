@@ -4,11 +4,13 @@ import '../../core/styles.dart';
 import '../../core/colors.dart';
 import 'span_status.dart';
 import '../router/app_routes.dart';
+import '../../extensions/string_extensions.dart';
 
 enum MenuPopupTransaction { firstItem, secondItem, thirdItem }
 
 class TransactionCard extends StatelessWidget {
   final String trxID;
+  final String trxCode;
   final String trxDate;
   final String status;
   final String productName;
@@ -19,11 +21,11 @@ class TransactionCard extends StatelessWidget {
   final Widget? dialogUpload;
   final Widget? dialogCancel;
   final void Function() onTapCard;
-  final controller;
 
   const TransactionCard(
       {Key? key,
       required this.trxID,
+      required this.trxCode,
       required this.trxDate,
       required this.status,
       required this.productName,
@@ -33,8 +35,7 @@ class TransactionCard extends StatelessWidget {
       required this.productImage,
       this.dialogUpload,
       this.dialogCancel,
-      required this.onTapCard,
-      required this.controller})
+      required this.onTapCard})
       : super(key: key);
 
   @override
@@ -66,10 +67,11 @@ class TransactionCard extends StatelessWidget {
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(trxID, style: AppStyles.trxCode),
+                                    Text(trxCode, style: AppStyles.trxCode),
                                     Text(trxDate, style: AppStyles.trxDate)
                                   ]),
-                              SpanStatus(text: txtStatus(status), tipe: status)
+                              SpanStatus(
+                                  text: status.txtStatusLabel(), tipe: status)
                             ]),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,13 +117,13 @@ class TransactionCard extends StatelessWidget {
                                 ],
                               )),
                               PopupMenuButton<MenuPopupTransaction>(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       side: BorderSide(
                                           color: AppColors.lightgray),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
                                   color: Colors.white,
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.more_vert,
                                     color: AppColors.blackv2,
                                     size: 40,
@@ -130,9 +132,8 @@ class TransactionCard extends StatelessWidget {
                                     if (item.name == 'firstItem') {
                                       Get.dialog(dialogUpload!);
                                     } else if (item.name == 'secondItem') {
-                                      String transactionId = '1';
-                                      Get.toNamed(
-                                          '${AppRoutes.transactionDetail.replaceFirst(":id", transactionId)}');
+                                      Get.toNamed(AppRoutes.transactionDetail
+                                          .replaceFirst(":id", trxID));
                                     } else if (item.name == 'thirdItem') {
                                       Get.dialog(dialogCancel!);
                                     }
@@ -148,7 +149,8 @@ class TransactionCard extends StatelessWidget {
                                                   : AppStyles
                                                       .txtDropdownDisabled),
                                         ),
-                                        PopupMenuItem<MenuPopupTransaction>(
+                                        const PopupMenuItem<
+                                            MenuPopupTransaction>(
                                           value:
                                               MenuPopupTransaction.secondItem,
                                           child: Text('Detail Transaksi',
@@ -175,20 +177,5 @@ class TransactionCard extends StatelessWidget {
 
   bool dropDownItemCancel(tipe) {
     return (tipe == 'reserved') ? true : false;
-  }
-
-  String txtStatus(tipe) {
-    switch (tipe) {
-      case 'accepted':
-        return 'Selesai';
-      case 'pending':
-        return 'Pending';
-      case 'reserved':
-        return 'Perlu Upload';
-      case 'cancelled':
-        return 'Dibatalkan';
-      default:
-        return 'Unknown Status';
-    }
   }
 }

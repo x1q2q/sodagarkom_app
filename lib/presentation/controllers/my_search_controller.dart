@@ -33,4 +33,8 @@ class MySearchController extends GetxController {
     super.onInit();
     // fetchProduct();
   }
+
+  void addToCart(String id) async {
+    print(id);
+  }
 }

@@ -5,6 +5,7 @@ import '../../core/colors.dart';
 import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../controllers/product_detail_controller.dart';
+import '../../extensions/string_extensions.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductDetailController controller = Get.find();
@@ -26,8 +27,9 @@ class ProductDetailPage extends StatelessWidget {
                     Container(
                       height: heightHeaderImg,
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(color: AppColors.lightgray),
+                      padding: const EdgeInsets.all(20),
+                      decoration:
+                          const BoxDecoration(color: AppColors.lightgray),
                       child: produkHeader(),
                     ),
                     produkContent(),
@@ -45,7 +47,7 @@ class ProductDetailPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(10)),
         child: Obx(() => controller.isLoading.value
             ? AppSkeleton.shimmerImg
-            : (controller.product!.imageThumb == '')
+            : (controller.product!.imageThumb.isEmpty)
                 ? AppSvg.imgNotFoundPotrait
                 : Image.network(
                     '${Core.pathAssetsProduct}${controller.product!.imageThumb}',
@@ -76,14 +78,17 @@ class ProductDetailPage extends StatelessWidget {
                 controller.isLoading.value
                     ? AppSkeleton.shimmerPrice
                     : Expanded(
-                        child: Text('Rp.${controller.product!.price}',
+                        child: Text('${controller.product!.price}'.toRupiah(),
                             style: AppStyles.txtRedPrice,
                             overflow: TextOverflow.ellipsis)),
-                ElevatedButton(
-                  child: Text('+ Keranjang', style: AppStyles.btnTxtWhite),
-                  style: AppStyles.btnElevatedRed,
-                  onPressed: () {},
-                )
+                controller.isLoading.value
+                    ? AppSkeleton.shimmerBtnRed
+                    : ElevatedButton(
+                        child:
+                            Text('+ Keranjang', style: AppStyles.btnTxtWhite),
+                        style: AppStyles.btnElevatedRed,
+                        onPressed: () {},
+                      )
               ],
             )));
   }

@@ -32,11 +32,12 @@ class AppRoutes {
         name: transaction,
         page: () => TransactionsPage(),
         binding: TransactionsBinding()),
-    GetPage(name: profile, page: () => ProfilePage(), binding: UserBinding()),
+    GetPage(
+        name: profile, page: () => ProfilePage(), binding: ProfileBinding()),
     GetPage(
         name: editProfile,
         page: () => EditProfilePage(),
-        binding: UserBinding()),
+        binding: ProfileBinding()),
     GetPage(
         name: transactionDetail,
         page: () => TransactionDetailPage(),

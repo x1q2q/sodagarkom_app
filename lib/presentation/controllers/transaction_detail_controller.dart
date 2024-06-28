@@ -6,11 +6,10 @@ class TransactionDetailController extends GetxController {
   final TransactionRepository _transactionRepository;
 
   TransactionDetailController(this._transactionRepository);
-  var transactions =
-      Transaction(id: 0, userId: 0, status: 'selesai', createdAt: '2024-10-05')
-          .obs;
 
   var isVisiblePaymentProof = false.obs;
+  bool isLoading = true;
+  Transaction? transaction;
 
   void changeVisionPayProof() {
     isVisiblePaymentProof.value = !isVisiblePaymentProof.value;
@@ -19,7 +18,20 @@ class TransactionDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    String transactionId = Get.parameters['id'] ?? 'unknown';
+    fetchTransactionId(transactionId);
   }
 
-  void fetchTransactions() async {}
+  void fetchTransactionId(String transactionId) async {
+    try {
+      int dummCustomerId = 9;
+      Transaction fetchedTransaction = await _transactionRepository
+          .getTransactionByID(dummCustomerId, transactionId);
+      transaction = fetchedTransaction;
+      isLoading = false;
+    } catch (e) {
+      print('failed to fetch transaction detail: $e');
+    }
+    update();
+  }
 }

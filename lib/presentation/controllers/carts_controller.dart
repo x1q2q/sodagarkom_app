@@ -7,36 +7,61 @@ class CartsController extends GetxController {
   final CartRepository _cartRepository;
 
   CartsController(this._cartRepository);
-  var carts = Cart(
-          id: 0,
-          productId: 0,
-          userId: 0,
-          quantity: 0,
-          productName: 'product1',
-          productPrice: 50000,
-          categoryName: 'asus',
-          addedDate: '2024-10-12')
-      .obs;
-
-  var qtyCarts = 9.obs;
-  var itemQty = 3.obs;
+  var carts = <Cart>[].obs;
+  bool isLoading = true;
+  var qtyCarts = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
+    fetchCarts();
   }
 
   void goToCarts() {
     Get.toNamed(AppRoutes.carts);
   }
 
-  void incrementItemCart() {
-    itemQty.value++;
+  void incrementItemCart(int cartId) {
+    for (var cart in carts) {
+      if (cart.id == cartId) {
+        cart.quantity.value += 1;
+        update();
+      }
+    }
   }
 
-  void decrementItemCart() {
-    itemQty.value--;
+  void decrementItemCart(int cartId) {
+    for (var cart in carts) {
+      if (cart.id == cartId) {
+        if (cart.quantity > 1) {
+          cart.quantity.value -= 1;
+        } else {
+          carts.remove(cart);
+        }
+        update();
+      }
+    }
   }
 
-  void fetchCarts() async {}
+  void removeItemCart(int cartId) {
+    for (var cart in carts) {
+      if (cart.id == cartId) {
+        carts.remove(cart);
+        update();
+      }
+    }
+  }
+
+  void fetchCarts() async {
+    try {
+      String customerId = '9';
+      List<Cart> fetchedCarts = await _cartRepository.getCarts(customerId);
+      isLoading = false;
+      carts.assignAll(fetchedCarts);
+      qtyCarts.value = fetchedCarts.length;
+    } catch (e) {
+      print('failed to fetch carts: $e');
+    }
+    update();
+  }
 }

@@ -14,7 +14,7 @@ class SpanStatus extends StatelessWidget {
         return AppColors.lightyellow;
       case 'reserved':
         return AppColors.lightpurple;
-      case 'cancelled':
+      case 'rejected':
         return AppColors.lightred;
       default:
         return Colors.black;
@@ -29,7 +29,7 @@ class SpanStatus extends StatelessWidget {
         return AppColors.yellowv1;
       case 'reserved':
         return AppColors.purplev1;
-      case 'cancelled':
+      case 'rejected':
         return AppColors.redv2;
       default:
         return Colors.white;

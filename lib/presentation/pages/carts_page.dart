@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/carts_controller.dart';
-import '../../core/assets.dart';
+import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
+import '../../extensions/string_extensions.dart';
 
 class CartsPage extends StatelessWidget {
-  final CartsController controller = Get.find();
-
+  const CartsPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: DefaultAppbar(title: 'Keranjang'),
+        appBar: const DefaultAppbar(title: 'Keranjang'),
         bottomNavigationBar: bottomAppBar(),
         body: SafeArea(child: LayoutBuilder(builder:
             (BuildContext context, BoxConstraints viewportConstraints) {
@@ -21,7 +21,9 @@ class CartsPage extends StatelessWidget {
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[listCarts(context)])));
+                  child: GetBuilder<CartsController>(
+                      builder: (dx) =>
+                          Column(children: <Widget>[listCarts(context, dx)]))));
         })));
   }
 
@@ -41,7 +43,7 @@ class CartsPage extends StatelessWidget {
         Expanded(
             child: ElevatedButton.icon(
           label: AppSvg.checkout,
-          icon: Text('Checkout', style: AppStyles.btnTxtWhite),
+          icon: const Text('Checkout', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
           onPressed: () {
             Get.toNamed(AppRoutes.transactionConfirm);
@@ -51,22 +53,31 @@ class CartsPage extends StatelessWidget {
     ));
   }
 
-  Widget listCarts(BuildContext context) {
-    return ListView.separated(
-        itemCount: 4,
-        shrinkWrap: true,
-        separatorBuilder: (BuildContext context, int index) =>
-            AppStyles.vSpaceMedium,
-        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return ProductCartCard(
-              productName: 'Laptop Asus Aspire Pro ${index + 1}',
-              productPrice: '5.000.000',
-              productImage: Image.asset(Assets.dummLaptop2, fit: BoxFit.cover),
-              categoryName: 'asus',
-              onTapBtn: () {},
-              controller: controller);
-        });
+  Widget listCarts(BuildContext context, dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerListView
+        : ListView.separated(
+            itemCount: controller.carts!.length,
+            shrinkWrap: true,
+            separatorBuilder: (BuildContext context, int index) =>
+                AppStyles.vSpaceMedium,
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              var cart = controller.carts[index];
+              ;
+              return ProductCartCard(
+                  cartId: cart.id,
+                  productName: cart.productName,
+                  productQuantity: cart.quantity,
+                  productPrice: '${cart.productPrice}'.toRupiah(),
+                  productImage: (cart.productImage.isEmpty)
+                      ? AppSvg.imgNotFound
+                      : Image.network(
+                          '${Core.pathAssetsProduct}${cart.productImage}',
+                          fit: BoxFit.cover),
+                  categoryName: '${cart.categoryName}',
+                  controller: controller);
+            });
   }
 }

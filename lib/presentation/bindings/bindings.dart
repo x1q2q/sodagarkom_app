@@ -8,4 +8,4 @@ export 'tabs_binding.dart';
 export 'transaction_confirm_binding.dart';
 export 'transaction_detail_binding.dart';
 export 'transactions_binding.dart';
-export 'user_binding.dart';
+export 'profile_binding.dart';

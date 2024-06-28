@@ -6,8 +6,9 @@ class HomeController extends GetxController {
   final CategoryRepository _categoryRepository;
 
   HomeController(this._categoryRepository);
+
   var idChipSelected = 0.obs;
-  List<Category> categories = [];
+  List chips = [];
   Category? category;
   bool isLoading = true;
 
@@ -19,15 +20,17 @@ class HomeController extends GetxController {
 
   void changeChip(bool selected, int index) {
     idChipSelected.value = selected ? index : 0;
+    isLoading = true;
+    fetchCategoryId(index.toString());
   }
 
   void fetchCategories() async {
     try {
       List<Category> fetchedCategories =
           await _categoryRepository.getCategories();
-      categories = fetchedCategories;
-      idChipSelected.value = categories[0].id;
-      fetchCategoryId(categories[0].id.toString());
+      chips = fetchedCategories;
+      idChipSelected.value = chips[0].id;
+      fetchCategoryId(chips[0].id.toString());
     } catch (e) {
       print('failed to fetch categories: $e');
     }
@@ -35,12 +38,10 @@ class HomeController extends GetxController {
   }
 
   void fetchCategoryId(String id) async {
-    isLoading = true;
     try {
       Category fetchedCategory = await _categoryRepository.getCategoryByID(id);
       category = fetchedCategory;
       isLoading = false;
-      // print(category!.products!.length);
     } catch (e) {
       print('failed to fetch category id: $e');
     }
