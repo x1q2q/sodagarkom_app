@@ -7,6 +7,19 @@ extension StringExtensions on String {
     return formatter.format(int.parse(this));
   }
 
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+  }
+
+  String toCapitalize() {
+    return this.split(' ').map((word) => word.capitalize()).join(' ');
+  }
+
+  String toFormattedDate(String format) {
+    DateTime dateTime = DateTime.parse(this);
+    return DateFormat(format, "id_ID").format(dateTime);
+  }
+
   String txtStatusDetail() {
     switch (this) {
       case 'accepted':

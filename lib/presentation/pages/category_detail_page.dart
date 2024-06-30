@@ -121,22 +121,19 @@ class CategoryDetailPage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
+              var products = controller.category!.products![index];
               return ProductTileCard(
-                  productId: '${controller.category!.products![index].id}',
-                  productName: '${controller.category!.products![index].name}',
-                  productPrice: '${controller.category!.products![index].price}'
-                      .toRupiah(),
-                  productImage: (controller
-                          .category!.products![index].imageThumb.isEmpty)
+                  productId: '${products.id}',
+                  productName: products.name,
+                  productPrice: '${products.price}'.toRupiah(),
+                  productImage: (products.imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
-                          '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
+                          '${Core.pathAssetsProduct}${products.imageThumb}',
                           fit: BoxFit.cover),
                   onTapCard: () {
-                    String productId =
-                        controller.category!.products![index].id.toString();
-                    Get.toNamed(
-                        AppRoutes.productDetail.replaceFirst(":id", productId));
+                    Get.toNamed(AppRoutes.productDetail
+                        .replaceFirst(":id", '${products.id}'));
                   },
                   controller: controller);
             });
@@ -156,21 +153,18 @@ class CategoryDetailPage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
+              var products = controller.category!.products![index];
               return ProductCard(
-                  productName: '${controller.category!.products![index].name}',
-                  productPrice: '${controller.category!.products![index].price}'
-                      .toRupiah(),
-                  productImage: (controller
-                          .category!.products![index].imageThumb.isEmpty)
+                  productName: products.name,
+                  productPrice: '${products.price}'.toRupiah(),
+                  productImage: (products.imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
-                          '${Core.pathAssetsProduct}${controller.category!.products![index].imageThumb}',
+                          '${Core.pathAssetsProduct}${products.imageThumb}',
                           fit: BoxFit.cover),
                   onTapCard: () {
-                    String productId =
-                        controller.category!.products![index].id.toString();
-                    Get.toNamed(
-                        AppRoutes.productDetail.replaceFirst(":id", productId));
+                    Get.toNamed(AppRoutes.productDetail
+                        .replaceFirst(":id", '${products.id}'));
                   },
                   onTapBtn: () {});
             });

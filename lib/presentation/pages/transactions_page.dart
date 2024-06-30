@@ -68,14 +68,18 @@ class TransactionsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         BtnCircle(
-                            widget: AppSvg.galleryAdd,
+                            widget: Column(
+                              children: <Widget>[
+                                AppSvg.galleryAdd,
+                                Text('Galeri', style: AppStyles.productNameTile)
+                              ],
+                            ),
                             bgColor: AppColors.lightgray,
                             size: 120,
                             padding: 20,
                             onTap: () {
-                              print('galeri');
+                              // print('galeri');
                             }),
-                        const Text('Galeri', style: AppStyles.productNameTile)
                       ]),
                   Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -118,34 +122,21 @@ class TransactionsPage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              String id = controller.transactions![index].id.toString();
-              String code = controller.transactions![index].code;
-              String createdAt = controller.transactions![index].createdAt;
-              String status = controller.transactions![index].status;
-              String totalAmount = controller.transactions![index].totalAmount
-                  .toString()
-                  .toRupiah();
-              String productName =
-                  controller.transactions![index].products[0].productName;
-              String productImage =
-                  controller.transactions![index].products[0].productImage;
-              String productQuantity = controller
-                  .transactions![index].products[0].productQuantity
-                  .toString();
-              int qtyRemaining =
-                  controller.transactions![index].products.length - 1;
+              var trx = controller.transactions![index];
+              String id = '${trx.id}';
               return TransactionCard(
                   trxID: id,
-                  trxCode: code,
-                  trxDate: createdAt,
-                  status: status,
-                  productName: productName,
-                  productQty: productQuantity,
-                  trxQtyRemaining: qtyRemaining.toString(),
-                  totalAmount: totalAmount,
-                  productImage: (productImage.isEmpty)
+                  trxCode: trx.code,
+                  trxDate: '${trx.createdAt}'.toFormattedDate('dd MMMM yyyy'),
+                  status: trx.status,
+                  productName: trx.products[0].productName,
+                  productQty: '${trx.products[0].productQuantity}',
+                  trxQtyRemaining: '${trx.products.length - 1}',
+                  totalAmount: '${trx.totalAmount}'.toRupiah(),
+                  productImage: (trx.products[0].productImage.isEmpty)
                       ? AppSvg.imgNotFound
-                      : Image.network('${Core.pathAssetsProduct}$productImage',
+                      : Image.network(
+                          '${Core.pathAssetsProduct}${trx.products[0].productImage}',
                           fit: BoxFit.cover),
                   dialogUpload: dialogUpload,
                   dialogCancel: dialogCancel,

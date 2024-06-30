@@ -64,7 +64,8 @@ class TransactionDetailPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: RowLabel(
                       field: 'Tangal Pembelian',
-                      value: controller.transaction!.createdAt,
+                      value: '${controller.transaction!.createdAt}'
+                          .toFormattedDate('dd MMMM yyyy, (HH:m:s)'),
                       fieldKeyStyle: AppStyles.fieldLabelVal)),
             ],
           );
@@ -172,14 +173,16 @@ class TransactionDetailPage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                 child: RowLabel(
                     field: 'Metode Pembayaran',
-                    value: '${controller.trxConfirm!.paymentMethod}',
+                    value: '${controller.transaction!.paymentMethod}'
+                        .toCapitalize(),
                     fieldKeyStyle: AppStyles.fieldLabelKey)),
             const Divider(color: AppColors.lightgray),
-            const Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
                 child: RowLabel(
                     field: 'Biaya Ongkos Kirim',
-                    value: 'Rp.35.000',
+                    value:
+                        '${controller.transaction!.totalShipping}'.toRupiah(),
                     fieldKeyStyle: AppStyles.fieldLabelVal)),
             Padding(
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),

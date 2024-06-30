@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sodagarkom_app/extensions/string_extensions.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
@@ -108,7 +109,9 @@ class ProfilePage extends StatelessWidget {
                   profilFieldCard('Alamat', controller.customer!.address,
                       isColumn: true),
                   profilFieldCard(
-                      'Terdaftar Pada', controller.customer!.createdAt),
+                      'Terdaftar Pada',
+                      '${controller.customer!.createdAt}'
+                          .toFormattedDate('EEEE, dd MMMM yyyy')),
                 ],
               ));
   }

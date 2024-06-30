@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'presentation/router/app_routes.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'core/core.dart';
 import 'core/colors.dart';
 
 void main() {
+  initializeDateFormatting();
   runApp(const MainApp());
 }
 
@@ -15,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.white54));
+        const SystemUiOverlayStyle(statusBarColor: Colors.white54));
     return GetMaterialApp(
       theme: ThemeData(
         useMaterial3: true,

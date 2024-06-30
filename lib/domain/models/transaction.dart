@@ -7,6 +7,8 @@ class Transaction {
   final String status;
   final int totalAmount;
   final int totalAmountProduct;
+  final int totalShipping;
+  final String paymentMethod;
   final String paymentProof;
   final String createdAt;
   final List<TransactionProduct>? products;
@@ -17,6 +19,8 @@ class Transaction {
       required this.status,
       required this.totalAmount,
       required this.totalAmountProduct,
+      required this.totalShipping,
+      required this.paymentMethod,
       required this.paymentProof,
       required this.createdAt,
       this.products});
@@ -30,8 +34,10 @@ class Transaction {
         code: json['code'],
         userId: int.parse(json['customer_id']),
         status: json['status'],
-        totalAmount: int.parse(json['total_amount']),
+        totalAmount: json['total_amount'],
         totalAmountProduct: json['total_amount_product'],
+        totalShipping: json['total_shipping'],
+        paymentMethod: json['payment_method'] ?? '',
         paymentProof: json['payment_proof'] ?? '',
         createdAt: json['created_at'],
         products: extractProducts);
@@ -44,6 +50,9 @@ class Transaction {
       'status': status,
       'total_amount': totalAmount,
       'total_amount_product': totalAmountProduct,
+      'total_shippin': totalShipping,
+      'payment_method': paymentMethod,
+      'payment_proof': paymentProof,
       'created_at': createdAt
     };
   }
