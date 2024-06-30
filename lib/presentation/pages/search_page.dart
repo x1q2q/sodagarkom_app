@@ -26,7 +26,7 @@ class SearchPage extends StatelessWidget {
             decoration: InputDecoration(
                 isDense: true,
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 border: null,
                 fillColor: Colors.white,
                 filled: true,

@@ -4,14 +4,14 @@ import '../../core/colors.dart';
 
 class ProductTransactionCard extends StatelessWidget {
   final String productName;
-  final String productPrice;
+  final String totalPrice;
   final Widget productImage;
   final String productQty;
 
   const ProductTransactionCard(
       {Key? key,
       required this.productName,
-      required this.productPrice,
+      required this.totalPrice,
       required this.productImage,
       required this.productQty})
       : super(key: key);
@@ -49,7 +49,7 @@ class ProductTransactionCard extends StatelessWidget {
                         style: AppStyles.trxProductName,
                       ),
                       Text(
-                        productPrice,
+                        totalPrice,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.trxProductDesc,
                       ),

@@ -89,8 +89,8 @@ class TransactionDetailPage extends StatelessWidget {
                         controller.transaction!.products![index].productName;
                     String productImage =
                         controller.transaction!.products[index].productImage;
-                    String productPrice = controller
-                        .transaction!.products![index].productPrice
+                    String totalPrice = controller
+                        .transaction!.products![index].totalPrice
                         .toString()
                         .toRupiah();
                     String productQuantity = controller
@@ -98,7 +98,7 @@ class TransactionDetailPage extends StatelessWidget {
                         .toString();
                     return ProductTransactionCard(
                         productName: productName,
-                        productPrice: productPrice,
+                        totalPrice: totalPrice,
                         productQty: productQuantity,
                         productImage: (productImage.isEmpty)
                             ? AppSvg.imgNotFound
@@ -168,11 +168,11 @@ class TransactionDetailPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             child: AppSkeleton.shimmerTransactionTotal)
         : Column(children: <Widget>[
-            const Padding(
-                padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                 child: RowLabel(
                     field: 'Metode Pembayaran',
-                    value: 'Transfer Manual',
+                    value: '${controller.trxConfirm!.paymentMethod}',
                     fieldKeyStyle: AppStyles.fieldLabelKey)),
             const Divider(color: AppColors.lightgray),
             const Padding(

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import '../../domain/repositories/cart_repository.dart';
 import '../../domain/models/cart.dart';
 import '../router/app_routes.dart';
+import '../../core/colors.dart';
 
 class CartsController extends GetxController {
   final CartRepository _cartRepository;
@@ -22,34 +23,56 @@ class CartsController extends GetxController {
   }
 
   void incrementItemCart(int cartId) {
-    for (var cart in carts) {
-      if (cart.id == cartId) {
-        cart.quantity.value += 1;
-        update();
-      }
-    }
+    int index = carts.indexWhere((item) => item.id == cartId);
+    int value = carts[index].quantity.value + 1;
+    updateItemCart(cartId, value);
   }
 
   void decrementItemCart(int cartId) {
-    for (var cart in carts) {
-      if (cart.id == cartId) {
-        if (cart.quantity > 1) {
-          cart.quantity.value -= 1;
-        } else {
-          carts.remove(cart);
-        }
-        update();
-      }
+    int index = carts.indexWhere((item) => item.id == cartId);
+    if (carts[index].quantity.value > 1) {
+      int value = carts[index].quantity.value - 1;
+      updateItemCart(cartId, value);
+    } else {
+      removeItemCart(cartId);
     }
   }
 
-  void removeItemCart(int cartId) {
-    for (var cart in carts) {
-      if (cart.id == cartId) {
-        carts.remove(cart);
-        update();
-      }
+  void removeItemCart(int cartId) async {
+    carts.removeWhere((item) => item.id == cartId);
+    qtyCarts.value = carts.length;
+    update();
+  }
+
+  void updateItemCart(int cartId, int value) async {
+    int index = carts.indexWhere((item) => item.id == cartId);
+    if (onHitMaxValue(value, cartId)) {
+      toast('maximal stok adalah ${carts[index].stock} item');
+    } else if (onHitMinuseValue(value)) {
+      toast('stok tidak boleh bernilai minus');
+    } else if (value == 0) {
+      removeItemCart(cartId);
+    } else {
+      carts[index].quantity.value = value;
+      update();
     }
+  }
+
+  bool onHitMaxValue(int assignedValue, int cartId) {
+    int index = carts.indexWhere((item) => item.id == cartId);
+    return assignedValue > carts[index].stock;
+  }
+
+  bool onHitMinuseValue(int assignedValue) {
+    return assignedValue < 0;
+  }
+
+  void toast(String message) {
+    Get.rawSnackbar(
+        message: message,
+        maxWidth: Get.width,
+        backgroundColor: AppColors.redv2,
+        snackPosition: SnackPosition.TOP);
   }
 
   void fetchCarts() async {

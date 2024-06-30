@@ -6,13 +6,15 @@ class BtnRounded extends StatelessWidget {
   final Color bgColor;
   final Color? splashColor;
   final bool isOutline;
+  final double size;
   const BtnRounded(
       {Key? key,
       required this.widget,
       this.onTap,
       required this.bgColor,
       this.splashColor,
-      this.isOutline = false})
+      this.isOutline = false,
+      this.size = 35})
       : super(key: key);
 
   @override
@@ -35,8 +37,8 @@ class BtnRounded extends StatelessWidget {
                 : BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: bgColor, width: 1.5)),
-            height: 35,
-            width: 35,
+            height: size,
+            width: size,
             child: widget,
           ),
         ),

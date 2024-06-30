@@ -9,7 +9,7 @@ class Cart {
   final String productImage;
   final int productPrice;
   final String categoryName;
-  final String addedDate;
+  final int stock;
   Cart(
       {required this.id,
       required this.productId,
@@ -19,7 +19,7 @@ class Cart {
       required this.productImage,
       required this.productPrice,
       required this.categoryName,
-      required this.addedDate});
+      required this.stock});
 
   factory Cart.fromJson(Map<String, dynamic> json) {
     return Cart(
@@ -31,7 +31,7 @@ class Cart {
         productImage: json['product_image'] ?? '',
         productPrice: int.parse(json['product_price']),
         categoryName: json['category_name'],
-        addedDate: json['added_date']);
+        stock: int.parse(json['stock']));
   }
   Map toMap() {
     return {
@@ -43,7 +43,7 @@ class Cart {
       'product_image': productImage,
       'product_price': productPrice,
       'category_name': categoryName,
-      'added_date': addedDate
+      'stock': stock
     };
   }
 }

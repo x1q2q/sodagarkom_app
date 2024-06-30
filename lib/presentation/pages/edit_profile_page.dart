@@ -107,7 +107,6 @@ class EditProfilePage extends StatelessWidget {
                 colorText: AppColors.greenv1);
             // Navigator.pop(context);
             Get.until((route) => route.settings.name == AppRoutes.appTab);
-            ;
           },
         )));
   }

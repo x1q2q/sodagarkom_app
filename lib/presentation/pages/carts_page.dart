@@ -37,9 +37,11 @@ class CartsPage extends StatelessWidget {
             child: ElevatedButton(
           child: Text('Belanja Lagi', style: AppStyles.btnTxtPurple),
           style: AppStyles.btnOutinePurple,
-          onPressed: () {},
+          onPressed: () {
+            Get.until((route) => route.settings.name == AppRoutes.appTab);
+          },
         )),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Expanded(
             child: ElevatedButton.icon(
           label: AppSvg.checkout,
@@ -60,12 +62,11 @@ class CartsPage extends StatelessWidget {
             itemCount: controller.carts!.length,
             shrinkWrap: true,
             separatorBuilder: (BuildContext context, int index) =>
-                AppStyles.vSpaceMedium,
+                AppStyles.vSpaceSmall,
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               var cart = controller.carts[index];
-              ;
               return ProductCartCard(
                   cartId: cart.id,
                   productName: cart.productName,

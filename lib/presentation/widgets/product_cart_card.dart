@@ -36,68 +36,67 @@ class ProductCartCard extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 color: AppColors.lightgray),
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                          width: 80,
-                          height: 80,
-                          clipBehavior: Clip.antiAlias,
-                          padding: const EdgeInsets.all(5),
-                          margin: const EdgeInsets.only(right: 5),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: AppColors.grayv1),
-                              borderRadius: BorderRadius.circular(18)),
-                          child: productImage),
-                      Expanded(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    productName,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppStyles.trxProductName,
-                                  ),
-                                  Text(
-                                    categoryName,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppStyles.trxProductDesc,
-                                  ),
-                                ]),
-                            Text(
-                              productPrice,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppStyles.trxProductName,
-                            ),
-                          ])),
-                      qtyAdjuster(context)
-                    ]),
-                Positioned(
-                    child: BtnCircle(
-                        widget: AppSvg.cross,
-                        bgColor: AppColors.redv1,
-                        splashColor: AppColors.redv2,
-                        size: 40,
-                        onTap: () {
-                          controller.removeItemCart(cartId);
-                        },
-                        padding: 12),
-                    top: -25,
-                    right: -5)
-              ],
-            )));
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                      width: 80,
+                      height: 80,
+                      clipBehavior: Clip.antiAlias,
+                      padding: const EdgeInsets.all(5),
+                      margin: const EdgeInsets.only(right: 5),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: AppColors.grayv1),
+                          borderRadius: BorderRadius.circular(18)),
+                      child: productImage),
+                  Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                productName,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppStyles.trxProductName,
+                              ),
+                              Text(
+                                categoryName,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppStyles.trxProductDesc,
+                              ),
+                            ]),
+                        Text(
+                          productPrice,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.trxProductName,
+                        ),
+                      ])),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        BtnCircle(
+                            widget: AppSvg.cross,
+                            bgColor: AppColors.redv1,
+                            splashColor: AppColors.redv2,
+                            size: 30,
+                            onTap: () {
+                              controller.removeItemCart(cartId);
+                            },
+                            padding: 8),
+                        qtyAdjuster(context)
+                      ])
+                ])));
   }
 
   Widget qtyAdjuster(BuildContext context) {
+    final TextEditingController txtController = TextEditingController();
+    txtController.text = '${productQuantity.value}';
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,11 +108,32 @@ class ProductCartCard extends StatelessWidget {
               onTap: () {
                 controller.decrementItemCart(cartId);
               },
+              size: 30,
               isOutline: true),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text('${productQuantity.value}',
-                  style: AppStyles.trxProductName)),
+          SizedBox(
+              width: 40,
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: txtController,
+                cursorColor: AppColors.blackv1,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 4),
+                    fillColor: AppColors.lightgray,
+                    filled: true,
+                    hintText: '0',
+                    hintStyle: AppStyles.fieldInput,
+                    enabled: true,
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.lightpurple)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.purplev1, width: 2))),
+                onSubmitted: (value) {
+                  controller.updateItemCart(cartId, int.parse(value));
+                },
+              )),
           BtnRounded(
               widget: AppSvg.addCart,
               bgColor: AppColors.purplev1,
@@ -121,6 +141,7 @@ class ProductCartCard extends StatelessWidget {
               onTap: () {
                 controller.incrementItemCart(cartId);
               },
+              size: 30,
               isOutline: true)
         ]);
   }
