@@ -4,6 +4,7 @@ import '../../core/styles.dart';
 import '../../core/colors.dart';
 import '../../core/core.dart';
 import '../controllers/category_detail_controller.dart';
+import '../controllers/carts_controller.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 import '../../extensions/string_extensions.dart';
@@ -13,6 +14,7 @@ class CategoryDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CategoryDetailController categoryController = Get.find();
+    final CartsController cartController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: const DefaultAppbar(title: 'Kategori Detail'),
@@ -34,8 +36,8 @@ class CategoryDetailPage extends StatelessWidget {
                                 curtainCategory(context, dx),
                                 sectionLabel(context, dx),
                                 dx.isGridView
-                                    ? gridProducts(context, dx)
-                                    : listProduct(context, dx)
+                                    ? gridProducts(context, dx, cartController)
+                                    : listProduct(context, dx, cartController)
                               ]))));
             }))));
   }
@@ -62,19 +64,19 @@ class CategoryDetailPage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                       width: width / 4,
-                      margin: EdgeInsets.only(right: 5),
+                      margin: const EdgeInsets.only(right: 5),
                       height: 160,
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             controller.isLoading
-                                ? AppSkeleton.shimmerCategory
+                                ? AppSkeleton.shimmerCategorySm
                                 : Text('${controller.category!.name}',
                                     style: AppStyles.labelCategoryPurple),
                             AppStyles.vSpaceSmall,
                             controller.isLoading
-                                ? AppSkeleton.shimmerImgSmall
+                                ? AppSkeleton.shimmerImgSm
                                 : (controller.category!.imageThumb.isEmpty)
                                     ? AppSvg.imgNotFound
                                     : Image.network(
@@ -118,7 +120,8 @@ class CategoryDetailPage extends StatelessWidget {
             ]));
   }
 
-  Widget listProduct(BuildContext context, dynamic controller) {
+  Widget listProduct(
+      BuildContext context, dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerListView
         : ListView.separated(
@@ -138,16 +141,17 @@ class CategoryDetailPage extends StatelessWidget {
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${products.imageThumb}',
-                          fit: BoxFit.cover),
+                          fit: BoxFit.contain),
                   onTapCard: () {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));
                   },
-                  controller: controller);
+                  controller: cartController);
             });
   }
 
-  Widget gridProducts(BuildContext context, dynamic controller) {
+  Widget gridProducts(
+      BuildContext context, dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(
@@ -169,12 +173,14 @@ class CategoryDetailPage extends StatelessWidget {
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${products.imageThumb}',
-                          fit: BoxFit.cover),
+                          fit: BoxFit.contain),
                   onTapCard: () {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));
                   },
-                  onTapBtn: () {});
+                  onTapBtn: () {
+                    cartController.addToCart(products.id);
+                  });
             });
   }
 }

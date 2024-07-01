@@ -86,7 +86,7 @@ class ProductCartCard extends StatelessWidget {
                             splashColor: AppColors.redv2,
                             size: 30,
                             onTap: () {
-                              controller.removeItemCart(cartId);
+                              controller.deleteCart(cartId);
                             },
                             padding: 8),
                         qtyAdjuster(context)
@@ -131,7 +131,9 @@ class ProductCartCard extends StatelessWidget {
                         borderSide:
                             BorderSide(color: AppColors.purplev1, width: 2))),
                 onSubmitted: (value) {
-                  controller.updateItemCart(cartId, int.parse(value));
+                  if (value.isNumericOnly) {
+                    controller.updateItemCart(cartId, int.parse(value));
+                  }
                 },
               )),
           BtnRounded(

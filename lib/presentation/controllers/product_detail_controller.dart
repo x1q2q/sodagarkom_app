@@ -7,18 +7,19 @@ class ProductDetailController extends GetxController {
   ProductDetailController(this._productRepository);
 
   Product? product;
-  var isLoading = true.obs;
+  bool isLoading = true;
+  String? productId;
   @override
   void onInit() {
     super.onInit();
-    String productId = Get.parameters['id'] ?? 'unknown';
-    fetchProductId(productId);
+    productId = Get.parameters['id'] ?? 'unknown';
+    fetchProductId(productId!);
   }
 
   void fetchProductId(String id) async {
     try {
       Product fetchedProduct = await _productRepository.getProductByID(id);
-      isLoading.value = false;
+      isLoading = false;
       product = fetchedProduct;
     } catch (e) {
       print('failed to fetch product id: $e');

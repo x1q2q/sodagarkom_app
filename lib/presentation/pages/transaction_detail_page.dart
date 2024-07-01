@@ -86,25 +86,15 @@ class TransactionDetailPage extends StatelessWidget {
                       const Divider(color: AppColors.grayv1),
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
-                    String productName =
-                        controller.transaction!.products![index].productName;
-                    String productImage =
-                        controller.transaction!.products[index].productImage;
-                    String totalPrice = controller
-                        .transaction!.products![index].totalPrice
-                        .toString()
-                        .toRupiah();
-                    String productQuantity = controller
-                        .transaction!.products![index].productQuantity
-                        .toString();
+                    var trx = controller.transaction!.products![index];
                     return ProductTransactionCard(
-                        productName: productName,
-                        totalPrice: totalPrice,
-                        productQty: productQuantity,
-                        productImage: (productImage.isEmpty)
+                        productName: trx.productName,
+                        totalPrice: '${trx.totalPrice}'.toRupiah(),
+                        productQty: '${trx.productQuantity}',
+                        productImage: (trx.productImage.isEmpty)
                             ? AppSvg.imgNotFound
                             : Image.network(
-                                '${Core.pathAssetsProduct}$productImage',
+                                '${Core.pathAssetsProduct}${trx.productImage}',
                                 fit: BoxFit.cover));
                   }),
             ],
@@ -117,12 +107,15 @@ class TransactionDetailPage extends StatelessWidget {
     return (controller.transaction!.status == 'reserved')
         ? const Text('Anda perlu mengupload bukti transfer terlebih dahulu',
             style: AppStyles.trxProductDesc)
-        : (image.isEmpty)
-            ? AppSvg.imgNotFoundPotrait
-            : Image.network(
-                '${Core.pathAssetsPayment}${controller.transaction!.paymentProof}',
-                width: 200,
-              );
+        : (controller.transaction!.status == 'rejected')
+            ? const Text('Anda tidak pernah mengupload bukti transfer',
+                style: AppStyles.trxProductDesc)
+            : (image.isEmpty)
+                ? AppSvg.imgNotFoundPotrait
+                : Image.network(
+                    '${Core.pathAssetsPayment}${controller.transaction!.paymentProof}',
+                    width: 200,
+                  );
   }
 
   Widget transferProof(dynamic controller) {
@@ -187,8 +180,7 @@ class TransactionDetailPage extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
                 child: RowLabel(
-                    field:
-                        'Total Harga (${controller.transaction!.products!.length} Barang)',
+                    field: 'Total Harga (${controller.totalQtyBarang!} Barang)',
                     value: '${controller.transaction!.totalAmountProduct}'
                         .toRupiah(),
                     fieldKeyStyle: AppStyles.fieldLabelVal)),

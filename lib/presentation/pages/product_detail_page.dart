@@ -5,39 +5,42 @@ import '../../core/colors.dart';
 import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../controllers/product_detail_controller.dart';
+import '../controllers/carts_controller.dart';
 import '../../extensions/string_extensions.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  final ProductDetailController controller = Get.find();
+  const ProductDetailPage({super.key});
   final double heightHeaderImg = 420.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: DefaultAppbar(title: 'Produk Detail'),
-        bottomNavigationBar: bottomAppBar(),
+        appBar: const DefaultAppbar(title: 'Produk Detail'),
         body: SafeArea(child: LayoutBuilder(builder:
             (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
               child: ConstrainedBox(
                   constraints:
                       BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    Container(
-                      height: heightHeaderImg,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(20),
-                      decoration:
-                          const BoxDecoration(color: AppColors.lightgray),
-                      child: produkHeader(),
-                    ),
-                    produkContent(),
-                  ])));
-        })));
+                  child: GetBuilder<ProductDetailController>(
+                      builder: (dx) => Column(children: <Widget>[
+                            Container(
+                              height: heightHeaderImg,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(20),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.lightgray),
+                              child: produkHeader(dx),
+                            ),
+                            produkContent(dx),
+                          ]))));
+        })),
+        bottomNavigationBar: GetBuilder<ProductDetailController>(
+            builder: (dx) => bottomAppBar(dx)));
   }
 
-  Widget produkHeader() {
+  Widget produkHeader(dynamic controller) {
     return Container(
         width: double.infinity,
         height: double.infinity,
@@ -45,13 +48,13 @@ class ProductDetailPage extends StatelessWidget {
             color: Colors.white,
             border: Border.all(color: Colors.white, width: 4),
             borderRadius: BorderRadius.circular(10)),
-        child: Obx(() => controller.isLoading.value
+        child: controller.isLoading
             ? AppSkeleton.shimmerImg
             : (controller.product!.imageThumb.isEmpty)
                 ? AppSvg.imgNotFoundPotrait
                 : Image.network(
                     '${Core.pathAssetsProduct}${controller.product!.imageThumb}',
-                    fit: BoxFit.cover)));
+                    fit: BoxFit.contain));
   }
 
   Widget chipsProduk(String text, {bool bgWhite = false}) {
@@ -61,7 +64,7 @@ class ProductDetailPage extends StatelessWidget {
           border: Border.all(color: AppColors.purplev1),
           borderRadius: BorderRadius.circular(30),
         ),
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
         child: Text(text,
             style: TextStyle(
                 fontFamily: 'PlusJakarta',
@@ -70,34 +73,38 @@ class ProductDetailPage extends StatelessWidget {
                 fontSize: 14)));
   }
 
-  Widget bottomAppBar() {
+  Widget bottomAppBar(dynamic controller) {
+    final CartsController cartController = Get.find();
     return DefaultBottombar(
-        widget: Obx(() => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                controller.isLoading.value
-                    ? AppSkeleton.shimmerPrice
-                    : Expanded(
-                        child: Text('${controller.product!.price}'.toRupiah(),
-                            style: AppStyles.txtRedPrice,
-                            overflow: TextOverflow.ellipsis)),
-                controller.isLoading.value
-                    ? AppSkeleton.shimmerBtnRed
-                    : ElevatedButton(
-                        child:
-                            Text('+ Keranjang', style: AppStyles.btnTxtWhite),
+        widget: controller.isLoading
+            ? AppSkeleton.bottomBarProduk
+            : (controller.product != null)
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                          child: Text('${controller.product!.price}'.toRupiah(),
+                              style: AppStyles.txtRedPrice,
+                              overflow: TextOverflow.ellipsis)),
+                      ElevatedButton(
                         style: AppStyles.btnElevatedRed,
-                        onPressed: () {},
+                        onPressed: () {
+                          cartController
+                              .addToCart(int.parse(controller.productId));
+                        },
+                        child: const Text('+ Keranjang',
+                            style: AppStyles.btnTxtWhite),
                       )
-              ],
-            )));
+                    ],
+                  )
+                : Text('kosong'));
   }
 
-  Widget produkContent() {
+  Widget produkContent(dynamic controller) {
     return Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-        child: Obx(() => controller.isLoading.value
+        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+        child: controller.isLoading
             ? AppSkeleton.shimmerDetail
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,14 +115,14 @@ class ProductDetailPage extends StatelessWidget {
                     AppStyles.vSpaceSmall,
                     Row(children: <Widget>[
                       chipsProduk(controller.product!.categoryName),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       chipsProduk('${controller.product!.stock} item',
                           bgWhite: true),
                     ]),
                     AppStyles.vSpaceSmall,
-                    Text('${controller.product!.description}',
+                    Text(controller.product!.description,
                         textAlign: TextAlign.justify,
                         style: AppStyles.productNameTile)
-                  ])));
+                  ]));
   }
 }

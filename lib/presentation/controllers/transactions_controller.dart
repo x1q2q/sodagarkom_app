@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/app_dialog_upload.dart';
 import '../../presentation/services/dialog_services.dart';
+import '../../extensions/string_extensions.dart';
 // import 'package:flutter/services.dart';
 
 class TransactionsController extends GetxController {
@@ -79,18 +80,14 @@ class TransactionsController extends GetxController {
       Map<String, dynamic> result = await _transactionRepository
           .updateTransactionStatus(statusHandleTo, transactionId!);
       isLoadingProcess = false;
-      if (result['status'] == 'ok') {
-        Get.back();
-        int index = transactions.indexWhere((item) => item.id == transactionId);
-        transactions[index].status = statusHandleTo;
-        update();
-        DialogService.showToast('success', 'berhasil mengupdate data status');
-      } else {
-        DialogService.showToast('error', 'gagal mengupdate data status');
-      }
+      Get.back();
+      int index = transactions.indexWhere((item) => item.id == transactionId);
+      transactions[index].status = statusHandleTo;
+      update();
+      DialogService.showToast('success', result['message']);
     } catch (e) {
       Get.back();
-      DialogService.showToast('error', 'gagal mengupdate data status');
+      DialogService.showToast('error', '$e'.extractMessage());
     }
   }
 
@@ -132,19 +129,13 @@ class TransactionsController extends GetxController {
           await _transactionRepository.uploadImage(transactionId!, filePhoto!);
       isLoadingProcess = false;
       Get.back();
-      if (result['status'] == 'ok') {
-        int index = transactions.indexWhere((item) => item.id == transactionId);
-        transactions[index].status = statusHandleTo;
-        update();
-        DialogService.showToast(
-            'success', 'berhasil mengupload bukti transfer pembayaran');
-      } else {
-        DialogService.showToast(
-            'error', 'gagal mengupload bukti transfer pembayaran');
-      }
+      int index = transactions.indexWhere((item) => item.id == transactionId);
+      transactions[index].status = statusHandleTo;
+      update();
+      DialogService.showToast('success', result['message']);
     } catch (e) {
-      DialogService.showToast(
-          'error', 'gagal mengupload bukti transfer pembayaran');
+      Get.back();
+      DialogService.showToast('error', '$e'.extractMessage());
     }
     update();
   }

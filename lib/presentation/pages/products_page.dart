@@ -13,8 +13,8 @@ class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final CartsController cartController = Get.find();
     final ProductsController productController = Get.find();
+    final CartsController cartController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
         body: RefreshIndicator(
@@ -49,8 +49,9 @@ class ProductsPage extends StatelessWidget {
                             builder: (dx) => Column(children: <Widget>[
                                   sectionLabel(context),
                                   dx.isGridView
-                                      ? gridProducts(context, dx)
-                                      : listProduct(context, dx)
+                                      ? gridProducts(
+                                          context, dx, cartController)
+                                      : listProduct(context, dx, cartController)
                                 ]))
                       ])));
             }))));
@@ -74,8 +75,8 @@ class ProductsPage extends StatelessWidget {
             ]));
   }
 
-  Widget gridProducts(BuildContext context, dynamic controller) {
-    final CartsController cartController = Get.find();
+  Widget gridProducts(
+      BuildContext context, dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(
@@ -97,7 +98,7 @@ class ProductsPage extends StatelessWidget {
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${products.imageThumb}',
-                          fit: BoxFit.cover),
+                          fit: BoxFit.contain),
                   onTapCard: () {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));
@@ -108,8 +109,8 @@ class ProductsPage extends StatelessWidget {
             });
   }
 
-  Widget listProduct(BuildContext context, dynamic controller) {
-    final CartsController cartController = Get.find();
+  Widget listProduct(
+      BuildContext context, dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerListView
         : ListView.separated(
@@ -129,7 +130,7 @@ class ProductsPage extends StatelessWidget {
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${products.imageThumb}',
-                          fit: BoxFit.cover),
+                          fit: BoxFit.contain),
                   onTapCard: () {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));

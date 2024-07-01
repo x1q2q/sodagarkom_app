@@ -99,4 +99,13 @@ class NetworkService {
 //       rethrow;
 //     }
 //   }
+// Future<Response> deleteData(
+//     String endpoint, Map<String, dynamic> data) async {
+//   try {
+//     final response = await dio.delete('$baseUrl/$endpoint', data: data);
+//     return response;
+//   } catch (e) {
+//     throw Exception('Failed to fetch data: $e');
+//   }
+// }
 // }

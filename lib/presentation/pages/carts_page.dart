@@ -66,7 +66,19 @@ class CartsPage extends StatelessWidget {
                               onPressed: controller.goTransactionConfirm))
                     ],
                   )
-                : AppStyles.vSpaceSmall);
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                        Expanded(
+                            child: ElevatedButton(
+                                style: AppStyles.btnOutinePurple,
+                                onPressed: () {
+                                  Get.until((route) =>
+                                      route.settings.name == AppRoutes.appTab);
+                                },
+                                child: const Text('Yuk Belanja!',
+                                    style: AppStyles.btnTxtPurple)))
+                      ]));
   }
 
   Widget listCarts(BuildContext context, dynamic controller) {

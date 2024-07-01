@@ -10,6 +10,7 @@ class TransactionDetailController extends GetxController {
   var isVisiblePaymentProof = false.obs;
   bool isLoading = true;
   Transaction? transaction;
+  int? totalQtyBarang;
 
   void changeVisionPayProof() {
     isVisiblePaymentProof.value = !isVisiblePaymentProof.value;
@@ -28,6 +29,9 @@ class TransactionDetailController extends GetxController {
       Transaction fetchedTransaction = await _transactionRepository
           .getTransactionByID(dummCustomerId, transactionId);
       transaction = fetchedTransaction;
+      totalQtyBarang = fetchedTransaction.products!
+          .map((product) => product.productQuantity)
+          .reduce((a, b) => a + b);
       isLoading = false;
     } catch (e) {
       print('failed to fetch transaction detail: $e');

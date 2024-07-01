@@ -56,11 +56,6 @@ class AppSkeleton {
         ],
       ));
 
-  static Widget shimmerPrice = Shimmer.fromColors(
-      baseColor: Colors.red.shade200,
-      highlightColor: Colors.red.shade300,
-      child: baseContainer(190, 28));
-
   static Widget shimmerGridView = Shimmer.fromColors(
       baseColor: Colors.grey.shade100,
       highlightColor: Colors.grey.shade300,
@@ -91,15 +86,25 @@ class AppSkeleton {
           itemBuilder: (_, i) {
             return baseContainer(double.infinity, 100, radius: 18);
           }));
-  static Widget shimmerImgSmall = Shimmer.fromColors(
+  static Widget shimmerImgSm = Shimmer.fromColors(
       baseColor: Colors.grey.shade200,
       highlightColor: Colors.grey.shade300,
-      child: baseContainer(120, 120));
+      child: baseContainer(100, 80));
 
-  static Widget shimmerCategory = Shimmer.fromColors(
+  static Widget shimmerImgMd = Shimmer.fromColors(
       baseColor: Colors.grey.shade200,
       highlightColor: Colors.grey.shade300,
-      child: baseContainer(170, 25));
+      child: baseContainer(160, 160));
+
+  static Widget shimmerCategorySm = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
+      child: baseContainer(100, 25));
+
+  static Widget shimmerCategoryMd = Shimmer.fromColors(
+      baseColor: Colors.grey.shade200,
+      highlightColor: Colors.grey.shade300,
+      child: baseContainer(170, 34));
 
   static Widget shimmerDescription = Shimmer.fromColors(
       baseColor: Colors.grey.shade200,
@@ -107,12 +112,14 @@ class AppSkeleton {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          baseContainer(180, 18, shadeGrey: 300),
+          AppStyles.vSpaceMedium,
+          baseContainer(180, 13, shadeGrey: 300),
           AppStyles.vSpaceSmall,
-          baseContainer(double.infinity, 18, shadeGrey: 300),
+          baseContainer(double.infinity, 13, shadeGrey: 300),
           AppStyles.vSpaceSmall,
-          baseContainer(double.infinity, 18, shadeGrey: 300),
-          AppStyles.vSpaceSmall
+          baseContainer(double.infinity, 13, shadeGrey: 300),
+          AppStyles.vSpaceSmall,
+          baseContainer(double.infinity, 13, shadeGrey: 300)
         ],
       ));
 
@@ -166,7 +173,7 @@ class AppSkeleton {
   static Widget shimmerBtn = Shimmer.fromColors(
       baseColor: Colors.grey.shade200,
       highlightColor: Colors.grey.shade300,
-      child: baseContainer(100, 26, radius: 18));
+      child: baseContainer(180, 36, radius: 30));
 
   static Widget shimmerBtnRed = Shimmer.fromColors(
       baseColor: Colors.red.shade200,
@@ -180,11 +187,11 @@ class AppSkeleton {
           padding: const EdgeInsets.only(top: 10),
           child: Row(
             children: <Widget>[
-              baseContainer(100, 30, radius: 8),
+              baseContainer(140, 36, radius: 8),
               const SizedBox(width: 10),
-              baseContainer(100, 30, radius: 8),
+              baseContainer(90, 36, radius: 8),
               const SizedBox(width: 10),
-              baseContainer(100, 30, radius: 8),
+              baseContainer(110, 36, radius: 8),
               const SizedBox(width: 10)
             ],
           )));
@@ -237,6 +244,18 @@ class AppSkeleton {
           Expanded(child: baseContainer(double.infinity, 34, radius: 8)),
           const SizedBox(width: 10),
           Expanded(child: baseContainer(double.infinity, 34, radius: 8)),
+        ],
+      ));
+
+  static Widget bottomBarProduk = Shimmer.fromColors(
+      baseColor: Colors.red.shade200,
+      highlightColor: Colors.red.shade300,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(child: baseContainer(150, 30)),
+          const SizedBox(width: 10),
+          Expanded(child: baseContainer(double.infinity, 50, radius: 8)),
         ],
       ));
 }

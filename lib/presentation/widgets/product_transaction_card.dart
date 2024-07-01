@@ -22,7 +22,7 @@ class ProductTransactionCard extends StatelessWidget {
         child: Container(
             height: 70,
             width: double.infinity,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,8 +31,8 @@ class ProductTransactionCard extends StatelessWidget {
                       width: 65,
                       height: 65,
                       clipBehavior: Clip.antiAlias,
-                      padding: EdgeInsets.all(5),
-                      margin: EdgeInsets.only(right: 5),
+                      padding: const EdgeInsets.all(5),
+                      margin: const EdgeInsets.only(right: 5),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: AppColors.grayv1),

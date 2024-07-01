@@ -87,7 +87,7 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       controller.isLoading
-                          ? AppSkeleton.shimmerCategory
+                          ? AppSkeleton.shimmerCategoryMd
                           : Text(controller.category!.name,
                               style: AppStyles.labelCategory),
                       controller.isLoading
@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget {
                     ]),
               ),
               controller.isLoading
-                  ? AppSkeleton.shimmerImgSmall
+                  ? AppSkeleton.shimmerImgMd
                   : (controller.category!.imageThumb.isEmpty)
                       ? AppSvg.imgNotFound
                       : Image.network(
@@ -161,7 +161,7 @@ class HomePage extends StatelessWidget {
                       ? AppSvg.imgNotFound
                       : Image.network(
                           '${Core.pathAssetsProduct}${products.imageThumb}',
-                          fit: BoxFit.cover),
+                          fit: BoxFit.contain),
                   onTapCard: () {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));

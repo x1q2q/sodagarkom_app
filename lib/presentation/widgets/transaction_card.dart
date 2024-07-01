@@ -47,7 +47,7 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String productItemDesc = (trxQtyRemaining != '')
-        ? '$productQty item (+$trxQtyRemaining lainnya)'
+        ? '$productQty item (+$trxQtyRemaining produk lainnya)'
         : '$productQty item';
 
     return SizedBox.fromSize(

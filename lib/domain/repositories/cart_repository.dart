@@ -32,4 +32,26 @@ class CartRepository {
       throw Exception('Failed add product to cart');
     }
   }
+
+  Future<Map<String, dynamic>> deleteCart(int cartId) async {
+    final response = await _networkService.fetchData('cart/delete/$cartId');
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> result = Map.from(response.data);
+
+      return result;
+    } else {
+      throw Exception('Failed delete cart');
+    }
+  }
+
+  Future<Map<String, dynamic>> updateCart(Map<String, dynamic> data) async {
+    final response = await _networkService.updateData('cart/update/', data);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> result = Map.from(response.data);
+
+      return result;
+    } else {
+      throw Exception('Failed update cart');
+    }
+  }
 }

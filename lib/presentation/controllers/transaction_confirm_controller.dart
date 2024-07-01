@@ -13,12 +13,17 @@ class TransactionConfirmController extends GetxController {
   var infoChangeAddress = '*silahkan ganti alamat di menu profil';
   bool isLoading = true;
   bool isLoadingProcess = false;
+  var isVisiblePaymentProof = false.obs;
   TransactionConfirm? trxConfirm;
 
   @override
   void onInit() {
     super.onInit();
     fetchTransactionConfirm();
+  }
+
+  void changeVisionPayProof() {
+    isVisiblePaymentProof.value = !isVisiblePaymentProof.value;
   }
 
   void fetchTransactionConfirm() async {

@@ -19,4 +19,18 @@ class DialogService {
         backgroundColor: AppColors.blackv2,
         snackPosition: SnackPosition.BOTTOM);
   }
+
+  static SnackbarController topToast(String color, String msg) {
+    return Get.rawSnackbar(
+        message: msg,
+        maxWidth: Get.width,
+        backgroundColor: (color == 'red')
+            ? AppColors.redv2
+            : (color == 'yellow')
+                ? AppColors.lightyellow
+                : (color == 'green')
+                    ? AppColors.lightgreen
+                    : AppColors.blackv2,
+        snackPosition: SnackPosition.TOP);
+  }
 }

@@ -20,6 +20,11 @@ extension StringExtensions on String {
     return DateFormat(format, "id_ID").format(dateTime);
   }
 
+  String extractMessage() {
+    List<String> parts = this.split(': ');
+    return (parts.length == 2) ? parts[1] : this;
+  }
+
   String txtStatusDetail() {
     switch (this) {
       case 'accepted':

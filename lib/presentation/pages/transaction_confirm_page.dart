@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/styles.dart';
 import '../../core/colors.dart';
+import '../../core/core.dart';
 import '../widgets/widgets.dart';
 import '../controllers/transaction_confirm_controller.dart';
 import '../../extensions/string_extensions.dart';
@@ -25,6 +26,7 @@ class TransactionConfirmPage extends StatelessWidget {
                       builder: (dx) => Column(children: <Widget>[
                             boxWhite(addressReceiver(dx)),
                             boxWhite(paymentMethod(dx)),
+                            boxWhite(listProduct(dx)),
                             boxWhite(totalPayment(dx), withNoPadding: true),
                           ]))));
         })));
@@ -73,6 +75,55 @@ class TransactionConfirmPage extends StatelessWidget {
                 Text('${controller.infoChangeAddress}',
                     style: AppStyles.trxProductDesc)
               ]);
+  }
+
+  Widget listProduct(dynamic controller) {
+    return controller.isLoading
+        ? AppSkeleton.shimmerListProducTrx
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text('Daftar Belanjaan',
+                        style: AppStyles.fieldLabelKey),
+                    IconButton(
+                        onPressed: controller.changeVisionPayProof,
+                        icon: Obx(() => Icon(
+                            controller.isVisiblePaymentProof.value
+                                ? Icons.keyboard_arrow_down
+                                : Icons.keyboard_arrow_right,
+                            size: 30)))
+                  ]),
+              Obx(() => Visibility(
+                  visible: controller.isVisiblePaymentProof.value,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      opacity: controller.isVisiblePaymentProof.value ? 1 : 0,
+                      child: ListView.separated(
+                          itemCount: controller.trxConfirm!.products!.length,
+                          shrinkWrap: true,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(color: AppColors.grayv1),
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            var trx = controller.trxConfirm!.products![index];
+                            return ProductTransactionCard(
+                                productName: trx.productName,
+                                totalPrice: '${trx.totalPrice}'.toRupiah(),
+                                productQty: '${trx.productQuantity}',
+                                productImage: (trx.productImage.isEmpty)
+                                    ? AppSvg.imgNotFound
+                                    : Image.network(
+                                        '${Core.pathAssetsProduct}${trx.productImage}',
+                                        fit: BoxFit.cover));
+                          })))),
+            ],
+          );
   }
 
   Widget paymentMethod(dynamic controller) {

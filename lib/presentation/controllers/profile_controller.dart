@@ -4,6 +4,7 @@ import '../../domain/models/customer.dart';
 import 'package:flutter/material.dart';
 import '../router/app_routes.dart';
 import '../../presentation/services/dialog_services.dart';
+import '../../extensions/string_extensions.dart';
 
 // used for [profile_page, edit_profile_page]
 class ProfileController extends GetxController {
@@ -54,11 +55,6 @@ class ProfileController extends GetxController {
     addressCtrlr.text = customer!.address;
   }
 
-  String extractMessage(String text) {
-    List<String> parts = text.split(': ');
-    return (parts.length == 2) ? parts[1] : text;
-  }
-
   void updateProfile() async {
     isLoadingProcess = true;
     try {
@@ -84,7 +80,7 @@ class ProfileController extends GetxController {
     } catch (e) {
       initField();
       update();
-      DialogService.showToast('error', extractMessage('$e'));
+      DialogService.showToast('error', '$e'.extractMessage());
     }
   }
 }
