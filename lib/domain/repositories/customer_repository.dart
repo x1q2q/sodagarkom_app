@@ -15,4 +15,18 @@ class CustomerRepository {
       throw Exception('Failed to load user data');
     }
   }
+
+  Future<Map<String, dynamic>> updateUser(Customer data) async {
+    final response = await _networkService
+        .updateData('customer/update_profile', {...data.toJson()});
+    if (response.statusCode == 200 ||
+        response.statusCode == 400 ||
+        response.statusCode == 409 ||
+        response.statusCode == 500) {
+      final Map<String, dynamic> result = Map.from(response.data);
+      return result;
+    } else {
+      throw Exception('Failed to update profile user');
+    }
+  }
 }

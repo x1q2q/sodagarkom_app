@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'package:http_parser/http_parser.dart';
 
 class NetworkService {
   final String baseUrl;
@@ -15,16 +18,60 @@ class NetworkService {
     }
   }
 
-  Future<Response> postData(String endpoint, Map<String, dynamic> data) async {
+  Future<Response> insertData(
+      String endpoint, Map<String, dynamic> data) async {
     try {
       final response = await dio.post('$baseUrl/$endpoint', data: data);
       return response;
     } catch (e) {
-      throw Exception('Failed to post data: $e');
+      throw Exception('Failed to insert data: $e');
+    }
+  }
+
+  Future<Response> updateData(
+      String endpoint, Map<String, dynamic> data) async {
+    try {
+      final response = await dio.put('$baseUrl/$endpoint', data: data);
+      return response;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        // Check the status code and handle accordingly
+        if (e.response!.statusCode == 400 ||
+            e.response!.statusCode == 409 ||
+            e.response!.statusCode == 500) {
+          throw Exception(e.response!.data['message']);
+        } else {
+          throw Exception('Failed to update data: ${e.response!.data}');
+        }
+      } else {
+        // handling network error
+        throw Exception('Failed to update data: ${e.message}');
+      }
+    } catch (e) {
+      // handling the others
+      throw Exception('Failed to update data: $e');
+    }
+  }
+
+  Future<Response> uploadImage(
+      String endpoint, Map<String, dynamic> objData, File filePhoto) async {
+    try {
+      String fileName = filePhoto.path.split('/').last;
+      var fileExt = fileName.split('.').last;
+      Map<String, dynamic> imgData = {
+        'file': await MultipartFile.fromFile(filePhoto.path,
+            filename: fileName, contentType: MediaType("image", fileExt))
+      };
+
+      FormData formData = FormData.fromMap({...objData, ...imgData});
+
+      final response = await dio.post('$baseUrl/$endpoint', data: formData);
+      return response;
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
     }
   }
 }
-
 // class NetworkService {
 //   final Dio _dio;
 

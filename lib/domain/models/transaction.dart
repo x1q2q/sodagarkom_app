@@ -4,7 +4,7 @@ class Transaction {
   final int id;
   final String code;
   final int userId;
-  final String status;
+  String status;
   final int totalAmount;
   final int totalAmountProduct;
   final int totalShipping;

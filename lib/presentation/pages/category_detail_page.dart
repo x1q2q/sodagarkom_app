@@ -33,56 +33,11 @@ class CategoryDetailPage extends StatelessWidget {
   }
 
   Widget curtainCategory(BuildContext context, dynamic controller) {
+    double width = MediaQuery.of(context).size.width;
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       height: 228.0,
       alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        controller.isLoading
-                            ? AppSkeleton.shimmerCategory
-                            : Text('${controller.category!.name}',
-                                style: AppStyles.labelCategoryPurple),
-                        AppStyles.vSpaceSmall,
-                        controller.isLoading
-                            ? AppSkeleton.shimmerImgSmall
-                            : (controller.category!.imageThumb.isEmpty)
-                                ? AppSvg.imgNotFound
-                                : Image.network(
-                                    '${Core.pathAssetsCategory}${controller.category!.imageThumb}',
-                                    width: 110,
-                                    height: 110)
-                      ])),
-              Expanded(
-                  child: controller.isLoading
-                      ? AppSkeleton.shimmerDescription
-                      : Text('${controller.category!.description}',
-                          textAlign: TextAlign.justify,
-                          maxLines: 6,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppStyles.btnTxtCardCategory))
-            ],
-          ),
-          Center(
-            child: Text(
-              controller.isLoading
-                  ? '... items'
-                  : '${controller.category!.products!.length} items',
-              style: AppStyles.productNameGrid,
-            ),
-          )
-        ],
-      ),
       decoration: BoxDecoration(
           color: controller.isLoading
               ? Colors.grey.shade50
@@ -90,6 +45,51 @@ class CategoryDetailPage extends StatelessWidget {
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30))),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                      width: width / 4,
+                      margin: EdgeInsets.only(right: 5),
+                      height: 160,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            controller.isLoading
+                                ? AppSkeleton.shimmerCategory
+                                : Text('${controller.category!.name}',
+                                    style: AppStyles.labelCategoryPurple),
+                            AppStyles.vSpaceSmall,
+                            controller.isLoading
+                                ? AppSkeleton.shimmerImgSmall
+                                : (controller.category!.imageThumb.isEmpty)
+                                    ? AppSvg.imgNotFound
+                                    : Image.network(
+                                        '${Core.pathAssetsCategory}${controller.category!.imageThumb}',
+                                        width: width / 4,
+                                        height: 80)
+                          ])),
+                  Expanded(
+                      child: controller.isLoading
+                          ? AppSkeleton.shimmerDescription
+                          : Text('${controller.category!.description}',
+                              textAlign: TextAlign.justify,
+                              maxLines: 6,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppStyles.btnTxtCardCategory))
+                ]),
+            Center(
+                child: Text(
+                    controller.isLoading
+                        ? '... items'
+                        : '${controller.category!.products!.length} items',
+                    style: AppStyles.productNameGrid))
+          ]),
     );
   }
 

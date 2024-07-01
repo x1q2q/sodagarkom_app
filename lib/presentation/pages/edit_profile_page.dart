@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
-import '../router/app_routes.dart';
 import '../widgets/widgets.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -49,7 +48,10 @@ class EditProfilePage extends StatelessWidget {
 
   Widget fieldInput(String fieldLabel, TextEditingController txtController,
       String placeholder,
-      {bool isObscure = false, Icon? icon, int lines = 1}) {
+      {bool isObscure = false,
+      Icon? icon,
+      int lines = 1,
+      TextInputType type = TextInputType.name}) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -59,13 +61,13 @@ class EditProfilePage extends StatelessWidget {
           ),
           AppStyles.vSpaceXSmall,
           AppInputField(
-            controller: txtController,
-            hintText: placeholder,
-            obscureText: isObscure,
-            icon: icon,
-            bgColor: AppColors.lightgray,
-            lines: lines,
-          ),
+              controller: txtController,
+              hintText: placeholder,
+              obscureText: isObscure,
+              icon: icon,
+              bgColor: AppColors.lightgray,
+              lines: lines,
+              type: type),
           AppStyles.vSpaceSmall
         ]);
   }
@@ -80,34 +82,32 @@ class EditProfilePage extends StatelessWidget {
             fieldInput(
                 'Username', controller.unameCtrlr, 'kolom tidak boleh kosong'),
             fieldInput(
-                'Email', controller.emailCtrlr, 'kolom tidak boleh kosong'),
+                'Email', controller.emailCtrlr, 'kolom tidak boleh kosong',
+                type: TextInputType.emailAddress),
+            fieldInput('Password Baru', controller.pwdCtrlr,
+                '(tetap kosongkan jika tidak ingin diubah)',
+                isObscure: true, type: TextInputType.visiblePassword),
             fieldInput('Nama Lengkap', controller.fnameCtrlr,
                 'masukkan kolom tidak boleh kosong'),
             fieldInput('Nomor Telepon', controller.notelpCtrlr,
-                'kolom tidak boleh kosong'),
+                'kolom tidak boleh kosong',
+                type: TextInputType.phone),
             fieldInput(
                 'Alamat', controller.addressCtrlr, 'kolom tidak boleh kosong',
-                lines: 3),
+                lines: 3, type: TextInputType.streetAddress),
           ],
         ));
   }
 
   Widget fieldButton(BuildContext context, dynamic controller) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Center(
             child: ElevatedButton.icon(
           label: AppSvg.save,
           icon: const Text('Simpan', style: AppStyles.btnTxtWhite),
           style: AppStyles.btnElevatedRed,
-          onPressed: () {
-            Get.snackbar('success', 'berhasil menyimpan data',
-                margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
-                backgroundColor: AppColors.lightgreen,
-                colorText: AppColors.greenv1);
-            // Navigator.pop(context);
-            Get.until((route) => route.settings.name == AppRoutes.appTab);
-          },
+          onPressed: controller.updateProfile,
         )));
   }
 }

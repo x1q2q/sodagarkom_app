@@ -107,11 +107,11 @@ class AppSkeleton {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          baseContainer(180, 20, shadeGrey: 300),
+          baseContainer(180, 18, shadeGrey: 300),
           AppStyles.vSpaceSmall,
-          baseContainer(double.infinity, 20, shadeGrey: 300),
+          baseContainer(double.infinity, 18, shadeGrey: 300),
           AppStyles.vSpaceSmall,
-          baseContainer(double.infinity, 20, shadeGrey: 300),
+          baseContainer(double.infinity, 18, shadeGrey: 300),
           AppStyles.vSpaceSmall
         ],
       ));

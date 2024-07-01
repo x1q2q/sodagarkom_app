@@ -40,15 +40,15 @@ class AppStyles {
 
   static const TextStyle labelCategoryPurple = TextStyle(
       fontFamily: 'PlusJakarta',
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w800,
       color: AppColors.purplev1,
-      fontSize: 26);
+      fontSize: 20);
 
   static const TextStyle btnTxtCardCategory = TextStyle(
       fontFamily: 'PlusJakarta',
       fontWeight: FontWeight.w500,
       color: AppColors.purplev1,
-      fontSize: 16);
+      fontSize: 15);
 
   static const TextStyle labelSection = TextStyle(
       fontFamily: 'PlusJakarta',

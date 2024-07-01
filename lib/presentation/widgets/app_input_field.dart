@@ -9,6 +9,7 @@ class AppInputField extends StatefulWidget {
   final Icon? icon;
   final int lines;
   final Color bgColor;
+  final TextInputType? type;
   AppInputField(
       {super.key,
       required this.controller,
@@ -16,7 +17,8 @@ class AppInputField extends StatefulWidget {
       required this.obscureText,
       this.icon,
       this.bgColor = Colors.white,
-      this.lines = 1});
+      this.lines = 1,
+      this.type});
 
   @override
   State<AppInputField> createState() => _AppInputFieldState();
@@ -34,7 +36,7 @@ class _AppInputFieldState extends State<AppInputField> {
   Widget build(BuildContext context) {
     // use the ternary instead of object properties cause obscureText cant accept maxLines attribute
     return (widget.lines > 1)
-        ? TextFormField(
+        ? TextField(
             maxLines: widget.lines,
             controller: widget.controller,
             cursorColor: AppColors.blackv1,
@@ -54,7 +56,8 @@ class _AppInputFieldState extends State<AppInputField> {
                   borderSide: const BorderSide(color: AppColors.blackv2)),
               filled: true,
             ))
-        : TextFormField(
+        : TextField(
+            keyboardType: widget.type,
             controller: widget.controller,
             obscureText: widget.obscureText ? _isHidden : widget.obscureText,
             cursorColor: AppColors.blackv1,
