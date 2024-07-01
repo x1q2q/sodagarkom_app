@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sodagarkom_app/extensions/string_extensions.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
@@ -7,33 +6,43 @@ import '../../core/assets.dart';
 import '../../core/colors.dart';
 import '../router/app_routes.dart';
 import '../widgets/widgets.dart';
+import '../../extensions/string_extensions.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
+    final ProfileController profilController = Get.find();
     return Scaffold(
         backgroundColor: AppColors.lightgray,
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<ProfileController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            Container(
-                              color: Colors.white,
-                              padding:
-                                  const EdgeInsets.fromLTRB(20, 60, 20, 25),
-                              height: 300.0,
-                              alignment: Alignment.center,
-                              child: headerProfile(context, dx),
-                            ),
-                            listFieldUser(context, dx),
-                            fieldButton(context, dx),
-                          ]))));
-        })));
+        body: RefreshIndicator(
+            backgroundColor: AppColors.redv2,
+            color: Colors.white,
+            strokeWidth: 2.0,
+            onRefresh: () async {
+              profilController.handleRefresh();
+            },
+            child: SafeArea(child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<ProfileController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                Container(
+                                  color: Colors.white,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 60, 20, 25),
+                                  height: 300.0,
+                                  alignment: Alignment.center,
+                                  child: headerProfile(context, dx),
+                                ),
+                                listFieldUser(context, dx),
+                                fieldButton(context, dx),
+                              ]))));
+            }))));
   }
 
   Widget headerProfile(BuildContext context, dynamic controller) {

@@ -87,7 +87,7 @@ class ProductTileCard extends StatelessWidget {
                                   Get.toNamed(AppRoutes.productDetail
                                       .replaceFirst(":id", productId));
                                 } else {
-                                  controller.addToCart(productId);
+                                  controller.addToCart(int.parse(productId));
                                 }
                               },
                               itemBuilder: (BuildContext context) =>

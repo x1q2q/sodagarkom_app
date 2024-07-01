@@ -6,12 +6,10 @@ import 'btn_cart.dart';
 import 'btn_circle.dart';
 import 'app_svg.dart';
 import 'package:get/get.dart';
-import '../controllers/carts_controller.dart';
-
-final CartsController controller = Get.find();
 
 class AppHeader extends StatelessWidget {
-  const AppHeader({Key? key}) : super(key: key);
+  final controller;
+  AppHeader({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

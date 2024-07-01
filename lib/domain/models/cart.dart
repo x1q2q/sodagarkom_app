@@ -33,7 +33,7 @@ class Cart {
         categoryName: json['category_name'],
         stock: int.parse(json['stock']));
   }
-  Map toMap() {
+  Map toJson() {
     return {
       'id': id,
       'product_id': productId,

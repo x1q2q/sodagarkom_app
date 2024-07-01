@@ -13,8 +13,6 @@ class AppTabController extends GetxController {
   static AppTabController get to => Get.find();
 
   var selectedIndex = 0.obs;
-
-  // final pages = [HomePage(), ProductsPage(), TransactionsPage(), ProfilePage()];
   final pages = <String>['/home', '/products', '/transactions', '/profile'];
 
   @override
@@ -36,21 +34,23 @@ class AppTabController extends GetxController {
     switch (settings.name) {
       case '/home':
         return GetPageRoute(
-            settings: settings, page: () => HomePage(), binding: HomeBinding());
+            settings: settings,
+            page: () => const HomePage(),
+            binding: HomeBinding());
       case '/products':
         return GetPageRoute(
             settings: settings,
-            page: () => ProductsPage(),
+            page: () => const ProductsPage(),
             binding: ProductsBinding());
       case '/transactions':
         return GetPageRoute(
             settings: settings,
-            page: () => TransactionsPage(),
+            page: () => const TransactionsPage(),
             binding: TransactionsBinding());
       case '/profile':
         return GetPageRoute(
             settings: settings,
-            page: () => ProfilePage(),
+            page: () => const ProfilePage(),
             binding: ProfileBinding());
       default:
         return null;

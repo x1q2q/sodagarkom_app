@@ -91,4 +91,17 @@ class TransactionRepository {
       throw Exception('Failed to load Transaction confirm');
     }
   }
+
+  Future<Map<String, dynamic>> insertTransaction(
+      TransactionConfirm trxConfirm) async {
+    final response = await _networkService
+        .insertData('transaction/checkout', {...trxConfirm.toJson()});
+    print(response);
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> result = Map.from(response.data);
+      return result;
+    } else {
+      throw Exception('Failed to update transaction status');
+    }
+  }
 }

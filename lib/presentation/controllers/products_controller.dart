@@ -6,7 +6,6 @@ class ProductsController extends GetxController {
   final ProductRepository _productRepository;
   ProductsController(this._productRepository);
 
-  // var products = <Product>[].obs;
   List<Product> products = [];
   bool isGridView = true;
   bool isLoading = true;
@@ -14,6 +13,12 @@ class ProductsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    handleRefresh();
+  }
+
+  Future<void> handleRefresh() async {
+    isLoading = true;
+    update();
     fetchProducts();
   }
 
@@ -27,8 +32,8 @@ class ProductsController extends GetxController {
   void fetchProducts() async {
     try {
       List<Product> fetchedProducts = await _productRepository.getProducts();
-      isLoading = false;
       products = fetchedProducts;
+      isLoading = false;
     } catch (e) {
       print('failed to fetch producst: $e');
     }

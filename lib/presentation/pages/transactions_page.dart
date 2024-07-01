@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/styles.dart';
+import '../../core/colors.dart';
 import '../controllers/transactions_controller.dart';
 import '../../core/core.dart';
 import '../widgets/widgets.dart';
@@ -12,20 +13,29 @@ class TransactionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TransactionsController trasactionController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<TransactionsController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            sectionStatus(context, dx),
-                            listTransaction(context, dx)
-                          ]))));
-        })));
+        body: RefreshIndicator(
+            backgroundColor: AppColors.redv2,
+            color: Colors.white,
+            strokeWidth: 2.0,
+            onRefresh: () async {
+              trasactionController.handleRefresh();
+            },
+            child: SafeArea(child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<TransactionsController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                sectionStatus(context, dx),
+                                listTransaction(context, dx)
+                              ]))));
+            }))));
   }
 
   Widget sectionStatus(BuildContext context, dynamic controller) {

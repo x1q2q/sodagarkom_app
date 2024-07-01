@@ -11,16 +11,22 @@ class CategoryDetailController extends GetxController {
   bool isLoading = true;
   Category? category;
 
-  void changeTypeView() {
-    isGridView = !isGridView;
-    update();
-  }
-
   @override
   void onInit() {
     super.onInit();
+    handleRefresh();
+  }
+
+  Future<void> handleRefresh() async {
     String categoryId = Get.parameters['id'] ?? 'unknown';
+    isLoading = true;
+    update();
     fetchCategoryId(categoryId);
+  }
+
+  void changeTypeView() {
+    isGridView = !isGridView;
+    update();
   }
 
   void fetchCategoryId(String id) async {

@@ -3,6 +3,7 @@ import '../../domain/repositories/cart_repository.dart';
 import '../../domain/models/cart.dart';
 import '../router/app_routes.dart';
 import '../../core/colors.dart';
+import '../services/dialog_services.dart';
 
 class CartsController extends GetxController {
   final CartRepository _cartRepository;
@@ -10,11 +11,19 @@ class CartsController extends GetxController {
   CartsController(this._cartRepository);
   var carts = <Cart>[].obs;
   bool isLoading = true;
+  bool isLoadingProcess = false;
   var qtyCarts = 0.obs;
+  String dummCustomerId = '9';
 
   @override
   void onInit() {
     super.onInit();
+    handleRefresh();
+  }
+
+  Future<void> handleRefresh() async {
+    isLoading = true;
+    update();
     fetchCarts();
   }
 
@@ -77,13 +86,46 @@ class CartsController extends GetxController {
 
   void fetchCarts() async {
     try {
-      String customerId = '9';
-      List<Cart> fetchedCarts = await _cartRepository.getCarts(customerId);
+      List<Cart> fetchedCarts = await _cartRepository.getCarts(dummCustomerId);
       isLoading = false;
       carts.assignAll(fetchedCarts);
       qtyCarts.value = fetchedCarts.length;
     } catch (e) {
+      isLoading = false;
+      carts.clear();
+      qtyCarts.value = 0;
       print('failed to fetch carts: $e');
+    }
+    update();
+  }
+
+  void goTransactionConfirm() {
+    if (carts.value.isNotEmpty) {
+      Get.toNamed(AppRoutes.transactionConfirm);
+    } else {
+      toast('tidak ada data dalam keranjang, silahkan belanja terlebih dahulu');
+    }
+  }
+
+  void addToCart(int productId) async {
+    try {
+      isLoading = true;
+      Map<String, dynamic> data = {
+        'customer_id': dummCustomerId,
+        'product_id': productId
+      };
+      Map<String, dynamic> result = await _cartRepository.insertCart(data);
+      isLoadingProcess = false;
+
+      DialogService.showToast('success', result['message']);
+      Get.toNamed(AppRoutes.carts);
+      Cart cartResult = Cart.fromJson(result['data'][0]);
+
+      carts.insert(0, cartResult);
+      isLoading = false;
+    } catch (e) {
+      print('failed add product to cart: $e');
+      DialogService.showToast('error', '$e');
     }
     update();
   }

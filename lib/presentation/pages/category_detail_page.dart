@@ -12,24 +12,32 @@ class CategoryDetailPage extends StatelessWidget {
   const CategoryDetailPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final CategoryDetailController categoryController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: const DefaultAppbar(title: 'Kategori Detail'),
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<CategoryDetailController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            curtainCategory(context, dx),
-                            sectionLabel(context, dx),
-                            dx.isGridView
-                                ? gridProducts(context, dx)
-                                : listProduct(context, dx)
-                          ]))));
-        })));
+        body: RefreshIndicator(
+            backgroundColor: AppColors.redv2,
+            color: Colors.white,
+            strokeWidth: 2.0,
+            onRefresh: () async {
+              categoryController.handleRefresh();
+            },
+            child: SafeArea(child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<CategoryDetailController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                curtainCategory(context, dx),
+                                sectionLabel(context, dx),
+                                dx.isGridView
+                                    ? gridProducts(context, dx)
+                                    : listProduct(context, dx)
+                              ]))));
+            }))));
   }
 
   Widget curtainCategory(BuildContext context, dynamic controller) {

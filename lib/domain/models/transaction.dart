@@ -50,7 +50,7 @@ class Transaction {
       'status': status,
       'total_amount': totalAmount,
       'total_amount_product': totalAmountProduct,
-      'total_shippin': totalShipping,
+      'total_shipping': totalShipping,
       'payment_method': paymentMethod,
       'payment_proof': paymentProof,
       'created_at': createdAt

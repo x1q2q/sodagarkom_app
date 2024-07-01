@@ -15,7 +15,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCategories();
+    handleRefresh();
   }
 
   void changeChip(bool selected, int index) {
@@ -24,7 +24,12 @@ class HomeController extends GetxController {
     fetchCategoryId(index.toString());
   }
 
+  Future<void> handleRefresh() async {
+    fetchCategories();
+  }
+
   void fetchCategories() async {
+    isLoading = true;
     try {
       List<Category> fetchedCategories =
           await _categoryRepository.getCategories();

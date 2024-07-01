@@ -3,6 +3,7 @@ import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/carts_controller.dart';
 import '../../core/core.dart';
+import '../../core/colors.dart';
 import '../widgets/widgets.dart';
 import '../router/app_routes.dart';
 import '../../extensions/string_extensions.dart';
@@ -11,53 +12,68 @@ class CartsPage extends StatelessWidget {
   const CartsPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final CartsController cartController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: const DefaultAppbar(title: 'Keranjang'),
-        bottomNavigationBar: bottomAppBar(),
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<CartsController>(
-                      builder: (dx) =>
-                          Column(children: <Widget>[listCarts(context, dx)]))));
-        })));
+        body: RefreshIndicator(
+            backgroundColor: AppColors.redv2,
+            color: Colors.white,
+            strokeWidth: 2.0,
+            onRefresh: () async {
+              cartController.handleRefresh();
+            },
+            child: SafeArea(child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<CartsController>(
+                          builder: (dx) => Column(
+                              children: <Widget>[listCarts(context, dx)]))));
+            }))),
+        bottomNavigationBar:
+            GetBuilder<CartsController>(builder: (dx) => bottomAppBar(dx)));
   }
 
-  Widget bottomAppBar() {
+  Widget bottomAppBar(dynamic controller) {
     return DefaultBottombar(
-        widget: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-            child: ElevatedButton(
-          child: Text('Belanja Lagi', style: AppStyles.btnTxtPurple),
-          style: AppStyles.btnOutinePurple,
-          onPressed: () {
-            Get.until((route) => route.settings.name == AppRoutes.appTab);
-          },
-        )),
-        const SizedBox(width: 10),
-        Expanded(
-            child: ElevatedButton.icon(
-          label: AppSvg.checkout,
-          icon: const Text('Checkout', style: AppStyles.btnTxtWhite),
-          style: AppStyles.btnElevatedRed,
-          onPressed: () {
-            Get.toNamed(AppRoutes.transactionConfirm);
-          },
-        ))
-      ],
-    ));
+        widget: controller.isLoading
+            ? AppSkeleton.bottomBar
+            : controller.carts!.length > 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Expanded(
+                          child: ElevatedButton(
+                              style: AppStyles.btnOutinePurple,
+                              onPressed: () {
+                                Get.until((route) =>
+                                    route.settings.name == AppRoutes.appTab);
+                              },
+                              child: const Text('Belanja Lagi',
+                                  style: AppStyles.btnTxtPurple))),
+                      const SizedBox(width: 10),
+                      Expanded(
+                          child: ElevatedButton.icon(
+                              label: AppSvg.checkout,
+                              icon: const Text('Checkout',
+                                  style: AppStyles.btnTxtWhite),
+                              style: AppStyles.btnElevatedRed,
+                              onPressed: controller.goTransactionConfirm))
+                    ],
+                  )
+                : AppStyles.vSpaceSmall);
   }
 
   Widget listCarts(BuildContext context, dynamic controller) {
     return controller.isLoading
-        ? AppSkeleton.shimmerListView
+        ? Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: AppSkeleton.shimmerListView)
         : ListView.separated(
             itemCount: controller.carts!.length,
             shrinkWrap: true,

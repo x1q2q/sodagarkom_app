@@ -227,4 +227,16 @@ class AppSkeleton {
           AppStyles.vSpaceSmall,
         ],
       ));
+  static Widget bottomBar = Shimmer.fromColors(
+      baseColor: Colors.red.shade200,
+      highlightColor: Colors.red.shade300,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(child: baseContainer(double.infinity, 34, radius: 8)),
+          const SizedBox(width: 10),
+          Expanded(child: baseContainer(double.infinity, 34, radius: 8)),
+        ],
+      ));
 }

@@ -4,7 +4,6 @@ import '../../core/styles.dart';
 import '../../core/colors.dart';
 import '../widgets/widgets.dart';
 import '../controllers/transaction_confirm_controller.dart';
-import '../router/app_routes.dart';
 import '../../extensions/string_extensions.dart';
 
 class TransactionConfirmPage extends StatelessWidget {
@@ -32,18 +31,13 @@ class TransactionConfirmPage extends StatelessWidget {
   }
 
   Widget bottomAppBar() {
+    final TransactionConfirmController controller = Get.find();
     return DefaultBottombar(
         widget: ElevatedButton.icon(
       icon: const Text('Submit Transaksi', style: AppStyles.btnTxtWhite),
       label: AppSvg.trxSubmit,
       style: AppStyles.btnElevatedRed,
-      onPressed: () {
-        Get.snackbar('success', 'berhasil melakukan pesanan transaksi',
-            margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
-            backgroundColor: AppColors.lightgreen,
-            colorText: AppColors.greenv1);
-        Get.until((route) => route.settings.name == AppRoutes.appTab);
-      },
+      onPressed: controller.insertTransactionConfirm,
     ));
   }
 

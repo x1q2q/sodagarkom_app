@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/products_controller.dart';
+import '../controllers/carts_controller.dart';
 import '../../core/core.dart';
 import '../../core/colors.dart';
 import '../widgets/widgets.dart';
@@ -12,35 +13,47 @@ class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final CartsController cartController = Get.find();
+    final ProductsController productController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<ProductsController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
-                              height: 165.0,
-                              alignment: Alignment.center,
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  AppHeader(),
-                                  AppSearchbar(),
-                                ],
-                              ),
-                            ),
-                            sectionLabel(context),
-                            dx.isGridView
-                                ? gridProducts(context, dx)
-                                : listProduct(context, dx)
-                          ]))));
-        })));
+        body: RefreshIndicator(
+            backgroundColor: AppColors.redv2,
+            color: Colors.white,
+            strokeWidth: 2.0,
+            onRefresh: () async {
+              productController.handleRefresh();
+              cartController.handleRefresh();
+            },
+            child: SafeArea(child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: Column(children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
+                          height: 165.0,
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AppHeader(controller: cartController),
+                              const AppSearchbar(),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<ProductsController>(
+                            builder: (dx) => Column(children: <Widget>[
+                                  sectionLabel(context),
+                                  dx.isGridView
+                                      ? gridProducts(context, dx)
+                                      : listProduct(context, dx)
+                                ]))
+                      ])));
+            }))));
   }
 
   Widget sectionLabel(BuildContext context) {
@@ -62,6 +75,7 @@ class ProductsPage extends StatelessWidget {
   }
 
   Widget gridProducts(BuildContext context, dynamic controller) {
+    final CartsController cartController = Get.find();
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(
@@ -88,11 +102,14 @@ class ProductsPage extends StatelessWidget {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));
                   },
-                  onTapBtn: () {});
+                  onTapBtn: () {
+                    cartController.addToCart(products.id);
+                  });
             });
   }
 
   Widget listProduct(BuildContext context, dynamic controller) {
+    final CartsController cartController = Get.find();
     return controller.isLoading
         ? AppSkeleton.shimmerListView
         : ListView.separated(
@@ -117,7 +134,7 @@ class ProductsPage extends StatelessWidget {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));
                   },
-                  controller: controller);
+                  controller: cartController);
             });
   }
 }

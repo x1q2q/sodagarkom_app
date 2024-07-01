@@ -32,4 +32,17 @@ class TransactionConfirm {
         cartsPrice: json['total_cart_price'],
         totalAmount: json['total_amount']);
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'customer_id': customerId,
+      'customer_name': customerName,
+      'customer_address': customerAddress,
+      'payment_method': paymentMethod,
+      'payment_text': paymentText,
+      'total_shipping': totalShipping,
+      'total_cart_qty': cartsQty,
+      'total_cart_price': cartsPrice,
+      'total_amount': totalAmount
+    };
+  }
 }

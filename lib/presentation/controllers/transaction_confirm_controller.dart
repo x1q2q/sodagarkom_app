@@ -1,22 +1,18 @@
 import 'package:get/get.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/models/transaction_confirm.dart';
+import '../../presentation/services/dialog_services.dart';
+import 'carts_controller.dart';
+import '../router/app_routes.dart';
 
 class TransactionConfirmController extends GetxController {
   final TransactionRepository _transactionRepository;
 
   TransactionConfirmController(this._transactionRepository);
 
-//   var addressReceiver =
-//       ''' Barang akan dikirim dengan penerima: Username1, ke alamat berikut:
-//       Jl. desa karangtengah, pengadegan, Kab. Purbalinga 53393  ''';
-//   var paymentMethod = ''' Silahkan transfer manual ke nomer rekening berikut:
-// - BRI (+62) 820000213291231, a.n Aleksander Grahambell
-// - BCA (+46) 8394238022342, a.n Aleksander Grahambell
-// - BNI  (+46) 8394238022342, a.n Aleksander Grahambell ''';
-
   var infoChangeAddress = '*silahkan ganti alamat di menu profil';
   bool isLoading = true;
+  bool isLoadingProcess = false;
   TransactionConfirm? trxConfirm;
 
   @override
@@ -38,5 +34,23 @@ class TransactionConfirmController extends GetxController {
       print('failed to fetch transaction confirm: $e');
     }
     update();
+  }
+
+  void insertTransactionConfirm() async {
+    final CartsController cartController = Get.find();
+    try {
+      isLoading = true;
+      Map<String, dynamic> result =
+          await _transactionRepository.insertTransaction(trxConfirm!);
+      isLoadingProcess = false;
+      // do reset carts controller length
+      DialogService.showToast('success', result['message']);
+      Get.until((route) => route.settings.name == AppRoutes.appTab);
+      cartController.qtyCarts.value = 0;
+      cartController.carts.clear();
+    } catch (e) {
+      print('failed to insert transaction confirm: $e');
+      DialogService.showToast('error', '$e');
+    }
   }
 }

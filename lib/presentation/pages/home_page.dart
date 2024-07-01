@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
+import '../controllers/carts_controller.dart';
 import '../../core/colors.dart';
 import '../../core/core.dart';
 import '../widgets/widgets.dart';
@@ -12,34 +13,46 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
+    final CartsController cartController = Get.find();
+    final HomeController homeController = Get.find();
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<HomeController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
-                              height: 165.0,
-                              alignment: Alignment.center,
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  AppHeader(),
-                                  AppSearchbar(),
-                                ],
-                              ),
-                            ),
-                            heroCategory(context, dx),
-                            sectionCategory(context, dx),
-                            gridProducts(context, dx)
-                          ]))));
-        })));
+        body: RefreshIndicator(
+            backgroundColor: AppColors.redv2,
+            color: Colors.white,
+            strokeWidth: 2.0,
+            onRefresh: () async {
+              homeController.handleRefresh();
+              cartController.handleRefresh();
+            },
+            child: SafeArea(child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: Column(children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
+                          height: 165.0,
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AppHeader(controller: cartController),
+                              const AppSearchbar(),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<HomeController>(
+                            builder: (dx) => Column(children: <Widget>[
+                                  heroCategory(context, dx),
+                                  sectionCategory(context, dx),
+                                  gridProducts(context, dx)
+                                ]))
+                      ])));
+            }))));
   }
 
   Widget heroCategory(BuildContext context, dynamic controller) {
@@ -126,6 +139,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget gridProducts(BuildContext context, dynamic controller) {
+    final CartsController cartController = Get.find();
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(
@@ -152,7 +166,9 @@ class HomePage extends StatelessWidget {
                     Get.toNamed(AppRoutes.productDetail
                         .replaceFirst(":id", '${products.id}'));
                   },
-                  onTapBtn: () {});
+                  onTapBtn: () {
+                    cartController.addToCart(products.id);
+                  });
             });
   }
 }

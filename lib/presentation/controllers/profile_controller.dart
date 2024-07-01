@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../../domain/repositories/customer_repository.dart';
 import '../../domain/models/customer.dart';
 import 'package:flutter/material.dart';
-import '../../core/colors.dart';
 import '../router/app_routes.dart';
 import '../../presentation/services/dialog_services.dart';
 
@@ -21,18 +20,25 @@ class ProfileController extends GetxController {
   bool isLoading = true;
   bool isLoadingProcess = false;
   Customer? customer;
+  String dummCustomerId = '9';
 
   @override
   void onInit() {
     super.onInit();
-    fetchCustomer('9');
+    handleRefresh();
+  }
+
+  Future<void> handleRefresh() async {
+    isLoading = true;
+    update();
+    fetchCustomer(dummCustomerId);
   }
 
   void fetchCustomer(String customerId) async {
     try {
       Customer fetchedUser = await _userRepository.getUserByID(customerId);
-      isLoading = false;
       customer = fetchedUser;
+      isLoading = false;
       initField();
     } catch (e) {
       print('failed to fetch customer id: $e');
@@ -46,6 +52,11 @@ class ProfileController extends GetxController {
     fnameCtrlr.text = customer!.fullName ?? '';
     notelpCtrlr.text = customer!.phone;
     addressCtrlr.text = customer!.address;
+  }
+
+  String extractMessage(String text) {
+    List<String> parts = text.split(': ');
+    return (parts.length == 2) ? parts[1] : text;
   }
 
   void updateProfile() async {
@@ -65,17 +76,15 @@ class ProfileController extends GetxController {
       final data = Customer.fromJson(dataField);
       Map<String, dynamic> result = await _userRepository.updateUser(data);
       isLoadingProcess = false;
-      if (result['status'] == 'ok') {
-        customer = data;
-        pwdCtrlr.text = '';
-        DialogService.showToast('success', result['message']);
-        Get.until((route) => route.settings.name == AppRoutes.appTab);
-        update();
-      }
+      customer = data;
+      pwdCtrlr.text = '';
+      update();
+      DialogService.showToast('success', result['message']);
+      Get.until((route) => route.settings.name == AppRoutes.appTab);
     } catch (e) {
-      DialogService.showToast('error', '$e');
       initField();
       update();
+      DialogService.showToast('error', extractMessage('$e'));
     }
   }
 }

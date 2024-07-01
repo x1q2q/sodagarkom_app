@@ -21,7 +21,7 @@ class AppDialogCancel extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -30,14 +30,14 @@ class AppDialogCancel extends StatelessWidget {
               ),
             ),
             child: Material(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(18),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -54,9 +54,9 @@ class AppDialogCancel extends StatelessWidget {
                           ],
                         )),
                     Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(18),
                               bottomRight: Radius.circular(18)),
@@ -65,12 +65,12 @@ class AppDialogCancel extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            SizedBox(width: 80),
+                            const SizedBox(width: 80),
                             OutlinedButton(
-                              child:
-                                  Text(txtConfirm, style: AppStyles.btnTxtPink),
                               style: AppStyles.btnOutlineCancel,
                               onPressed: onConfirm,
+                              child:
+                                  Text(txtConfirm, style: AppStyles.btnTxtPink),
                             ),
                           ],
                         ))

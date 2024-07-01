@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'dart:io';
-import 'dart:convert';
 import 'package:http_parser/http_parser.dart';
 
 class NetworkService {
@@ -13,8 +12,19 @@ class NetworkService {
     try {
       final response = await dio.get(endpoint);
       return response;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          throw Exception(e.response!.data['message']);
+        } else {
+          throw Exception('Failed to update data: ${e.response!.data}');
+        }
+      } else {
+        // handling network error
+        throw Exception('Failed to fetch data: ${e.message}');
+      }
     } catch (e) {
-      throw Exception('Failed to load data: $e');
+      throw Exception('Failed to fetch data: $e');
     }
   }
 
@@ -35,7 +45,6 @@ class NetworkService {
       return response;
     } on DioException catch (e) {
       if (e.response != null) {
-        // Check the status code and handle accordingly
         if (e.response!.statusCode == 400 ||
             e.response!.statusCode == 409 ||
             e.response!.statusCode == 500) {
@@ -48,7 +57,6 @@ class NetworkService {
         throw Exception('Failed to update data: ${e.message}');
       }
     } catch (e) {
-      // handling the others
       throw Exception('Failed to update data: $e');
     }
   }

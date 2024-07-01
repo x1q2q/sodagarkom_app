@@ -6,6 +6,8 @@ import '../../core/styles.dart';
 import 'app_svg.dart';
 
 class AppTab extends GetView<AppTabController> {
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

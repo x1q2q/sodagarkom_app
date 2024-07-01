@@ -29,9 +29,15 @@ class TransactionsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchFilters();
+    handleRefresh();
     // SystemChrome.setPreferredOrientations(
     //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  }
+
+  Future<void> handleRefresh() async {
+    isLoading = true;
+    update();
+    fetchFilters();
   }
 
   void changeChip(bool selected, String filter) {
@@ -49,7 +55,6 @@ class TransactionsController extends GetxController {
     } catch (e) {
       print('failed to fetch filters: $e');
     }
-    update();
   }
 
   void fetchTransactionsFilter(String filter) async {

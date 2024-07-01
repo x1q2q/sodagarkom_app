@@ -20,4 +20,16 @@ class CartRepository {
       throw Exception('Failed to load carts data');
     }
   }
+
+  Future<Map<String, dynamic>> insertCart(
+      Map<String, dynamic> cartProduct) async {
+    final response =
+        await _networkService.insertData('cart/insert', cartProduct);
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> result = Map.from(response.data);
+      return result;
+    } else {
+      throw Exception('Failed add product to cart');
+    }
+  }
 }
