@@ -21,38 +21,46 @@ class AppRoutes {
 
   static final routes = [
     GetPage(name: appTab, page: () => AppTab(), binding: TabsBinding()),
-    GetPage(name: home, page: () => HomePage(), binding: HomeBinding()),
+    GetPage(name: home, page: () => const HomePage(), binding: HomeBinding()),
     GetPage(
         name: categoryDetail,
-        page: () => CategoryDetailPage(),
+        page: () => const CategoryDetailPage(),
         binding: CategoryDetailBinding()),
     GetPage(
-        name: product, page: () => ProductsPage(), binding: ProductsBinding()),
+        name: product,
+        page: () => const ProductsPage(),
+        binding: ProductsBinding()),
     GetPage(
         name: transaction,
-        page: () => TransactionsPage(),
+        page: () => const TransactionsPage(),
         binding: TransactionsBinding()),
     GetPage(
-        name: profile, page: () => ProfilePage(), binding: ProfileBinding()),
+        name: profile,
+        page: () => const ProfilePage(),
+        binding: ProfileBinding()),
     GetPage(
         name: editProfile,
-        page: () => EditProfilePage(),
+        page: () => const EditProfilePage(),
         binding: ProfileBinding()),
     GetPage(
         name: transactionDetail,
-        page: () => TransactionDetailPage(),
+        page: () => const TransactionDetailPage(),
         binding: TransactionDetailBinding()),
     GetPage(
         name: productDetail,
-        page: () => ProductDetailPage(),
+        page: () => const ProductDetailPage(),
         binding: ProductDetailBinding()),
-    GetPage(name: carts, page: () => CartsPage(), binding: CartsBinding()),
+    GetPage(
+        name: carts, page: () => const CartsPage(), binding: CartsBinding()),
     GetPage(
         name: transactionConfirm,
-        page: () => TransactionConfirmPage(),
+        page: () => const TransactionConfirmPage(),
         binding: TransactionConfirmBinding()),
     GetPage(name: search, page: () => SearchPage(), binding: SearchBinding()),
-    GetPage(name: login, page: () => LoginPage()),
-    GetPage(name: registration, page: () => RegistrationPage()),
+    GetPage(name: login, page: () => LoginPage(), binding: AuthBinding()),
+    GetPage(
+        name: registration,
+        page: () => RegistrationPage(),
+        binding: AuthBinding())
   ];
 }

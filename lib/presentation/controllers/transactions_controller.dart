@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'dart:io';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/models/transaction.dart';
@@ -26,9 +26,11 @@ class TransactionsController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   XFile? image;
   File? filePhoto;
+  final box = GetStorage();
+  int? customerId;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     handleRefresh();
     // SystemChrome.setPreferredOrientations(
@@ -36,12 +38,14 @@ class TransactionsController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
+    customerId = box.read('customerId');
+    print(customerId);
     isLoading = true;
     update();
     fetchFilters();
   }
 
-  void changeChip(bool selected, String filter) {
+  void changeChip(bool selected, String filter) async {
     idChipSelected.value = selected ? filter : 'all';
     isLoading = true;
     fetchTransactionsFilter(filter);
@@ -61,9 +65,8 @@ class TransactionsController extends GetxController {
   void fetchTransactionsFilter(String filter) async {
     isLoading = true;
     try {
-      int dummCustomerId = 9;
       List<Transaction> fetchedTransactions = await _transactionRepository
-          .getTransactionsFilter(dummCustomerId, filter);
+          .getTransactionsFilter(customerId!, filter);
       transactions.value = fetchedTransactions;
       isLoading = false;
     } catch (e) {

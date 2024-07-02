@@ -3,17 +3,17 @@ import 'package:get/get.dart';
 import '../../core/colors.dart';
 import '../../core/assets.dart';
 import '../../core/styles.dart';
-import '../widgets/app_input_field.dart';
+import '../widgets/field_input.dart';
 import '../router/app_routes.dart';
+import '../controllers/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
+  LoginPage({Key? key}) : super(key: key);
+  final AuthController controller = Get.find();
+  final TextEditingController unameCtrlr = TextEditingController();
+  final TextEditingController pwdCtrlr = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final TextEditingController unameCtrlr = TextEditingController();
-    final TextEditingController pwdCtrlr = TextEditingController();
-
     return SafeArea(
         child: GestureDetector(
             onTap: () {
@@ -33,14 +33,15 @@ class LoginPage extends StatelessWidget {
                                 color: AppColors.redv2,
                                 width: constraints.maxWidth,
                                 height: 440,
-                                padding: EdgeInsets.fromLTRB(30, 40, 30, 70),
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 40, 30, 70),
                                 child: fieldHeader()),
                             Positioned(
                               bottom: -1,
                               child: Container(
                                   height: 40,
                                   width: constraints.maxWidth,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(40),
@@ -55,11 +56,18 @@ class LoginPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              fieldInput('Username', unameCtrlr,
-                                  'masukkan username anda'),
-                              fieldInput('Password', pwdCtrlr, '************',
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Username',
+                                  txtController: unameCtrlr,
+                                  placeholder: 'masukkan username anda'),
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Password',
+                                  txtController: pwdCtrlr,
+                                  placeholder: '************',
                                   isObscure: true,
-                                  icon: Icon(Icons.visibility)),
+                                  icon: const Icon(Icons.visibility)),
                               fieldFooter()
                             ],
                           ),
@@ -77,14 +85,14 @@ class LoginPage extends StatelessWidget {
       children: <Widget>[
         Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+            decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 color: Colors.white),
             height: 65,
             width: 180,
             child: Image.asset(Assets.appLogo)),
-        Column(
+        const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -97,37 +105,17 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget fieldInput(String fieldLabel, TextEditingController txtController,
-      String placeholder,
-      {bool isObscure = false, Icon? icon, int? lines}) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            fieldLabel,
-            style: AppStyles.fieldLabelKey,
-          ),
-          AppStyles.vSpaceXSmall,
-          AppInputField(
-              controller: txtController,
-              hintText: placeholder,
-              obscureText: isObscure,
-              icon: icon),
-          AppStyles.vSpaceSmall
-        ]);
-  }
-
   Widget fieldFooter() {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox.fromSize(
               child: ElevatedButton(
-            child: Text('Masuk', style: AppStyles.btnAuth),
             style: AppStyles.btnElevatedPurple,
             onPressed: () {
-              Get.toNamed(AppRoutes.appTab);
+              controller.login(unameCtrlr.text, pwdCtrlr.text);
             },
+            child: const Text('Masuk', style: AppStyles.btnAuth),
           )),
           AppStyles.vSpaceXSmall,
           Row(

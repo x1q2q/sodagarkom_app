@@ -33,8 +33,23 @@ class NetworkService {
     try {
       final response = await dio.post('$baseUrl/$endpoint', data: data);
       return response;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 400 ||
+            e.response!.statusCode == 403 ||
+            e.response!.statusCode == 404 ||
+            e.response!.statusCode == 409 ||
+            e.response!.statusCode == 500) {
+          throw Exception(e.response!.data['message']);
+        } else {
+          throw Exception('Failed to post data: ${e.response!.data}');
+        }
+      } else {
+        // handling network error
+        throw Exception('Failed to post data: $e');
+      }
     } catch (e) {
-      throw Exception('Failed to insert data: $e');
+      throw Exception('Failed to post data');
     }
   }
 
@@ -47,17 +62,18 @@ class NetworkService {
       if (e.response != null) {
         if (e.response!.statusCode == 400 ||
             e.response!.statusCode == 409 ||
+            e.response!.statusCode == 404 ||
             e.response!.statusCode == 500) {
           throw Exception(e.response!.data['message']);
         } else {
-          throw Exception('Failed to update data: ${e.response!.data}');
+          throw Exception('Failed to put data: ${e.response!.data}');
         }
       } else {
         // handling network error
-        throw Exception('Failed to update data: ${e.message}');
+        throw Exception('Failed to put data: $e');
       }
     } catch (e) {
-      throw Exception('Failed to update data: $e');
+      throw Exception('Failed to put data');
     }
   }
 

@@ -3,7 +3,6 @@ import '../../core/colors.dart';
 import 'package:get/get.dart';
 
 class DialogService {
-  // toast basic
   static SnackbarController showToast(String title, String message) {
     return Get.snackbar(title, message,
         margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
@@ -23,6 +22,10 @@ class DialogService {
   static SnackbarController topToast(String color, String msg) {
     return Get.rawSnackbar(
         message: msg,
+        borderRadius: 8,
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        duration: const Duration(seconds: 2),
+        animationDuration: const Duration(milliseconds: 500),
         maxWidth: Get.width,
         backgroundColor: (color == 'red')
             ? AppColors.redv2
@@ -32,5 +35,15 @@ class DialogService {
                     ? AppColors.lightgreen
                     : AppColors.blackv2,
         snackPosition: SnackPosition.TOP);
+  }
+
+  static SnackbarController toastAuth(String title, String message) {
+    return Get.snackbar(title, message,
+        margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+        backgroundColor:
+            title == 'success' ? AppColors.lightgreen : AppColors.redv1,
+        colorText: title == 'success'
+            ? const Color.fromRGBO(4, 108, 78, 1)
+            : AppColors.redv3);
   }
 }

@@ -3,20 +3,22 @@ import 'package:get/get.dart';
 import '../../core/colors.dart';
 import '../../core/assets.dart';
 import '../../core/styles.dart';
-import '../widgets/app_input_field.dart';
+import '../widgets/field_input.dart';
 import '../router/app_routes.dart';
+import '../controllers/auth_controller.dart';
 
 class RegistrationPage extends StatelessWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+  RegistrationPage({Key? key}) : super(key: key);
+  final AuthController controller = Get.find();
+  final TextEditingController unameCtrlr = TextEditingController();
+  final TextEditingController pwdCtrlr = TextEditingController();
+  final TextEditingController emailCtrlr = TextEditingController();
+  final TextEditingController fnameCtrlr = TextEditingController();
+  final TextEditingController phoneCtrlr = TextEditingController();
+  final TextEditingController addressCtrlr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController unameCtrlr = TextEditingController();
-    final TextEditingController pwdCtrlr = TextEditingController();
-    final TextEditingController emailCtrlr = TextEditingController();
-    final TextEditingController fnameCtrlr = TextEditingController();
-    final TextEditingController notelpCtrlr = TextEditingController();
-    final TextEditingController addressCtrlr = TextEditingController();
     return SafeArea(
         child: GestureDetector(
             onTap: () {
@@ -36,14 +38,15 @@ class RegistrationPage extends StatelessWidget {
                                 color: AppColors.redv2,
                                 width: constraints.maxWidth,
                                 height: 270,
-                                padding: EdgeInsets.fromLTRB(30, 40, 30, 70),
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 40, 30, 70),
                                 child: fieldHeader()),
                             Positioned(
                               bottom: -1,
                               child: Container(
                                   height: 40,
                                   width: constraints.maxWidth,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(40),
@@ -57,20 +60,42 @@ class RegistrationPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: Column(
                             children: [
-                              fieldInput('Username', unameCtrlr,
-                                  'masukkan username anda'),
-                              fieldInput('Password', pwdCtrlr, '************',
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Username',
+                                  txtController: unameCtrlr,
+                                  placeholder: 'masukkan username anda'),
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Password',
+                                  txtController: pwdCtrlr,
+                                  placeholder: '************',
                                   isObscure: true,
-                                  icon: Icon(Icons.visibility)),
-                              fieldInput(
-                                  'Email', emailCtrlr, 'masukkan email anda'),
-                              fieldInput('Nama Lengkap', fnameCtrlr,
-                                  'masukkan nama lengkap anda'),
-                              fieldInput('Nomor Telepon', notelpCtrlr,
-                                  'masukkan email anda'),
-                              fieldInput('Alamat', addressCtrlr,
-                                  'masukkan alamat anda',
-                                  lines: 3),
+                                  icon: const Icon(Icons.visibility)),
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Email',
+                                  txtController: emailCtrlr,
+                                  placeholder: 'masukkan email anda',
+                                  type: TextInputType.emailAddress),
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Nama Lengkap',
+                                  txtController: fnameCtrlr,
+                                  placeholder: 'masukkan nama lengkap anda'),
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Nomor Telepon',
+                                  txtController: phoneCtrlr,
+                                  placeholder: '0888888',
+                                  type: TextInputType.number),
+                              FieldInput(
+                                  bgColor: Colors.white,
+                                  fieldLabel: 'Alamat',
+                                  txtController: addressCtrlr,
+                                  lines: 3,
+                                  placeholder: 'masukkan alamat anda',
+                                  type: TextInputType.streetAddress),
                               fieldFooter()
                             ],
                           ),
@@ -88,14 +113,14 @@ class RegistrationPage extends StatelessWidget {
       children: <Widget>[
         Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+            decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 color: Colors.white),
             height: 65,
             width: 180,
             child: Image.asset(Assets.appLogo)),
-        Column(
+        const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -108,36 +133,25 @@ class RegistrationPage extends StatelessWidget {
     );
   }
 
-  Widget fieldInput(String fieldLabel, TextEditingController txtController,
-      String placeholder,
-      {bool isObscure = false, Icon? icon, int lines = 1}) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            fieldLabel,
-            style: AppStyles.fieldLabelKey,
-          ),
-          AppStyles.vSpaceXSmall,
-          AppInputField(
-              controller: txtController,
-              hintText: placeholder,
-              obscureText: isObscure,
-              icon: icon,
-              lines: lines),
-          AppStyles.vSpaceSmall
-        ]);
-  }
-
   Widget fieldFooter() {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox.fromSize(
               child: ElevatedButton(
-            child: Text('Daftar', style: AppStyles.btnAuth),
             style: AppStyles.btnElevatedPurple,
-            onPressed: () {},
+            onPressed: () {
+              Map<String, dynamic> field = {
+                'username': unameCtrlr.text,
+                'password': pwdCtrlr.text,
+                'email': emailCtrlr.text,
+                'full_name': fnameCtrlr.text,
+                'phone': phoneCtrlr.text,
+                'address': addressCtrlr.text
+              };
+              controller.register(field);
+            },
+            child: const Text('Daftar', style: AppStyles.btnAuth),
           )),
           AppStyles.vSpaceXSmall,
           Row(

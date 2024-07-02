@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../domain/repositories/customer_repository.dart';
 import '../../domain/models/customer.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,13 @@ class ProfileController extends GetxController {
   final TextEditingController emailCtrlr = TextEditingController();
   final TextEditingController pwdCtrlr = TextEditingController();
   final TextEditingController fnameCtrlr = TextEditingController();
-  final TextEditingController notelpCtrlr = TextEditingController();
+  final TextEditingController phoneCtrlr = TextEditingController();
   final TextEditingController addressCtrlr = TextEditingController();
+  final box = GetStorage();
 
   bool isLoading = true;
   bool isLoadingProcess = false;
   Customer? customer;
-  String dummCustomerId = '9';
 
   @override
   void onInit() {
@@ -30,9 +31,10 @@ class ProfileController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
+    int customerId = await box.read('customerId');
     isLoading = true;
     update();
-    fetchCustomer(dummCustomerId);
+    fetchCustomer('$customerId');
   }
 
   void fetchCustomer(String customerId) async {
@@ -51,7 +53,7 @@ class ProfileController extends GetxController {
     unameCtrlr.text = customer!.username;
     emailCtrlr.text = customer!.email;
     fnameCtrlr.text = customer!.fullName ?? '';
-    notelpCtrlr.text = customer!.phone;
+    phoneCtrlr.text = customer!.phone;
     addressCtrlr.text = customer!.address;
   }
 
@@ -64,7 +66,7 @@ class ProfileController extends GetxController {
         'username': unameCtrlr.text,
         'email': emailCtrlr.text,
         'full_name': fnameCtrlr.text,
-        'phone': notelpCtrlr.text,
+        'phone': phoneCtrlr.text,
         'address': addressCtrlr.text,
         'password': pwdCtrlr.text,
         'created_at': customer!.createdAt
@@ -82,5 +84,10 @@ class ProfileController extends GetxController {
       update();
       DialogService.showToast('error', '$e'.extractMessage());
     }
+  }
+
+  void logout() async {
+    await box.erase();
+    Get.offNamedUntil(AppRoutes.login, (route) => false);
   }
 }

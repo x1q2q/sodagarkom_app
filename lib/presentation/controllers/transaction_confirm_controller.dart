@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/models/transaction_confirm.dart';
 import '../../presentation/services/dialog_services.dart';
@@ -15,6 +16,8 @@ class TransactionConfirmController extends GetxController {
   bool isLoadingProcess = false;
   var isVisiblePaymentProof = false.obs;
   TransactionConfirm? trxConfirm;
+  final box = GetStorage();
+  int? customerId;
 
   @override
   void onInit() {
@@ -27,10 +30,10 @@ class TransactionConfirmController extends GetxController {
   }
 
   void fetchTransactionConfirm() async {
+    customerId = box.read('customerId');
     try {
-      int dummCustomerId = 9;
       TransactionConfirm fetchedTrxConfirm =
-          await _transactionRepository.getTransactionConfirm(dummCustomerId);
+          await _transactionRepository.getTransactionConfirm(customerId!);
       trxConfirm = fetchedTrxConfirm;
       trxConfirm!.customerAddress =
           'Barang akan dikirim dengan penerima: (${fetchedTrxConfirm.customerName}), ke alamat berikut:\n\n ${fetchedTrxConfirm.customerAddress}';

@@ -6,7 +6,7 @@ class CartRepository {
 
   CartRepository(this._networkService);
 
-  Future<List<Cart>> getCarts(String customerId) async {
+  Future<List<Cart>> getCarts(int customerId) async {
     final response = await _networkService.fetchData('carts/$customerId');
     if (response.statusCode == 200) {
       final Map result = Map.from(response.data);

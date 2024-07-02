@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/models/transaction.dart';
 
@@ -11,6 +12,8 @@ class TransactionDetailController extends GetxController {
   bool isLoading = true;
   Transaction? transaction;
   int? totalQtyBarang;
+  final box = GetStorage();
+  int? customerId;
 
   void changeVisionPayProof() {
     isVisiblePaymentProof.value = !isVisiblePaymentProof.value;
@@ -24,10 +27,10 @@ class TransactionDetailController extends GetxController {
   }
 
   void fetchTransactionId(String transactionId) async {
+    customerId = box.read('customerId');
     try {
-      int dummCustomerId = 9;
       Transaction fetchedTransaction = await _transactionRepository
-          .getTransactionByID(dummCustomerId, transactionId);
+          .getTransactionByID(customerId!, transactionId);
       transaction = fetchedTransaction;
       totalQtyBarang = fetchedTransaction.products!
           .map((product) => product.productQuantity)

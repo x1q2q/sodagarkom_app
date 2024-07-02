@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../domain/repositories/cart_repository.dart';
 import '../../domain/models/cart.dart';
 import '../router/app_routes.dart';
@@ -8,11 +9,12 @@ class CartsController extends GetxController {
   final CartRepository _cartRepository;
 
   CartsController(this._cartRepository);
+  final box = GetStorage();
   var carts = <Cart>[].obs;
   bool isLoading = true;
   bool isLoadingProcess = false;
   var qtyCarts = 0.obs;
-  String dummCustomerId = '9';
+  int? customerId;
 
   @override
   void onInit() {
@@ -21,6 +23,8 @@ class CartsController extends GetxController {
   }
 
   Future<void> handleRefresh() async {
+    customerId = box.read('customerId');
+    print(customerId);
     isLoading = true;
     update();
     fetchCarts();
@@ -86,7 +90,7 @@ class CartsController extends GetxController {
 
   void fetchCarts() async {
     try {
-      List<Cart> fetchedCarts = await _cartRepository.getCarts(dummCustomerId);
+      List<Cart> fetchedCarts = await _cartRepository.getCarts(customerId!);
       isLoading = false;
       carts.assignAll(fetchedCarts);
       qtyCarts.value = fetchedCarts
@@ -114,7 +118,7 @@ class CartsController extends GetxController {
     try {
       isLoading = true;
       Map<String, dynamic> data = {
-        'customer_id': dummCustomerId,
+        'customer_id': customerId!,
         'product_id': productId
       };
       Map<String, dynamic> result = await _cartRepository.insertCart(data);
@@ -130,12 +134,12 @@ class CartsController extends GetxController {
       if (productOnCart.isEmpty) {
         // if result product on cart empty then insert
         carts.insert(0, cartResult);
+        qtyCarts.value++;
       } else {
         // do update
         int value = productOnCart[0].quantity.value + 1;
         updateItemCart(productOnCart[0].id, value);
       }
-      qtyCarts.value++;
       isLoading = false;
     } catch (e) {
       print('failed add product to cart: $e');

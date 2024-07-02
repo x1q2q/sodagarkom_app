@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
@@ -46,32 +47,6 @@ class EditProfilePage extends StatelessWidget {
           );
   }
 
-  Widget fieldInput(String fieldLabel, TextEditingController txtController,
-      String placeholder,
-      {bool isObscure = false,
-      Icon? icon,
-      int lines = 1,
-      TextInputType type = TextInputType.name}) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            fieldLabel,
-            style: AppStyles.fieldLabelKey,
-          ),
-          AppStyles.vSpaceXSmall,
-          AppInputField(
-              controller: txtController,
-              hintText: placeholder,
-              obscureText: isObscure,
-              icon: icon,
-              bgColor: AppColors.lightgray,
-              lines: lines,
-              type: type),
-          AppStyles.vSpaceSmall
-        ]);
-  }
-
   Widget listFieldUser(BuildContext context, dynamic controller) {
     return Container(
         margin: const EdgeInsets.only(top: 18),
@@ -79,22 +54,37 @@ class EditProfilePage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            fieldInput(
-                'Username', controller.unameCtrlr, 'kolom tidak boleh kosong'),
-            fieldInput(
-                'Email', controller.emailCtrlr, 'kolom tidak boleh kosong',
-                type: TextInputType.emailAddress),
-            fieldInput('Password Baru', controller.pwdCtrlr,
-                '(tetap kosongkan jika tidak ingin diubah)',
-                isObscure: true, type: TextInputType.visiblePassword),
-            fieldInput('Nama Lengkap', controller.fnameCtrlr,
-                'masukkan kolom tidak boleh kosong'),
-            fieldInput('Nomor Telepon', controller.notelpCtrlr,
-                'kolom tidak boleh kosong',
+            FieldInput(
+                fieldLabel: 'Username',
+                txtController: controller.unameCtrlr,
+                placeholder: 'kolom tidak boleh kosong'),
+            FieldInput(
+                fieldLabel: 'Email',
+                txtController: controller.emailCtrlr,
+                type: TextInputType.emailAddress,
+                placeholder: 'kolom tidak boleh kosong'),
+            FieldInput(
+                fieldLabel: 'Password Baru',
+                txtController: controller.pwdCtrlr,
+                placeholder: '(tetap kosongkan jika tidak ingin diubah)',
+                isObscure: true,
+                type: TextInputType.visiblePassword),
+            FieldInput(
+                fieldLabel: 'Nama Lengkap',
+                txtController: controller.fnameCtrlr,
+                placeholder: 'kolom tidak boleh kosong'),
+            FieldInput(
+                fieldLabel: 'Nomor Telepon',
+                txtController: controller.phoneCtrlr,
+                placeholder: '088888888',
                 type: TextInputType.phone),
-            fieldInput(
-                'Alamat', controller.addressCtrlr, 'kolom tidak boleh kosong',
-                lines: 3, type: TextInputType.streetAddress),
+            FieldInput(
+              fieldLabel: 'Alamat',
+              txtController: controller.addressCtrlr,
+              placeholder: 'kolom tidak boleh kosong',
+              lines: 3,
+              type: TextInputType.streetAddress,
+            ),
           ],
         ));
   }

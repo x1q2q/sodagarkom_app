@@ -130,7 +130,9 @@ class ProfilePage extends StatelessWidget {
         title: 'Konfirmasi Keluar Akun',
         contentText: 'Yakin untuk keluar akun?',
         txtConfirm: 'Yakin',
-        onConfirm: () {});
+        onConfirm: () {
+          controller.logout();
+        });
     return Container(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         color: Colors.white,
