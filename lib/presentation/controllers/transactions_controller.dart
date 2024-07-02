@@ -39,7 +39,6 @@ class TransactionsController extends GetxController {
 
   Future<void> handleRefresh() async {
     customerId = box.read('customerId');
-    print(customerId);
     isLoading = true;
     update();
     fetchFilters();

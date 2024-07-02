@@ -6,6 +6,7 @@ import 'presentation/router/app_routes.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'core/core.dart';
 import 'core/colors.dart';
+import 'core/styles.dart';
 
 void main() async {
   initializeDateFormatting();
@@ -20,23 +21,36 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white54));
+        const SystemUiOverlayStyle(statusBarColor: Colors.white38));
     GetStorage box = GetStorage();
     return GetMaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorScheme: const ColorScheme.light().copyWith(
-          primary: AppColors.redv2,
-          secondary: AppColors.purplev1,
-        ),
-      ),
+      theme: theme(),
       title: Core.appName,
       initialRoute:
           box.hasData('customerId') ? AppRoutes.appTab : AppRoutes.login,
       getPages: AppRoutes.routes,
       defaultTransition: Transition.noTransition,
       debugShowCheckedModeBanner: false,
+    );
+  }
+
+  ThemeData? theme() {
+    return ThemeData(
+      fontFamily: 'PlusJakarta',
+      useMaterial3: true,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      colorScheme: const ColorScheme.light().copyWith(
+        primary: AppColors.redv1,
+        secondary: AppColors.lightpurple,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        labelTextStyle: MaterialStateTextStyle.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return AppStyles.tabsSelected;
+          }
+          return AppStyles.tabsUnselected;
+        }),
+      ),
     );
   }
 }

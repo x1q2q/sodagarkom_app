@@ -13,23 +13,24 @@ class TransactionDetailPage extends StatelessWidget {
   const TransactionDetailPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: const DefaultAppbar(title: 'Detail Transaksi'),
-        backgroundColor: AppColors.lightgray,
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<TransactionDetailController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            boxWhite(headerStatus(dx)),
-                            boxWhite(listProduct(dx)),
-                            boxWhite(transferProof(dx)),
-                            boxWhite(totalPayment(dx), withNoPadding: true)
-                          ]))));
-        })));
+    return SafeArea(
+        child: Scaffold(
+            appBar: const DefaultAppbar(title: 'Detail Transaksi'),
+            backgroundColor: AppColors.lightgray,
+            body: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<TransactionDetailController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                boxWhite(headerStatus(dx)),
+                                boxWhite(listProduct(dx)),
+                                boxWhite(transferProof(dx)),
+                                boxWhite(totalPayment(dx), withNoPadding: true)
+                              ]))));
+            })));
   }
 
   Widget boxWhite(Widget widget, {bool withNoPadding = false}) {

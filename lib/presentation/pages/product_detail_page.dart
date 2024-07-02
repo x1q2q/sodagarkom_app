@@ -14,30 +14,31 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: const DefaultAppbar(title: 'Produk Detail'),
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<ProductDetailController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            Container(
-                              height: heightHeaderImg,
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(20),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.lightgray),
-                              child: produkHeader(dx),
-                            ),
-                            produkContent(dx),
-                          ]))));
-        })),
-        bottomNavigationBar: GetBuilder<ProductDetailController>(
-            builder: (dx) => bottomAppBar(dx)));
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: const DefaultAppbar(title: 'Produk Detail'),
+            body: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<ProductDetailController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                Container(
+                                  height: heightHeaderImg,
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: const BoxDecoration(
+                                      color: AppColors.lightgray),
+                                  child: produkHeader(dx),
+                                ),
+                                produkContent(dx),
+                              ]))));
+            }),
+            bottomNavigationBar: GetBuilder<ProductDetailController>(
+                builder: (dx) => bottomAppBar(dx))));
   }
 
   Widget produkHeader(dynamic controller) {

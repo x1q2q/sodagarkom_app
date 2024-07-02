@@ -13,62 +13,63 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          toolbarHeight: 58,
-          backgroundColor: AppColors.lightgray,
-          elevation: 0.3,
-          title: TextField(
-            autofocus: true,
-            controller: txtController,
-            cursorColor: AppColors.blackv1,
-            decoration: InputDecoration(
-                isDense: true,
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                border: null,
-                fillColor: Colors.white,
-                filled: true,
-                hintText: 'Cari produk di sini ...',
-                hintStyle: AppStyles.fieldInput,
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none))),
-            onSubmitted: (value) async {
-              controller.searchKeywords(value);
-            },
-          ),
-          leadingWidth: 55,
-          leading: BtnCircle(
-            bgColor: Colors.transparent,
-            size: 35,
-            widget: const Icon(
-              Icons.arrow_back_ios,
-              color: AppColors.blackv1,
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              toolbarHeight: 58,
+              backgroundColor: AppColors.lightgray,
+              elevation: 0.3,
+              title: TextField(
+                autofocus: true,
+                controller: txtController,
+                cursorColor: AppColors.blackv1,
+                decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    border: null,
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Cari produk di sini ...',
+                    hintStyle: AppStyles.fieldInput,
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none))),
+                onSubmitted: (value) async {
+                  controller.searchKeywords(value);
+                },
+              ),
+              leadingWidth: 55,
+              leading: BtnCircle(
+                bgColor: Colors.transparent,
+                size: 35,
+                widget: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.blackv1,
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: Column(children: <Widget>[
-                    Obx(() => !controller.onSubmit.value
-                        ? filteredProducts()
-                        : result(context))
-                  ])));
-        })));
+            body: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: Column(children: <Widget>[
+                        Obx(() => !controller.onSubmit.value
+                            ? filteredProducts()
+                            : result(context))
+                      ])));
+            })));
   }
 
   Widget productHistoryCard(String name) {
@@ -76,7 +77,7 @@ class SearchPage extends StatelessWidget {
         child: Container(
             height: 40,
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: AppColors.lightgray),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../router/app_routes.dart';
 import '../../presentation/services/dialog_services.dart';
 import '../../extensions/string_extensions.dart';
+import 'app_tab_controller.dart';
 
 // used for [profile_page, edit_profile_page]
 class ProfileController extends GetxController {
@@ -20,6 +21,7 @@ class ProfileController extends GetxController {
   final TextEditingController addressCtrlr = TextEditingController();
   final box = GetStorage();
 
+  final AppTabController tabCtrl = Get.find();
   bool isLoading = true;
   bool isLoadingProcess = false;
   Customer? customer;
@@ -88,6 +90,8 @@ class ProfileController extends GetxController {
 
   void logout() async {
     await box.erase();
-    Get.offNamedUntil(AppRoutes.login, (route) => false);
+    tabCtrl.selectedIndex.value = 0;
+    Get.offNamedUntil(
+        AppRoutes.login, (route) => route.settings.name == '/home');
   }
 }

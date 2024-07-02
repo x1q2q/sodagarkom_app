@@ -84,7 +84,6 @@ class TransactionRepository {
     Map<String, dynamic> data = {'transaction_id': transactionId};
     final response = await _networkService.uploadImage(
         'transaction/upload_image', data, filePhoto);
-    print(response);
     if (response.statusCode == 200) {
       final Map<String, dynamic> result = Map.from(response.data);
       return result;
@@ -97,7 +96,6 @@ class TransactionRepository {
       TransactionConfirm trxConfirm) async {
     final response = await _networkService
         .insertData('transaction/checkout', {...trxConfirm.toJson()});
-    print(response);
     if (response.statusCode == 201) {
       final Map<String, dynamic> result = Map.from(response.data);
       return result;

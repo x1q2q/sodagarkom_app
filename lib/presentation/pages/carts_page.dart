@@ -13,29 +13,31 @@ class CartsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartsController cartController = Get.find();
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: const DefaultAppbar(title: 'Keranjang'),
-        body: RefreshIndicator(
-            backgroundColor: AppColors.redv2,
-            color: Colors.white,
-            strokeWidth: 2.0,
-            onRefresh: () async {
-              cartController.handleRefresh();
-            },
-            child: SafeArea(child: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minHeight: viewportConstraints.maxHeight),
-                      child: GetBuilder<CartsController>(
-                          builder: (dx) => Column(
-                              children: <Widget>[listCarts(context, dx)]))));
-            }))),
-        bottomNavigationBar:
-            GetBuilder<CartsController>(builder: (dx) => bottomAppBar(dx)));
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: const DefaultAppbar(title: 'Keranjang'),
+            body: RefreshIndicator(
+                backgroundColor: AppColors.redv2,
+                color: Colors.white,
+                strokeWidth: 2.0,
+                onRefresh: () async {
+                  cartController.handleRefresh();
+                },
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints viewportConstraints) {
+                  return SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minHeight: viewportConstraints.maxHeight),
+                          child: GetBuilder<CartsController>(
+                              builder: (dx) => Column(children: <Widget>[
+                                    listCarts(context, dx)
+                                  ]))));
+                })),
+            bottomNavigationBar: GetBuilder<CartsController>(
+                builder: (dx) => bottomAppBar(dx))));
   }
 
   Widget bottomAppBar(dynamic controller) {

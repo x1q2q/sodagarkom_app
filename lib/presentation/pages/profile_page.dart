@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/styles.dart';
 import 'package:get/get.dart';
+import '../../core/styles.dart';
 import '../controllers/profile_controller.dart';
 import '../../core/assets.dart';
 import '../../core/colors.dart';
@@ -129,7 +129,7 @@ class ProfilePage extends StatelessWidget {
     final dialogLogout = AppDialogCancel(
         title: 'Konfirmasi Keluar Akun',
         contentText: 'Yakin untuk keluar akun?',
-        txtConfirm: 'Yakin',
+        txtConfirm: 'Ya, Keluar',
         onConfirm: () {
           controller.logout();
         });

@@ -24,7 +24,6 @@ class CartsController extends GetxController {
 
   Future<void> handleRefresh() async {
     customerId = box.read('customerId');
-    print(customerId);
     isLoading = true;
     update();
     fetchCarts();

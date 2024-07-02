@@ -11,29 +11,30 @@ class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: const DefaultAppbar(title: 'Edit Profil'),
-        backgroundColor: AppColors.lightgray,
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<ProfileController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            Container(
-                              color: Colors.white,
-                              padding:
-                                  const EdgeInsets.fromLTRB(20, 25, 20, 25),
-                              height: 180.0,
-                              alignment: Alignment.center,
-                              child: headerProfile(context, dx),
-                            ),
-                            listFieldUser(context, dx),
-                            fieldButton(context, dx),
-                          ]))));
-        })));
+    return SafeArea(
+        child: Scaffold(
+            appBar: const DefaultAppbar(title: 'Edit Profil'),
+            backgroundColor: AppColors.lightgray,
+            body: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<ProfileController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                Container(
+                                  color: Colors.white,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 25, 20, 25),
+                                  height: 180.0,
+                                  alignment: Alignment.center,
+                                  child: headerProfile(context, dx),
+                                ),
+                                listFieldUser(context, dx),
+                                fieldButton(context, dx),
+                              ]))));
+            })));
   }
 
   Widget headerProfile(BuildContext context, dynamic controller) {

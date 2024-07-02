@@ -15,31 +15,34 @@ class CategoryDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final CategoryDetailController categoryController = Get.find();
     final CartsController cartController = Get.find();
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: const DefaultAppbar(title: 'Kategori Detail'),
-        body: RefreshIndicator(
-            backgroundColor: AppColors.redv2,
-            color: Colors.white,
-            strokeWidth: 2.0,
-            onRefresh: () async {
-              categoryController.handleRefresh();
-            },
-            child: SafeArea(child: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                  child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minHeight: viewportConstraints.maxHeight),
-                      child: GetBuilder<CategoryDetailController>(
-                          builder: (dx) => Column(children: <Widget>[
-                                curtainCategory(context, dx),
-                                sectionLabel(context, dx),
-                                dx.isGridView
-                                    ? gridProducts(context, dx, cartController)
-                                    : listProduct(context, dx, cartController)
-                              ]))));
-            }))));
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: const DefaultAppbar(title: 'Kategori Detail'),
+            body: RefreshIndicator(
+                backgroundColor: AppColors.redv2,
+                color: Colors.white,
+                strokeWidth: 2.0,
+                onRefresh: () async {
+                  categoryController.handleRefresh();
+                },
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints viewportConstraints) {
+                  return SingleChildScrollView(
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minHeight: viewportConstraints.maxHeight),
+                          child: GetBuilder<CategoryDetailController>(
+                              builder: (dx) => Column(children: <Widget>[
+                                    curtainCategory(context, dx),
+                                    sectionLabel(context, dx),
+                                    dx.isGridView
+                                        ? gridProducts(
+                                            context, dx, cartController)
+                                        : listProduct(
+                                            context, dx, cartController)
+                                  ]))));
+                }))));
   }
 
   Widget curtainCategory(BuildContext context, dynamic controller) {

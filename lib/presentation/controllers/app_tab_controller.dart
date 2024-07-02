@@ -28,6 +28,7 @@ class AppTabController extends GetxController {
   void changePage(int index) {
     selectedIndex.value = index;
     Get.toNamed(pages[index], id: 1);
+    update();
   }
 
   Route? onGenerateRoute(RouteSettings settings) {

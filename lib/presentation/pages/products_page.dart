@@ -15,46 +15,49 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductsController productController = Get.find();
     final CartsController cartController = Get.find();
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: RefreshIndicator(
-            backgroundColor: AppColors.redv2,
-            color: Colors.white,
-            strokeWidth: 2.0,
-            onRefresh: () async {
-              productController.handleRefresh();
-              cartController.handleRefresh();
-            },
-            child: SafeArea(child: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minHeight: viewportConstraints.maxHeight),
-                      child: Column(children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
-                          height: 165.0,
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              AppHeader(controller: cartController),
-                              const AppSearchbar(),
-                            ],
-                          ),
-                        ),
-                        GetBuilder<ProductsController>(
-                            builder: (dx) => Column(children: <Widget>[
-                                  sectionLabel(context),
-                                  dx.isGridView
-                                      ? gridProducts(
-                                          context, dx, cartController)
-                                      : listProduct(context, dx, cartController)
-                                ]))
-                      ])));
-            }))));
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            body: RefreshIndicator(
+                backgroundColor: AppColors.redv2,
+                color: Colors.white,
+                strokeWidth: 2.0,
+                onRefresh: () async {
+                  productController.handleRefresh();
+                  cartController.handleRefresh();
+                },
+                child: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints viewportConstraints) {
+                  return SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minHeight: viewportConstraints.maxHeight),
+                          child: Column(children: <Widget>[
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(20, 25, 20, 0),
+                              height: 165.0,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  AppHeader(controller: cartController),
+                                  const AppSearchbar(),
+                                ],
+                              ),
+                            ),
+                            GetBuilder<ProductsController>(
+                                builder: (dx) => Column(children: <Widget>[
+                                      sectionLabel(context),
+                                      dx.isGridView
+                                          ? gridProducts(
+                                              context, dx, cartController)
+                                          : listProduct(
+                                              context, dx, cartController)
+                                    ]))
+                          ])));
+                }))));
   }
 
   Widget sectionLabel(BuildContext context) {

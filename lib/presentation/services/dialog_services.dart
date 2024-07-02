@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class DialogService {
   static SnackbarController showToast(String title, String message) {
     return Get.snackbar(title, message,
-        margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+        margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
         backgroundColor:
             title == 'success' ? AppColors.lightgreen : AppColors.redv2,
         colorText: title == 'success' ? AppColors.greenv1 : Colors.white);
@@ -23,7 +23,7 @@ class DialogService {
     return Get.rawSnackbar(
         message: msg,
         borderRadius: 8,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         duration: const Duration(seconds: 2),
         animationDuration: const Duration(milliseconds: 500),
         maxWidth: Get.width,
@@ -39,7 +39,7 @@ class DialogService {
 
   static SnackbarController toastAuth(String title, String message) {
     return Get.snackbar(title, message,
-        margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+        margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
         backgroundColor:
             title == 'success' ? AppColors.lightgreen : AppColors.redv1,
         colorText: title == 'success'

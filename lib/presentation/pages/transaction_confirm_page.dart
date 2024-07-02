@@ -12,24 +12,25 @@ class TransactionConfirmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColors.lightgray,
-        appBar: const DefaultAppbar(title: 'Konfirmasi Transaksi'),
-        bottomNavigationBar: bottomAppBar(),
-        body: SafeArea(child: LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-              child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                  child: GetBuilder<TransactionConfirmController>(
-                      builder: (dx) => Column(children: <Widget>[
-                            boxWhite(addressReceiver(dx)),
-                            boxWhite(paymentMethod(dx)),
-                            boxWhite(listProduct(dx)),
-                            boxWhite(totalPayment(dx), withNoPadding: true),
-                          ]))));
-        })));
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: AppColors.lightgray,
+            appBar: const DefaultAppbar(title: 'Konfirmasi Transaksi'),
+            bottomNavigationBar: bottomAppBar(),
+            body: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: viewportConstraints.maxHeight),
+                      child: GetBuilder<TransactionConfirmController>(
+                          builder: (dx) => Column(children: <Widget>[
+                                boxWhite(addressReceiver(dx)),
+                                boxWhite(paymentMethod(dx)),
+                                boxWhite(listProduct(dx)),
+                                boxWhite(totalPayment(dx), withNoPadding: true),
+                              ]))));
+            })));
   }
 
   Widget bottomAppBar() {
