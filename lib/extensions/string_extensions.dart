@@ -25,6 +25,11 @@ extension StringExtensions on String {
     return (parts.length == 2) ? parts[1] : this;
   }
 
+  String generateId() {
+    final now = DateTime.now();
+    return now.microsecondsSinceEpoch.toString();
+  }
+
   String txtStatusDetail() {
     switch (this) {
       case 'accepted':

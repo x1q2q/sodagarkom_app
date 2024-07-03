@@ -49,37 +49,33 @@ class ProductsPage extends StatelessWidget {
                             ),
                             GetBuilder<ProductsController>(
                                 builder: (dx) => Column(children: <Widget>[
-                                      sectionLabel(context),
+                                      sectionLabel(dx),
                                       dx.isGridView
-                                          ? gridProducts(
-                                              context, dx, cartController)
-                                          : listProduct(
-                                              context, dx, cartController)
+                                          ? gridProducts(dx, cartController)
+                                          : listProduct(dx, cartController)
                                     ]))
                           ])));
                 }))));
   }
 
-  Widget sectionLabel(BuildContext context) {
+  Widget sectionLabel(dynamic controller) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               const Text('Semua Produk', style: AppStyles.labelSection),
-              GetBuilder<ProductsController>(
-                  builder: (dx) => BtnRounded(
-                        widget:
-                            dx.isGridView ? AppSvg.gridView : AppSvg.listView,
-                        bgColor: AppColors.lightpurple,
-                        splashColor: AppColors.purplev1,
-                        onTap: dx.changeTypeView,
-                      ))
+              BtnRounded(
+                widget:
+                    controller.isGridView ? AppSvg.gridView : AppSvg.listView,
+                bgColor: AppColors.lightpurple,
+                splashColor: AppColors.purplev1,
+                onTap: controller.changeTypeView,
+              )
             ]));
   }
 
-  Widget gridProducts(
-      BuildContext context, dynamic controller, dynamic cartController) {
+  Widget gridProducts(dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(
@@ -112,8 +108,7 @@ class ProductsPage extends StatelessWidget {
             });
   }
 
-  Widget listProduct(
-      BuildContext context, dynamic controller, dynamic cartController) {
+  Widget listProduct(dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerListView
         : ListView.separated(

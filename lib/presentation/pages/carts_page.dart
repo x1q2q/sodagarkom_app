@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/styles.dart';
 import 'package:get/get.dart';
 import '../controllers/carts_controller.dart';
+import '../controllers/app_tab_controller.dart';
 import '../../core/core.dart';
 import '../../core/colors.dart';
 import '../widgets/widgets.dart';
@@ -41,6 +42,7 @@ class CartsPage extends StatelessWidget {
   }
 
   Widget bottomAppBar(dynamic controller) {
+    final AppTabController tabCtrlr = Get.find();
     return DefaultBottombar(
         widget: controller.isLoading
             ? AppSkeleton.bottomBar
@@ -55,6 +57,7 @@ class CartsPage extends StatelessWidget {
                               onPressed: () {
                                 Get.until((route) =>
                                     route.settings.name == AppRoutes.appTab);
+                                tabCtrlr.changePage(1);
                               },
                               child: const Text('Belanja Lagi',
                                   style: AppStyles.btnTxtPurple))),

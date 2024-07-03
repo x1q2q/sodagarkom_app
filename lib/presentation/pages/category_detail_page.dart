@@ -35,12 +35,10 @@ class CategoryDetailPage extends StatelessWidget {
                           child: GetBuilder<CategoryDetailController>(
                               builder: (dx) => Column(children: <Widget>[
                                     curtainCategory(context, dx),
-                                    sectionLabel(context, dx),
+                                    sectionLabel(dx),
                                     dx.isGridView
-                                        ? gridProducts(
-                                            context, dx, cartController)
-                                        : listProduct(
-                                            context, dx, cartController)
+                                        ? gridProducts(dx, cartController)
+                                        : listProduct(dx, cartController)
                                   ]))));
                 }))));
   }
@@ -106,7 +104,7 @@ class CategoryDetailPage extends StatelessWidget {
     );
   }
 
-  Widget sectionLabel(BuildContext context, dynamic controller) {
+  Widget sectionLabel(dynamic controller) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
         child: Row(
@@ -123,8 +121,7 @@ class CategoryDetailPage extends StatelessWidget {
             ]));
   }
 
-  Widget listProduct(
-      BuildContext context, dynamic controller, dynamic cartController) {
+  Widget listProduct(dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerListView
         : ListView.separated(
@@ -153,8 +150,7 @@ class CategoryDetailPage extends StatelessWidget {
             });
   }
 
-  Widget gridProducts(
-      BuildContext context, dynamic controller, dynamic cartController) {
+  Widget gridProducts(dynamic controller, dynamic cartController) {
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
         : GridView.builder(

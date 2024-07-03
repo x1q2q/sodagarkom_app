@@ -35,12 +35,8 @@ class ProductsController extends GetxController {
       products = fetchedProducts;
       isLoading = false;
     } catch (e) {
-      print('failed to fetch producst: $e');
+      print('failed to fetch products: $e');
     }
     update();
-  }
-
-  void addToCart(String id) async {
-    print(id);
   }
 }

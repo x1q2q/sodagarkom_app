@@ -91,7 +91,6 @@ class ProfileController extends GetxController {
   void logout() async {
     await box.erase();
     tabCtrl.selectedIndex.value = 0;
-    Get.offNamedUntil(
-        AppRoutes.login, (route) => route.settings.name == '/home');
+    Get.offNamedUntil(AppRoutes.login, (route) => false);
   }
 }
