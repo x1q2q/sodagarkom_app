@@ -39,7 +39,13 @@ class AppSvg {
 
   static Widget edit = SvgPicture.asset(Assets.iconEdit);
   static Widget save = SvgPicture.asset(Assets.iconSave);
-  static Widget imgNotFound = SvgPicture.string(Assets.strNotFoundImage);
+  static Widget imgNotFound = SvgPicture.asset(Assets.notFoundImage);
   static Widget imgNotFoundPotrait =
-      SvgPicture.string(Assets.strNotFoundImagePotrait);
+      SvgPicture.asset(Assets.notFoundImagePotrait);
+  static Widget emptyList =
+      SvgPicture.asset(Assets.emptyData, width: 220, height: 220);
+  static Widget emptyCart =
+      SvgPicture.asset(Assets.emptyCart, width: 220, height: 220);
+  static Widget emptySearch =
+      SvgPicture.asset(Assets.emptySearch, width: 220, height: 220);
 }

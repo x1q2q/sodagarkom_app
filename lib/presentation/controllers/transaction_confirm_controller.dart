@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/models/transaction_confirm.dart';
-import '../../presentation/services/dialog_services.dart';
+import '../../presentation/services/toast_service.dart';
 import 'carts_controller.dart';
 import '../router/app_routes.dart';
 
@@ -52,13 +52,13 @@ class TransactionConfirmController extends GetxController {
           await _transactionRepository.insertTransaction(trxConfirm!);
       isLoadingProcess = false;
       // do reset carts controller length
-      DialogService.showToast('success', result['message']);
+      ToastService.showToast('success', result['message']);
       Get.until((route) => route.settings.name == AppRoutes.appTab);
       cartController.qtyCarts.value = 0;
       cartController.carts.clear();
     } catch (e) {
       print('failed to insert transaction confirm: $e');
-      DialogService.showToast('error', '$e');
+      ToastService.showToast('error', '$e');
     }
   }
 }

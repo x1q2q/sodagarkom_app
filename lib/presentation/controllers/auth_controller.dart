@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../extensions/string_extensions.dart';
-import '../services/dialog_services.dart';
+import '../services/toast_service.dart';
 import '../../domain/repositories/customer_repository.dart';
 import '../router/app_routes.dart';
 
@@ -24,11 +24,11 @@ class AuthController extends GetxController {
       checkCredential(username, password);
     } else {
       if (username.isEmpty && password.isEmpty) {
-        DialogService.toastAuth('error', 'Username & password masih kosong');
+        ToastService.toastAuth('error', 'Username & password masih kosong');
       } else if (password.isEmpty) {
-        DialogService.toastAuth('error', 'Password masih kosong');
+        ToastService.toastAuth('error', 'Password masih kosong');
       } else {
-        DialogService.toastAuth('error', 'Username masih kosong');
+        ToastService.toastAuth('error', 'Username masih kosong');
       }
     }
   }
@@ -39,10 +39,10 @@ class AuthController extends GetxController {
       Map<String, dynamic> result = await _customerRepository.loginUser(data);
       isLoggedIn.value = true;
       await box.write('customerId', int.parse(result['data']['customer_id']));
-      DialogService.toastAuth('success', result['message']);
+      ToastService.toastAuth('success', result['message']);
       Get.offAndToNamed(AppRoutes.appTab);
     } catch (e) {
-      DialogService.toastAuth('error', '$e'.extractMessage());
+      ToastService.toastAuth('error', '$e'.extractMessage());
     }
     isLoading = false;
   }
@@ -51,10 +51,10 @@ class AuthController extends GetxController {
     try {
       Map<String, dynamic> result =
           await _customerRepository.registerUser(dataCredential);
-      DialogService.toastAuth('success', result['message']);
+      ToastService.toastAuth('success', result['message']);
       Get.toNamed(AppRoutes.login);
     } catch (e) {
-      DialogService.toastAuth('error', '$e'.extractMessage());
+      ToastService.toastAuth('error', '$e'.extractMessage());
     }
     isLoading = false;
   }

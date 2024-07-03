@@ -1,7 +1,7 @@
 import 'package:get_storage/get_storage.dart';
 import '../../extensions/string_extensions.dart';
 
-class StorageServices {
+class StorageService {
   final GetStorage _box = GetStorage();
 
   Future<void> checkDuplicate(String value) async {

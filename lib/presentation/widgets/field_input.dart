@@ -5,13 +5,14 @@ import 'app_input_field.dart';
 
 class FieldInput extends StatelessWidget {
   final String fieldLabel;
-  TextEditingController txtController;
+  final TextEditingController txtController;
   final String placeholder;
   final bool isObscure;
   final Icon? icon;
   final int lines;
   final TextInputType type;
   final Color bgColor;
+
   FieldInput(
       {Key? key,
       required this.fieldLabel,

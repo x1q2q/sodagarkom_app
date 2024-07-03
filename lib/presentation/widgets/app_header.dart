@@ -8,8 +8,8 @@ import 'app_svg.dart';
 import 'package:get/get.dart';
 
 class AppHeader extends StatelessWidget {
-  final controller;
-  AppHeader({Key? key, required this.controller}) : super(key: key);
+  final dynamic controller;
+  const AppHeader({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,15 @@ class AppHeader extends StatelessWidget {
                 bgColor: AppColors.lightgray,
                 splashColor: AppColors.grayv1),
             Positioned(
-                child: Obx(() => BtnCircle(
-                    widget: Center(
-                        child: Text('${controller.qtyCarts.value}',
-                            style: AppStyles.cartItems)),
-                    bgColor: AppColors.redv3,
-                    size: 25)),
-                top: 0,
-                right: 0)
+              top: 0,
+              right: 0,
+              child: Obx(() => BtnCircle(
+                  bgColor: AppColors.redv3,
+                  size: 25,
+                  widget: Center(
+                      child: Text('${controller.qtyCarts.value}',
+                          style: AppStyles.cartItems)))),
+            )
           ],
         )
       ],

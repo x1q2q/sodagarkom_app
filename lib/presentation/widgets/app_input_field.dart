@@ -3,7 +3,7 @@ import '../../core/colors.dart';
 import '../../core/styles.dart';
 
 class AppInputField extends StatefulWidget {
-  final controller;
+  final TextEditingController controller;
   final String hintText;
   final bool obscureText;
   final Icon? icon;

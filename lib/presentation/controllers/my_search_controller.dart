@@ -2,9 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../../domain/models/product.dart';
-import '../services/storage_services.dart';
-import '../services/dialog_services.dart';
-import '../../extensions/string_extensions.dart';
+import '../services/storage_service.dart';
+import '../services/toast_service.dart';
 
 class MySearchController extends GetxController {
   final ProductRepository _productRepository;
@@ -23,10 +22,10 @@ class MySearchController extends GetxController {
 
   void searchKeywords(String value) async {
     if (value.trim().isEmpty) {
-      DialogService.rawToast('keyword masih kosong');
+      ToastService.rawToast('keyword masih kosong');
     } else {
       onSubmit.value = true;
-      StorageServices().saveData(value);
+      StorageService().saveData(value);
       fetchProducts(value);
     }
   }
@@ -38,12 +37,12 @@ class MySearchController extends GetxController {
   }
 
   void fetchHistory() async {
-    searchHistory = await StorageServices().getData();
+    searchHistory = await StorageService().getData();
     isLoading.value = false;
   }
 
   void removeHistory(String id) async {
-    StorageServices().deleteData(id);
+    StorageService().deleteData(id);
     searchHistory!.removeWhere((item) => item['id'] == id);
     update();
   }

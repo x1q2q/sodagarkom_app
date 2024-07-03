@@ -55,35 +55,44 @@ class TransactionsPage extends StatelessWidget {
   Widget listTransaction(BuildContext context, dynamic controller) {
     return controller.isLoading
         ? AppSkeleton.shimmerListView
-        : ListView.separated(
-            itemCount: controller.transactions.value.length,
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) =>
-                AppStyles.vSpaceSmall,
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              var trx = controller.transactions.value[index];
-              String id = '${trx.id}';
-              return TransactionCard(
-                  trxID: id,
-                  trxCode: trx.code,
-                  trxDate: '${trx.createdAt}'.toFormattedDate('dd MMMM yyyy'),
-                  status: trx.status,
-                  productName: trx.products[0].productName,
-                  productQty: '${trx.products[0].productQuantity}',
-                  trxQtyRemaining: '${trx.products.length - 1}',
-                  totalAmount: '${trx.totalAmount}'.toRupiah(),
-                  productImage: (trx.products[0].productImage.isEmpty)
-                      ? AppSvg.imgNotFound
-                      : Image.network(
-                          '${Core.pathAssetsProduct}${trx.products[0].productImage}',
-                          fit: BoxFit.cover),
-                  onTapCard: () {
-                    Get.toNamed(
-                        AppRoutes.transactionDetail.replaceFirst(":id", id));
-                  },
-                  controller: controller);
-            });
+        : controller.transactions.value.isEmpty
+            ? Column(
+                children: <Widget>[
+                  AppSvg.emptyList,
+                  const Text('Data transaksi masih kosong...',
+                      style: AppStyles.descEmptyState)
+                ],
+              )
+            : ListView.separated(
+                itemCount: controller.transactions.value.length,
+                shrinkWrap: true,
+                separatorBuilder: (BuildContext context, int index) =>
+                    AppStyles.vSpaceSmall,
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  var trx = controller.transactions.value[index];
+                  String id = '${trx.id}';
+                  return TransactionCard(
+                      trxID: id,
+                      trxCode: trx.code,
+                      trxDate:
+                          '${trx.createdAt}'.toFormattedDate('dd MMMM yyyy'),
+                      status: trx.status,
+                      productName: trx.products[0].productName,
+                      productQty: '${trx.products[0].productQuantity}',
+                      trxQtyRemaining: '${trx.products.length - 1}',
+                      totalAmount: '${trx.totalAmount}'.toRupiah(),
+                      productImage: (trx.products[0].productImage.isEmpty)
+                          ? AppSvg.imgNotFound
+                          : Image.network(
+                              '${Core.pathAssetsProduct}${trx.products[0].productImage}',
+                              fit: BoxFit.cover),
+                      onTapCard: () {
+                        Get.toNamed(AppRoutes.transactionDetail
+                            .replaceFirst(":id", id));
+                      },
+                      controller: controller);
+                });
   }
 }

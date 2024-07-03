@@ -3,7 +3,7 @@ import '../../core/colors.dart';
 
 class DefaultBottombar extends StatelessWidget {
   final Widget widget;
-  const DefaultBottombar({Key? key, required this.widget}) : super(key: key);
+  const DefaultBottombar({super.key, required this.widget});
 
   @override
   Widget build(BuildContext context) {

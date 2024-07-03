@@ -138,6 +138,12 @@ class AppStyles {
       color: Colors.white,
       letterSpacing: 0.6,
       fontSize: 17);
+  static const TextStyle descEmptyState = TextStyle(
+      fontWeight: FontWeight.w400,
+      color: AppColors.grayv1,
+      fontSize: 14,
+      letterSpacing: 1.2,
+      fontStyle: FontStyle.italic);
 
   static const Widget vSpaceXSmall = SizedBox(height: 5.0);
   static const Widget vSpaceSmall = SizedBox(height: 15.0);

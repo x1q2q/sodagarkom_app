@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import '../../domain/repositories/cart_repository.dart';
 import '../../domain/models/cart.dart';
 import '../router/app_routes.dart';
-import '../services/dialog_services.dart';
+import '../services/toast_service.dart';
 
 class CartsController extends GetxController {
   final CartRepository _cartRepository;
@@ -58,14 +58,14 @@ class CartsController extends GetxController {
   void updateItemCart(int cartId, int value) async {
     int index = carts.indexWhere((item) => item.id == cartId);
     if (onHitMaxValue(value, cartId)) {
-      DialogService.topToast('red',
+      ToastService.topToast('red',
           'maximal stok ${carts[index].productName} adalah ${carts[index].stock} item');
     } else if (onHitMinuseValue(value)) {
-      DialogService.topToast('yellow', 'stok tidak boleh bernilai minus');
+      ToastService.topToast('yellow', 'stok tidak boleh bernilai minus');
     } else if (value == 0) {
       removeItemCart(cartId);
     } else if (value.runtimeType != int) {
-      DialogService.topToast('yellow', 'berikan value berupa angka');
+      ToastService.topToast('yellow', 'berikan value berupa angka');
     } else {
       bool updated = await updateCart(value, cartId);
       if (updated) {
@@ -105,12 +105,7 @@ class CartsController extends GetxController {
   }
 
   void goTransactionConfirm() {
-    if (carts.value.isNotEmpty) {
-      Get.toNamed(AppRoutes.transactionConfirm);
-    } else {
-      DialogService.topToast('yellow',
-          'tidak ada data dalam keranjang, silahkan belanja terlebih dahulu');
-    }
+    Get.toNamed(AppRoutes.transactionConfirm);
   }
 
   void addToCart(int productId) async {
@@ -123,7 +118,7 @@ class CartsController extends GetxController {
       Map<String, dynamic> result = await _cartRepository.insertCart(data);
       isLoadingProcess = false;
 
-      DialogService.showToast('success', result['message']);
+      ToastService.showToast('success', result['message']);
       Get.toNamed(AppRoutes.carts);
 
       Cart cartResult = Cart.fromJson(result['data'][0]);
@@ -142,7 +137,7 @@ class CartsController extends GetxController {
       isLoading = false;
     } catch (e) {
       print('failed add product to cart: $e');
-      DialogService.showToast('error', '$e');
+      ToastService.showToast('error', '$e');
     }
     update();
   }
@@ -152,12 +147,12 @@ class CartsController extends GetxController {
       Map<String, dynamic> result = await _cartRepository.deleteCart(cartId);
       isLoadingProcess = false;
 
-      DialogService.topToast('green', result['message']);
+      ToastService.topToast('green', result['message']);
       removeItemCart(cartId);
       isLoading = false;
     } catch (e) {
       print('failed delete cart: $e');
-      DialogService.topToast('red', 'error $e');
+      ToastService.topToast('red', 'error $e');
     }
   }
 
@@ -167,11 +162,11 @@ class CartsController extends GetxController {
       Map<String, dynamic> result = await _cartRepository.updateCart(data);
       isLoadingProcess = false;
 
-      DialogService.topToast('green', result['message']);
+      ToastService.topToast('green', result['message']);
       isLoading = false;
       return true;
     } catch (e) {
-      DialogService.topToast('red', 'error $e');
+      ToastService.topToast('red', 'error $e');
       return false;
     }
   }

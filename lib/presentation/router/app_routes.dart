@@ -20,7 +20,7 @@ class AppRoutes {
   static const String registration = '/registration';
 
   static final routes = [
-    GetPage(name: appTab, page: () => AppTab(), binding: TabsBinding()),
+    GetPage(name: appTab, page: () => const AppTab(), binding: TabsBinding()),
     GetPage(name: home, page: () => const HomePage(), binding: HomeBinding()),
     GetPage(
         name: categoryDetail,

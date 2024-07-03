@@ -13,18 +13,17 @@ class ProductCartCard extends StatelessWidget {
   final String categoryName;
   final String productPrice;
   final Widget productImage;
-  final controller;
+  final dynamic controller;
 
   ProductCartCard(
-      {Key? key,
+      {super.key,
       required this.cartId,
       required this.productName,
       required this.productQuantity,
       required this.categoryName,
       required this.productPrice,
       required this.productImage,
-      required this.controller})
-      : super(key: key);
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {

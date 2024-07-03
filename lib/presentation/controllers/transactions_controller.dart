@@ -7,7 +7,7 @@ import '../../domain/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/app_dialog_upload.dart';
-import '../../presentation/services/dialog_services.dart';
+import '../../presentation/services/toast_service.dart';
 import '../../extensions/string_extensions.dart';
 // import 'package:flutter/services.dart';
 
@@ -86,10 +86,10 @@ class TransactionsController extends GetxController {
       int index = transactions.indexWhere((item) => item.id == transactionId);
       transactions[index].status = statusHandleTo;
       update();
-      DialogService.showToast('success', result['message']);
+      ToastService.showToast('success', result['message']);
     } catch (e) {
       Get.back();
-      DialogService.showToast('error', '$e'.extractMessage());
+      ToastService.showToast('error', '$e'.extractMessage());
     }
   }
 
@@ -119,7 +119,7 @@ class TransactionsController extends GetxController {
         );
       });
     } else {
-      DialogService.rawToast('tidak ada gambar terpilih');
+      ToastService.rawToast('tidak ada gambar terpilih');
     }
   }
 
@@ -134,10 +134,10 @@ class TransactionsController extends GetxController {
       int index = transactions.indexWhere((item) => item.id == transactionId);
       transactions[index].status = statusHandleTo;
       update();
-      DialogService.showToast('success', result['message']);
+      ToastService.showToast('success', result['message']);
     } catch (e) {
       Get.back();
-      DialogService.showToast('error', '$e'.extractMessage());
+      ToastService.showToast('error', '$e'.extractMessage());
     }
     update();
   }

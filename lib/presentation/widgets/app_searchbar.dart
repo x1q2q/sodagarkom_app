@@ -6,7 +6,7 @@ import '../router/app_routes.dart';
 import 'app_svg.dart';
 
 class AppSearchbar extends StatelessWidget {
-  const AppSearchbar({Key? key}) : super(key: key);
+  const AppSearchbar({super.key});
 
   @override
   Widget build(BuildContext context) {

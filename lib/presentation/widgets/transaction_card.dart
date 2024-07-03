@@ -19,10 +19,10 @@ class TransactionCard extends StatelessWidget {
   final String totalAmount;
   final Widget productImage;
   final void Function() onTapCard;
-  final controller;
+  final dynamic controller;
 
   const TransactionCard(
-      {Key? key,
+      {super.key,
       required this.trxID,
       required this.trxCode,
       required this.trxDate,
@@ -33,8 +33,7 @@ class TransactionCard extends StatelessWidget {
       required this.totalAmount,
       required this.productImage,
       required this.onTapCard,
-      this.controller})
-      : super(key: key);
+      this.controller});
 
   bool dropDownItemUpload(tipe) {
     return (tipe == 'reserved' || tipe == 'pending') ? true : false;

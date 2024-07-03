@@ -8,14 +8,13 @@ class BtnRounded extends StatelessWidget {
   final bool isOutline;
   final double size;
   const BtnRounded(
-      {Key? key,
+      {super.key,
       required this.widget,
       this.onTap,
       required this.bgColor,
       this.splashColor,
       this.isOutline = false,
-      this.size = 35})
-      : super(key: key);
+      this.size = 35});
 
   @override
   Widget build(BuildContext context) {

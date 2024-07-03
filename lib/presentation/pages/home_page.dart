@@ -142,33 +142,42 @@ class HomePage extends StatelessWidget {
     final CartsController cartController = Get.find();
     return controller.isLoading
         ? AppSkeleton.shimmerGridView
-        : GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 20 / 23,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10),
-            itemCount: controller.category!.products!.length,
-            shrinkWrap: true,
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext ctx, index) {
-              var products = controller.category!.products![index];
-              return ProductCard(
-                  productName: products.name,
-                  productPrice: '${products.price}'.toRupiah(),
-                  productImage: (products.imageThumb.isEmpty)
-                      ? AppSvg.imgNotFound
-                      : Image.network(
-                          '${Core.pathAssetsProduct}${products.imageThumb}',
-                          fit: BoxFit.contain),
-                  onTapCard: () {
-                    Get.toNamed(AppRoutes.productDetail
-                        .replaceFirst(":id", '${products.id}'));
-                  },
-                  onTapBtn: () {
-                    cartController.addToCart(products.id);
-                  });
-            });
+        : controller.category.products.isEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  AppSvg.emptyList,
+                  const Text('Data produk masih kosong...',
+                      style: AppStyles.descEmptyState)
+                ],
+              )
+            : GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 20 / 23,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10),
+                itemCount: controller.category!.products!.length,
+                shrinkWrap: true,
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext ctx, index) {
+                  var products = controller.category!.products![index];
+                  return ProductCard(
+                      productName: products.name,
+                      productPrice: '${products.price}'.toRupiah(),
+                      productImage: (products.imageThumb.isEmpty)
+                          ? AppSvg.imgNotFound
+                          : Image.network(
+                              '${Core.pathAssetsProduct}${products.imageThumb}',
+                              fit: BoxFit.contain),
+                      onTapCard: () {
+                        Get.toNamed(AppRoutes.productDetail
+                            .replaceFirst(":id", '${products.id}'));
+                      },
+                      onTapBtn: () {
+                        cartController.addToCart(products.id);
+                      });
+                });
   }
 }

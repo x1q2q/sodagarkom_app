@@ -5,7 +5,7 @@ import 'btn_circle.dart';
 
 class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  const DefaultAppbar({Key? key, required this.title}) : super(key: key);
+  const DefaultAppbar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

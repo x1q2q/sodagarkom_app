@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/colors.dart';
 import 'package:get/get.dart';
 
-class DialogService {
+class ToastService {
   static SnackbarController showToast(String title, String message) {
     return Get.snackbar(title, message,
         margin: const EdgeInsets.only(top: 15, right: 10, left: 10),

@@ -3,8 +3,8 @@ import '../../core/colors.dart';
 import 'package:get/get.dart';
 
 class SectionChips extends StatelessWidget {
-  final controller;
-  const SectionChips({Key? key, required this.controller}) : super(key: key);
+  final dynamic controller;
+  const SectionChips({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

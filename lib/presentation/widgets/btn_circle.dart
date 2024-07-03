@@ -8,19 +8,18 @@ class BtnCircle extends StatelessWidget {
   final double size;
   final double padding;
   const BtnCircle(
-      {Key? key,
+      {super.key,
       required this.widget,
       this.onTap,
       required this.bgColor,
       this.splashColor,
       required this.size,
-      this.padding = 0})
-      : super(key: key);
+      this.padding = 0});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
       child: Material(
@@ -32,7 +31,7 @@ class BtnCircle extends StatelessWidget {
           customBorder: const CircleBorder(),
           child: Ink(
             padding: EdgeInsets.all(padding),
-            decoration: BoxDecoration(shape: BoxShape.circle),
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             height: size,
             width: size,
             child: widget,

@@ -91,27 +91,36 @@ class CartsPage extends StatelessWidget {
         ? Padding(
             padding: const EdgeInsets.only(top: 20),
             child: AppSkeleton.shimmerListView)
-        : ListView.separated(
-            itemCount: controller.carts!.length,
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) =>
-                AppStyles.vSpaceSmall,
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              var cart = controller.carts[index];
-              return ProductCartCard(
-                  cartId: cart.id,
-                  productName: cart.productName,
-                  productQuantity: cart.quantity,
-                  productPrice: '${cart.productPrice}'.toRupiah(),
-                  productImage: (cart.productImage.isEmpty)
-                      ? AppSvg.imgNotFound
-                      : Image.network(
-                          '${Core.pathAssetsProduct}${cart.productImage}',
-                          fit: BoxFit.cover),
-                  categoryName: '${cart.categoryName}',
-                  controller: controller);
-            });
+        : controller.carts!.isEmpty
+            ? Center(
+                child: Column(
+                children: <Widget>[
+                  AppSvg.emptyCart,
+                  const Text('Data cart masih kosong...',
+                      style: AppStyles.descEmptyState)
+                ],
+              ))
+            : ListView.separated(
+                itemCount: controller.carts!.length,
+                shrinkWrap: true,
+                separatorBuilder: (BuildContext context, int index) =>
+                    AppStyles.vSpaceSmall,
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  var cart = controller.carts[index];
+                  return ProductCartCard(
+                      cartId: cart.id,
+                      productName: cart.productName,
+                      productQuantity: cart.quantity,
+                      productPrice: '${cart.productPrice}'.toRupiah(),
+                      productImage: (cart.productImage.isEmpty)
+                          ? AppSvg.imgNotFound
+                          : Image.network(
+                              '${Core.pathAssetsProduct}${cart.productImage}',
+                              fit: BoxFit.cover),
+                      categoryName: '${cart.categoryName}',
+                      controller: controller);
+                });
   }
 }

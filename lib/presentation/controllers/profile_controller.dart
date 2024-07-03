@@ -4,7 +4,7 @@ import '../../domain/repositories/customer_repository.dart';
 import '../../domain/models/customer.dart';
 import 'package:flutter/material.dart';
 import '../router/app_routes.dart';
-import '../../presentation/services/dialog_services.dart';
+import '../../presentation/services/toast_service.dart';
 import '../../extensions/string_extensions.dart';
 import 'app_tab_controller.dart';
 
@@ -79,12 +79,12 @@ class ProfileController extends GetxController {
       customer = data;
       pwdCtrlr.text = '';
       update();
-      DialogService.showToast('success', result['message']);
+      ToastService.showToast('success', result['message']);
       Get.until((route) => route.settings.name == AppRoutes.appTab);
     } catch (e) {
       initField();
       update();
-      DialogService.showToast('error', '$e'.extractMessage());
+      ToastService.showToast('error', '$e'.extractMessage());
     }
   }
 

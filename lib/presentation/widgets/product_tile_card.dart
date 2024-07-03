@@ -12,17 +12,16 @@ class ProductTileCard extends StatelessWidget {
   final String productPrice;
   final Widget productImage;
   final void Function() onTapCard;
-  final controller;
+  final dynamic controller;
 
   const ProductTileCard(
-      {Key? key,
+      {super.key,
       required this.productId,
       required this.productName,
       required this.productPrice,
       required this.productImage,
       required this.onTapCard,
-      required this.controller})
-      : super(key: key);
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {

@@ -4,8 +4,7 @@ import '../../core/colors.dart';
 class SpanStatus extends StatelessWidget {
   final String text;
   final String tipe;
-  SpanStatus({Key? key, required this.text, required this.tipe})
-      : super(key: key);
+  const SpanStatus({super.key, required this.text, required this.tipe});
   Color bgColor() {
     switch (tipe) {
       case 'accepted':
@@ -43,7 +42,7 @@ class SpanStatus extends StatelessWidget {
           color: bgColor(),
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
         child: Text(
           text,
           style: TextStyle(

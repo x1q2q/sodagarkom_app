@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class BtnCart extends StatelessWidget {
   final Widget svg;
@@ -7,17 +6,16 @@ class BtnCart extends StatelessWidget {
   final Color bgColor;
   final Color splashColor;
   const BtnCart(
-      {Key? key,
+      {super.key,
       required this.svg,
       this.onTap,
       required this.bgColor,
-      required this.splashColor})
-      : super(key: key);
+      required this.splashColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
       child: Material(
@@ -28,7 +26,7 @@ class BtnCart extends StatelessWidget {
           onTap: onTap,
           customBorder: const CircleBorder(),
           child: Ink(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 shape: BoxShape.circle, border: Border.all(color: splashColor)),
             height: 58,
